@@ -34,16 +34,26 @@
 						</div>
 						<button type="submit" class="site-btn">로그인</button>
 					</form>
-					<a href="#" class="forget_pass">비밀번호를 잊으셨나요?</a>
+					<a href="#" class="forget_pass" onclick="window.open('findPassword.do', 'pwPopup', 'width=500,height=400'); return false;">비밀번호를 잊으셨나요?</a>
 				</div>
 			</div>
 			<div class="col-lg-6">
 				<div class="login__register">
 					<h3>아직 회원이 아니신가요?</h3>
-					<a href="signup.html" class="site-btn">회원가입</a>
+					<a href="signUp.do" class="site-btn">회원가입</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 <!-- Login Section End -->
+<script>
+function openFindPwPopup() {
+    window.open(
+        "findPassword.jsp",       // 👉 분리한 JSP 경로
+        "비밀번호 찾기",            // 팝업 이름
+        "width=450,height=400,scrollbars=no,resizable=no"
+    );
+}
+</script>
+<link rel="stylesheet" href="css/gemdori/loginForm.css" type="text/css">

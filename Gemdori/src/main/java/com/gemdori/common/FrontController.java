@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gemdori.main.MainControl;
+import com.gemdori.member.findPasswordControl;
+import com.gemdori.member.joinControl;
 import com.gemdori.member.loginControl;
 
 public class FrontController extends HttpServlet {
@@ -26,7 +28,11 @@ public class FrontController extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		map.put("/main.do", new MainControl());
+		
+		// 회원 컨트롤
 		map.put("/login.do", new loginControl());
+		map.put("/signUp.do", new joinControl());
+		map.put("/findPassword.do", new findPasswordControl());
 	}
 
 	// service.

@@ -219,9 +219,31 @@ input[type="date"] {
 	top: 14px;
 }
 
-.site-btn,
-.site-btn:link,
-.site-btn:visited  {
+/*---------------------
+  Sign Up
+-----------------------*/
+
+.signup {
+	padding-top: 130px;
+	padding-bottom: 150px;
+}
+
+.signup .login__form:after {
+	height: 450px;
+}
+
+.signup .login__form h5 {
+	font-size: 15px;
+	color: #ffffff;
+	margin-top: 36px;
+}
+
+.signup .login__form h5 a {
+	color: #e53637;
+	font-weight: 700;
+}
+/* signUp.css 하단 또는 버튼 스타일 정의 아래에 추가 */
+.site-btn {
 	font-size: 18px;
 	color: #ffffff;
 	background: #e53637;
@@ -234,12 +256,7 @@ input[type="date"] {
 	padding: 12px 30px;
 	transition: transform 0.2s ease-in-out;
 }
-.site-btn:hover {
-	transform: scale(1.05);
-}
 
-.forget_pass:hover {
-		color: #e53637;
-		text-decoration: underline;
-		transition: color 0.2s ease;
-	}
+.site-btn:hover {
+    transform: scale(1.05);
+}
