@@ -16,5 +16,7 @@
   <definition name="WILDCARD:*/*" extends="gemdori.common">
     <put-attribute name="body" value="/WEB-INF/{1}/{2}.jsp" />
   </definition>
+  
+
 
 </tiles-definitions>
