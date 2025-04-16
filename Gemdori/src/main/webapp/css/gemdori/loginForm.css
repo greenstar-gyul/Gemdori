@@ -1,0 +1,244 @@
+/*---------------------
+  Login
+-----------------------*/
+
+.login {
+	padding-top: 130px;
+	padding-bottom: 120px;
+}
+
+.login__form {
+    position: relative;
+    padding-left: 145px;
+}
+
+.login__form:after {
+    position: absolute;
+    right: -14px;
+    top: -40px;
+    height: 330px;
+    width: 1px;
+    content: "";
+    /* background: rgba(255, 255, 255, 0.2); */
+}
+
+.login__form h3 {
+    color: #ffffff;
+    font-weight: 700;
+    font-family: "Oswald", sans-serif;
+    margin-bottom: 30px;
+}
+
+/* ✅ form 태그 없이도 input__item 스타일 적용되도록 수정 */
+.input__item {
+    position: relative;
+    width: 370px;
+    margin-bottom: 20px;
+}
+
+/* 이메일 인증 버튼 css */
+/* input padding 오른쪽 추가 */
+.input__item-with-btn input {
+	padding-left: 76px;
+	padding-right: 100px; /* 버튼 공간 확보 */
+}
+
+/* 버튼을 input 안 우측에 고정 */
+.input__item-with-btn .verify-btn {
+	position: absolute;
+	right: 10px;
+	/* top: 2px; */
+	height: 30px;
+	padding: 0 12px;
+	font-size: 12px;
+	border: none;
+	background: #e53637;
+	color: #fff;
+	border-radius: 5px;
+	cursor: pointer;
+	font-family: 'Mulish', sans-serif;
+	transition: background 0.3s;
+}
+
+.verify-btn:hover {
+	background: #b0272b;
+}
+
+
+/* 성별 선택 영역 배경도 정리 */
+.input__item select {
+	position: relative;
+	background: #b7b7b7;
+	width: 370px;
+	margin-bottom: 20px;
+}
+
+.input__item:before {
+    position: absolute;
+    left: 50px;
+    top: 10px;
+    height: 30px;
+    width: 1px;
+    background: #b7b7b7;
+    content: "";
+}
+
+.input__item input,
+.input__item select {
+    height: 50px;
+    width: 100%;
+    font-size: 15px;
+    color: #000;
+    background: #ffffff;
+    border: none;
+    padding-left: 76px;
+}
+
+/* 아이콘 제거 */
+input[type="date"]::-webkit-calendar-picker-indicator {
+	opacity: 0;
+	position: absolute;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}
+
+/* input 클릭 시 포인터 설정 */
+input[type="date"] {
+	cursor: pointer;
+}
+/* ✅ placeholder 색상 통일 */
+.input__item input::placeholder,
+.input__item input::-webkit-input-placeholder,
+.input__item input::-moz-placeholder,
+.input__item input:-ms-input-placeholder,
+.input__item input::-ms-input-placeholder {
+    color: #b7b7b7;
+}
+
+/* ✅ 아이콘 위치 */
+.input__item span {
+    color: #b7b7b7;
+    font-size: 20px;
+    position: absolute;
+    left: 15px;
+    top: 13px;
+}
+
+
+/* ✅ 버튼 */
+.login__form button {
+    border-radius: 0;
+    margin-top: 10px;
+}
+
+/* ✅ 패스워드 잊음 링크 */
+.login__form .forget_pass {
+    font-size: 15px;
+    color: #ffffff;
+    display: inline-block;
+    position: absolute;
+    right: 60px;
+    bottom: 12px;
+}
+
+
+.login__register {
+	padding-left: 30px;
+}
+
+.login__register h3 {
+	color: #ffffff;
+	font-weight: 700;
+	font-family: "Oswald", sans-serif;
+	margin-bottom: 30px;
+}
+
+.login__register .primary-btn {
+	background: #e53637;
+	padding: 12px 42px;
+}
+
+.login__social {
+	padding-top: 52px;
+}
+
+.login__social__links {
+	text-align: center;
+}
+
+.login__social__links span {
+	color: #ffffff;
+	display: block;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	margin-bottom: 30px;
+}
+
+.login__social__links ul li {
+	list-style: none;
+	margin-bottom: 15px;
+}
+
+.login__social__links ul li:last-child {
+	margin-bottom: 0;
+}
+
+.login__social__links ul li a {
+	color: #ffffff;
+	display: block;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	width: 460px;
+	padding: 14px 0;
+	position: relative;
+	margin: 0 auto;
+}
+
+.login__social__links ul li a.facebook {
+	background: #4267b2;
+}
+
+.login__social__links ul li a.google {
+	background: #ff4343;
+}
+
+.login__social__links ul li a.twitter {
+	background: #1da1f2;
+}
+
+.login__social__links ul li a i {
+	font-size: 20px;
+	position: absolute;
+	left: 32px;
+	top: 14px;
+}
+
+/*---------------------
+  Sign Up
+-----------------------*/
+
+.signup {
+	padding-top: 130px;
+	padding-bottom: 150px;
+}
+
+.signup .login__form:after {
+	height: 450px;
+}
+
+.signup .login__form h5 {
+	font-size: 15px;
+	color: #ffffff;
+	margin-top: 36px;
+}
+
+.signup .login__form h5 a {
+	color: #e53637;
+	font-weight: 700;
+}
