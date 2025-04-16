@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>My Page</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <style>
+        .mypage__section {
+            padding: 60px 0;
+        }
+
+        .mypage__nav {
+            background: #111;
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .mypage__nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mypage__nav li {
+            margin-bottom: 10px;
+        }
+
+        .mypage__nav li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .mypage__nav li a:hover {
+            color: #e53637;
+        }
+
+        .mypage__content {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+        }
+
+        .mypage__content h4 {
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .mypage__info-item {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="header__logo">
+                        <a href="./index.html">
+                            <img src="img/logo.png" alt="">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="header__nav">
+                        <nav class="header__menu">
+                            <ul>
+                                <li><a href="./index.html">Homepage</a></li>
+                                <li><a href="./categories.html">Categories</a></li>
+                                <li><a href="./blog.html">Our Blog</a></li>
+                                <li><a href="#">Contacts</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="header__right">
+                        <a href="#" class="search-switch"><span class="icon_search"></span></a>
+                        <a href="./mypage.html"><span class="icon_profile"></span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="mypage__section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="mypage__nav">
+                        <ul>
+                            <li><a href="#info">회원 정보</a></li>
+                            <li><a href="#edit">회원 정보 수정</a></li>
+                            <li><a href="#orders">구매 내역</a></li>
+                            <li><a href="#reviews">리뷰 내역</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="mypage__content" id="info">
+                        <h4>회원 정보</h4>
+                        <div class="mypage__info-item">이름: 홍길동</div>
+                        <div class="mypage__info-item">이메일: hong@test.com</div>
+                        <div class="mypage__info-item">닉네임: 길동이</div>
+                        <div class="mypage__info-item">전화번호: 010-1234-5678</div>
+                        <div class="mypage__info-item">생년월일: 1990-01-01</div>
+                        <div class="mypage__info-item">성별: 남성</div>
+                    </div>
+
+                    <div class="mypage__content" id="edit" style="margin-top: 30px;">
+                        <h4>회원 정보 수정</h4>
+                        <form>
+                            <input type="text" placeholder="이름" class="form-control mb-2">
+                            <input type="text" placeholder="닉네임" class="form-control mb-2">
+                            <input type="text" placeholder="전화번호" class="form-control mb-2">
+                            <input type="date" class="form-control mb-2">
+                            <select class="form-control mb-3">
+                                <option value="">성별 선택</option>
+                                <option value="M">남성</option>
+                                <option value="F">여성</option>
+                            </select>
+                            <button class="btn btn-primary">수정하기</button>
+                        </form>
+                    </div>
+
+                    <div class="mypage__content" id="orders" style="margin-top: 30px;">
+                        <h4>구매 내역</h4>
+                        <ul>
+                            <li>2024-03-01 - "Fate/Stay Night"</li>
+                            <li>2024-04-02 - "Attack on Titan"</li>
+                        </ul>
+                    </div>
+
+                    <div class="mypage__content" id="reviews" style="margin-top: 30px;">
+                        <h4>리뷰 내역</h4>
+                        <ul>
+                            <li>"Fate/Stay Night" - 아주 재밌었어요!</li>
+                            <li>"Naruto" - 어릴 적 추억이 생각나는 애니였습니다.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
