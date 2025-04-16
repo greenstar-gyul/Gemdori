@@ -1753,20 +1753,26 @@ ol {
 /* 이메일 인증 버튼 css */
 
 /* 인증 버튼 포함된 input 감싸는 영역 */
-.email-verify_item {
-	text-align: right; /* 오른쪽 정렬 */
-	margin-top: 0px;   /* input 아래와 간격 */
-	margin-bottom: 20px; /* 다음 input과의 간격 */
+/* 인증 버튼 포함된 input 박스 스타일 */
+
+/* input padding 오른쪽 추가 */
+.input__item--with-btn input {
+	padding-left: 76px;
+	padding-right: 100px; /* 버튼 공간 확보 */
 }
 
-.verify-btn {
-	height: 34px;
-	padding: 0 15px;
+/* 버튼을 input 안 우측에 고정 */
+.input__item--with-btn .verify-btn {
+	position: absolute;
+	right: 10px;
+	/* top: 2px; */
+	height: 30px;
+	padding: 0 12px;
 	font-size: 12px;
 	border: none;
 	background: #e53637;
 	color: #fff;
-	border-radius: 15px;
+	border-radius: 5px;
 	cursor: pointer;
 	font-family: 'Mulish', sans-serif;
 	transition: background 0.3s;
