@@ -441,6 +441,10 @@ ol {
   Hero
 -----------------------*/
 
+.contents-section {	
+	padding-top: 50px;
+}
+
 .hero {
 	padding-top: 50px;
 }
