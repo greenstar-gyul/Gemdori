@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
 <header class="header">
         <div class="container">
@@ -36,8 +37,25 @@
                 </div>
                 <div class="col-lg-2">
                     <div class="header__right">
+                        <c:choose>
+					    <c:when test="${not empty sessionScope.loginUser}">
+					      <!-- 로그인된 상태: 마이페이지로 이동 -->
+					      <a href="${pageContext.request.contextPath}/user/mypage.do">
+					        <span class="icon_profile"></span>
+					      </a>
+					    </c:when>
+					    <c:otherwise>
+					      <!-- 비로그인 상태: 로그인 페이지로 이동 -->
+					      <a href="${pageContext.request.contextPath}/user/login.do">
+					        <span class="icon_profile"></span>
+					      </a>
+					    </c:otherwise>
+					  </c:choose>
+                        <a href="${pageContext.request.contextPath}/cart.do">
+				            <span class="icon_cart"></span>
+				        </a>
                         <a href="#" class="search-switch"><span class="icon_search"></span></a>
-                        <a href="./login.html"><span class="icon_profile"></span></a>
+					  
                     </div>
                 </div>
             </div>

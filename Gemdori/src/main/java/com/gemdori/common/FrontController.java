@@ -25,6 +25,9 @@ public class FrontController extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		map.put("/main.do", new MainControl());
+//		map.put("/login.do", new LoginControl());
+//		map.put("/cartPage.do", new CartPageControl());
+//		map.put("/detail.do", new detailPageControl());
 	}
 
 	// service.
