@@ -12,5 +12,7 @@
 /Gemdori/bin/
 /Gemdori/git/
 /Gemdori/.gitignore
+/Gemdori/.factorypath
 /Gemdori/.idea/
 /.idea/
+

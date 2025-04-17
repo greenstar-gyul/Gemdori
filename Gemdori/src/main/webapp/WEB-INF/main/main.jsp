@@ -1,43 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- Hero Section Begin -->
+
 <section class="hero">
     <div class="container">
         <div class="hero__slider owl-carousel">
-            <div class="hero__items set-bg" data-setbg="img/oncehuman/once-human-1.jpg" style="height: 524.5px;">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="hero__text">
-                            <h2>ONCE HUMAN</h2>
-                            <p>Survival in a strange, post-apocalyptic future.</p>
-                            <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
+            <c:forEach var="game" items="${gameList}">
+                <div class="hero__items set-bg"
+                     data-setbg="${pageContext.request.contextPath}/resources/images/${game.gameMainImage}"
+                     style="height: 524.5px;">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <h2>${game.gameTitle}</h2>
+                                <p>${game.contents}</p>
+                                <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="hero__items set-bg" data-setbg="img/2k25/2k25-1.jpg" style="height: 524.5px;">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="hero__text">
-                            <h2>2K25</h2>
-                            <p>The best sports game in existence!</p>
-                            <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="hero__items set-bg" data-setbg="img/forza/forza-1.jpg" style="height: 524.5px;">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="hero__text">
-                            <h2>FORZA HORIZON 5</h2>
-                            <p>Enjoy fun driving actions while exploring Mexico's vibrant Mother Nature in the world's best cars.</p>
-                            <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
         </div>
     </div>
 </section>
