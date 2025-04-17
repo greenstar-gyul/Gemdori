@@ -1,0 +1,17 @@
+/build/
+/Gemdori/target/
+/.settings/
+/.classpath
+/.project
+/.metadata/
+/Servers/
+/Gemdori/build/
+/Gemdori/target/
+/Gemdori/.settings/
+/Gemdori/.classpath
+/Gemdori/.project
+/Gemdori/bin/
+/Gemdori/git/
+/Gemdori/.gitignore
+/Gemdori/.factorypath
+
