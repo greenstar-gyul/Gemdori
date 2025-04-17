@@ -1,0 +1,758 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<style>
+.game__details__content {
+	margin-bottom: 40px;
+}
+
+.edition-box {
+	background-color: #1d1e39;
+	border-radius: 5px;
+	padding: 20px;
+	margin-bottom: 20px;
+	transition: all 0.3s;
+	border: 2px solid transparent;
+	cursor: pointer;
+	position: relative;
+}
+
+.edition-box.selected {
+	border-color: #e53637;
+}
+
+.edition-box:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.edition-box h4 {
+	color: #fff;
+	margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.edition-box .price {
+	color: #e53637;
+	font-weight: bold;
+	font-size: 24px;
+}
+
+.edition-features {
+	list-style: none;
+	padding: 0;
+	margin: 15px 0;
+	color: white;
+}
+
+.edition-features li {
+	margin-bottom: 8px;
+	display: flex;
+	align-items: start;
+}
+
+.edition-features li:before {
+	content: "✓";
+	color: #e53637;
+	margin-right: 10px;
+}
+
+.edition-badge {
+	position: absolute;
+	top: -10px;
+	right: -10px;
+	background-color: #e53637;
+	color: white;
+	padding: 5px 10px;
+	border-radius: 20px;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.game__details__btn {
+	margin-top: 30px;
+}
+
+.system-req {
+	background: #1d1e39;
+	border-radius: 5px;
+	padding: 20px;
+	margin-top: 30px;
+}
+
+.system-req .title {
+	color: white;
+	margin-bottom: 15px;
+	font-size: 18px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+	padding-bottom: 10px;
+}
+
+.req-column {
+	margin-bottom: 20px;
+}
+
+.req-column h5 {
+	color: #e53637;
+	margin-bottom: 10px;
+	font-size: 16px;
+}
+
+.req-column ul {
+	list-style: none;
+	padding: 0;
+}
+
+.req-column ul li {
+	margin-bottom: 8px;
+	font-size: 14px;
+	color: #b7b7b7;
+}
+
+.req-column ul li span {
+	color: white;
+	font-weight: 600;
+	margin-right: 5px;
+}
+
+.dlc-item {
+	display: flex;
+	align-items: center;
+	background: #1d1e39;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 10px;
+	transition: all 0.3s;
+}
+
+.dlc-item:hover {
+	background: #2a2b4c;
+}
+
+.dlc-img {
+	width: 60px;
+	height: 60px;
+	margin-right: 15px;
+	border-radius: 3px;
+	overflow: hidden;
+}
+
+.dlc-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.dlc-info {
+	flex-grow: 1;
+}
+
+.dlc-info h5 {
+	font-size: 14px;
+	margin-bottom: 5px;
+	color: white;
+}
+
+.dlc-price {
+	margin-left: 10px;
+	font-weight: bold;
+	color: #e53637;
+}
+
+.add-to-cart {
+	padding: 5px 10px;
+	border: none;
+	background: #e53637;
+	color: white;
+	border-radius: 3px;
+	cursor: pointer;
+	font-size: 12px;
+	margin-left: 10px;
+}
+
+.screenshots-slider {
+	margin-top: 30px;
+}
+
+.screenshot-item {
+	border-radius: 5px;
+	overflow: hidden;
+	height: 200px;
+	margin: 0 5px;
+}
+
+.screenshot-item img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.game-tags {
+	display: flex;
+	flex-wrap: wrap;
+	margin-top: 15px;
+}
+
+.game-tag {
+	background: rgba(255, 255, 255, 0.1);
+	color: #b7b7b7;
+	padding: 5px 12px;
+	border-radius: 20px;
+	font-size: 12px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	transition: all 0.3s;
+}
+
+.game-tag:hover {
+	background: #e53637;
+	color: white;
+}
+
+.game-rating {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.rating-number {
+	font-size: 48px;
+	font-weight: bold;
+	color: #e53637;
+	line-height: 1;
+	margin-right: 20px;
+}
+
+.rating-stars {
+	display: flex;
+	flex-direction: column;
+}
+
+.payment-methods {
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	margin-top: 20px;
+}
+
+.payment-methods i {
+	font-size: 24px;
+	color: #b7b7b7;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	z-index: 1000;
+	background-color: #000;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+body {
+	padding-top: 70px;
+}
+</style>
+
+<!-- Page Preloder -->
+<div id="preloder">
+	<div class="loader"></div>
+</div>
+
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="breadcrumb__links">
+					<a href="./index.html"><i class="fa fa-home"></i> 홈</a> <a
+						href="./categories.html">게임 카테고리</a> <a
+						href="./categories.html?genre=rpg">RPG</a> <span>엘든 링: 쉐도우
+						오브 더 어드리 트리</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Breadcrumb End -->
+
+<!-- Game Details Section Begin -->
+<section class="anime-details spad">
+	<div class="container">
+		<div class="game__details__content">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="anime__details__pic set-bg"
+						data-setbg="img/trending/trend-1.jpg">
+						<div class="view">
+							<i class="fa fa-eye"></i> 9,141
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="anime__details__text">
+						<div class="anime__details__title">
+							<h3>엘든 링: 쉐도우 오브 더 어드리 트리</h3>
+							<span>ELDEN RING: Shadow of the Erdtree</span>
+						</div>
+
+						<div class="game-rating">
+							<div class="rating-number">9.2</div>
+							<div class="rating-stars">
+								<div class="rating">
+									<a href="#"><i class="fa fa-star"></i></a> <a href="#"><i
+										class="fa fa-star"></i></a> <a href="#"><i class="fa fa-star"></i></a>
+									<a href="#"><i class="fa fa-star"></i></a> <a href="#"><i
+										class="fa fa-star-half-o"></i></a>
+								</div>
+								<span>1,029개의 평가</span>
+							</div>
+						</div>
+
+						<p>어둠의 땅에서 벌어지는 새로운 서사가 시작됩니다. 탐험가들이여, 새롭게 확장된 방대한 세계에서 무시무시한
+							적들과 맞서 싸우고, 복잡한 던전을 탐험하며, 힘을 증명하세요. 전설의 '어드리 트리'의 그림자 아래에서 벌어지는
+							전설적인 모험이 여러분을 기다립니다.</p>
+
+						<div class="anime__details__widget">
+							<div class="row">
+								<div class="col-lg-6 col-md-6">
+									<ul>
+										<li><span>개발사:</span> 프롬 소프트웨어</li>
+										<li><span>퍼블리셔:</span> 반다이 남코 엔터테인먼트</li>
+										<li><span>출시일:</span> 2025.06.21</li>
+										<li><span>플랫폼:</span> PS5, Xbox Series X|S, PC</li>
+										<li><span>장르:</span> 액션, RPG, 오픈월드, 판타지</li>
+									</ul>
+								</div>
+								<div class="col-lg-6 col-md-6">
+									<ul>
+										<li><span>파일 크기:</span> 75GB</li>
+										<li><span>언어:</span> 한국어, 영어, 일본어 외 다수</li>
+										<li><span>플레이 인원:</span> 1-4명 (온라인 멀티플레이)</li>
+										<li><span>ESRB 등급:</span> M (만 17세 이상)</li>
+										<li><span>기본 게임:</span> 필요 (별도 구매)</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+
+						<div class="game-tags">
+							<a href="#" class="game-tag">오픈월드</a> <a href="#"
+								class="game-tag">다크 판타지</a> <a href="#" class="game-tag">액션
+								RPG</a> <a href="#" class="game-tag">PvP</a> <a href="#"
+								class="game-tag">난이도 높음</a> <a href="#" class="game-tag">보스전</a>
+							<a href="#" class="game-tag">멀티플레이어</a> <a href="#"
+								class="game-tag">분위기</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Screenshots Slider -->
+		<div class="screenshots-slider">
+			<div class="owl-carousel owl-theme">
+				<div class="screenshot-item">
+					<img src="img/trending/trend-2.jpg" alt="">
+				</div>
+				<div class="screenshot-item">
+					<img src="img/trending/trend-3.jpg" alt="">
+				</div>
+				<div class="screenshot-item">
+					<img src="img/trending/trend-4.jpg" alt="">
+				</div>
+				<div class="screenshot-item">
+					<img src="img/trending/trend-5.jpg" alt="">
+				</div>
+				<div class="screenshot-item">
+					<img src="img/trending/trend-6.jpg" alt="">
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-lg-8">
+				<!-- 에디션 선택 -->
+				<div class="section-title">
+					<h4>에디션 선택</h4>
+				</div>
+
+				<div class="edition-box selected" data-game-code="ER001" data-edition-name="스탠다드 에디션" data-price="38000">
+					<h4>
+						스탠다드 에디션 <span class="price">38,000원</span>
+					</h4>
+					<p style="color: white">어드리 트리의 그림자 기본 확장 팩</p>
+					<ul class="edition-features">
+						<li>메인 확장 콘텐츠</li>
+						<li>신규 보스 12종</li>
+						<li>새로운 무기 및 방어구 세트 10종</li>
+					</ul>
+				</div>
+
+				<div class="edition-box" data-game-code="ER003" data-edition-name="디럭스 에디션" data-price="58000">
+					<span class="edition-badge">인기</span>
+					<h4>
+						디럭스 에디션 <span class="price">58,000원</span>
+					</h4>
+					<p style="color: white">확장된 콘텐츠와 추가 디지털 아이템</p>
+					<ul class="edition-features">
+						<li>메인 확장 콘텐츠</li>
+						<li>독점 무기 "어둠의 영혼검"</li>
+						<li>희귀 방어구 세트 "어둠의 기사"</li>
+						<li>디지털 아트북</li>
+						<li>디지털 사운드트랙</li>
+						<li>추가 보스 도전 던전</li>
+					</ul>
+				</div>
+
+				<div class="edition-box" data-game-code="ER005" data-edition-name="콜렉터스 에디션" data-price="98000">
+					<h4>
+						콜렉터스 에디션 <span class="price">98,000원</span>
+					</h4>
+					<p style="color: white">한정판 콜렉터스 에디션 (수량 한정)</p>
+					<ul class="edition-features">
+						<li>디럭스 에디션의 모든 콘텐츠</li>
+						<li>25cm 라이프 사이즈 피규어 (메인 보스)</li>
+						<li>하드커버 아트북 (120페이지)</li>
+						<li>오리지널 사운드트랙 CD</li>
+						<li>패브릭 월드맵</li>
+						<li>메탈 핀 세트 (3개)</li>
+						<li>스티커 세트</li>
+						<li>컬렉터스 박스</li>
+					</ul>
+				</div>
+
+				<div class="game__details__btn">
+					<a href="#" class="follow-btn"><i class="fa fa-heart-o"></i>
+						위시리스트</a> <a href="#" class="watch-btn"><span>장바구니에 추가</span> <i
+						class="fa fa-shopping-cart"></i></a>
+				</div>
+
+				<div class="payment-methods">
+					<i class="fa fa-cc-visa"></i> <i class="fa fa-cc-mastercard"></i> <i
+						class="fa fa-cc-paypal"></i> <i class="fa fa-cc-amex"></i>
+				</div>
+
+				<!-- 시스템 요구사항 -->
+				<div class="system-req">
+					<h4 class="title">시스템 요구사항</h4>
+					<div class="row">
+						<div class="col-md-6 req-column">
+							<h5>최소 사양</h5>
+							<ul>
+								<li><span>OS:</span> Windows 10</li>
+								<li><span>프로세서:</span> Intel Core i5-8400 / AMD Ryzen 3
+									3300X</li>
+								<li><span>메모리:</span> 12 GB RAM</li>
+								<li><span>그래픽:</span> NVIDIA GeForce GTX 1060 3 GB / AMD
+									Radeon RX 580 4 GB</li>
+								<li><span>저장공간:</span> 75 GB 이상의 사용 가능한 공간</li>
+								<li><span>DirectX:</span> 버전 12</li>
+								<li><span>네트워크:</span> 광대역 인터넷 연결</li>
+							</ul>
+						</div>
+						<div class="col-md-6 req-column">
+							<h5>권장 사양</h5>
+							<ul>
+								<li><span>OS:</span> Windows 10/11</li>
+								<li><span>프로세서:</span> Intel Core i7-10700K / AMD Ryzen 5
+									5600X</li>
+								<li><span>메모리:</span> 16 GB RAM</li>
+								<li><span>그래픽:</span> NVIDIA GeForce RTX 3070 / AMD Radeon
+									RX 6800 XT</li>
+								<li><span>저장공간:</span> 75 GB 이상의 SSD</li>
+								<li><span>DirectX:</span> 버전 12</li>
+								<li><span>네트워크:</span> 광대역 인터넷 연결</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<!-- 리뷰 섹션 -->
+				<div class="anime__details__review">
+					<div class="section-title">
+						<h5>리뷰 (6)</h5>
+					</div>
+					<div class="anime__review__item">
+						<div class="anime__review__item__pic">
+							<img src="img/anime/review-1.jpg" alt="">
+						</div>
+						<div class="anime__review__item__text">
+							<h6>
+								게임프로 - <span>1시간 전</span>
+							</h6>
+							<p>아 진짜 오래 기다렸는데 드디어 나왔네요! 베이스 게임만해도 너무 재밌었는데 확장팩은 얼마나 더 재밌을지
+								기대됩니다!</p>
+						</div>
+					</div>
+					<div class="anime__review__item">
+						<div class="anime__review__item__pic">
+							<img src="img/anime/review-2.jpg" alt="">
+						</div>
+						<div class="anime__review__item__text">
+							<h6>
+								롤링어택 - <span>5시간 전</span>
+							</h6>
+							<p>프롬소프트웨어는 실망시키는 법이 없죠. 트레일러만 봐도 벌써 떨려요.</p>
+						</div>
+					</div>
+					<div class="anime__review__item">
+						<div class="anime__review__item__pic">
+							<img src="img/anime/review-3.jpg" alt="">
+						</div>
+						<div class="anime__review__item__text">
+							<h6>
+								레벨디자이너 - <span>20시간 전</span>
+							</h6>
+							<p>엘든링 기본 게임만 해도 난이도 미쳤는데 확장팩은 얼마나 더 어려울지... 기대되면서도 무섭네요ㅠㅠ</p>
+						</div>
+					</div>
+				</div>
+				<div class="anime__details__form">
+					<div class="section-title">
+						<h5>리뷰 작성</h5>
+					</div>
+					<form action="#">
+						<textarea placeholder="리뷰를 작성해주세요"></textarea>
+						<button type="submit">
+							<i class="fa fa-location-arrow"></i> 리뷰 등록
+						</button>
+					</form>
+				</div>
+			</div>
+
+			<!-- 사이드바 -->
+			<div class="col-lg-4 col-md-4">
+				<div class="anime__details__sidebar">
+					<div class="section-title">
+						<h5>추천 DLC 콘텐츠</h5>
+					</div>
+					<!-- DLC 콘텐츠 -->
+					<div class="dlc-item">
+						<div class="dlc-img">
+							<img src="img/sidebar/tv-1.jpg" alt="">
+						</div>
+						<div class="dlc-info">
+							<h5>엘든링 - 갑옷 스킨 팩</h5>
+						</div>
+						<div class="dlc-price">12,000원</div>
+						<button class="add-to-cart">추가</button>
+					</div>
+					<div class="dlc-item">
+						<div class="dlc-img">
+							<img src="img/sidebar/tv-2.jpg" alt="">
+						</div>
+						<div class="dlc-info">
+							<h5>엘든링 - 디지털 사운드트랙</h5>
+						</div>
+						<div class="dlc-price">8,500원</div>
+						<button class="add-to-cart">추가</button>
+					</div>
+					<div class="dlc-item">
+						<div class="dlc-img">
+							<img src="img/sidebar/tv-3.jpg" alt="">
+						</div>
+						<div class="dlc-info">
+							<h5>엘든링 - 디지털 아트북</h5>
+						</div>
+						<div class="dlc-price">15,000원</div>
+						<button class="add-to-cart">추가</button>
+					</div>
+
+					<div class="section-title" style="margin-top: 30px;">
+						<h5>함께 구매한 게임</h5>
+					</div>
+					<div class="product__sidebar__view__item set-bg"
+						data-setbg="img/sidebar/tv-4.jpg">
+						<div class="ep">-25%</div>
+						<div class="view">
+							<i class="fa fa-eye"></i> 9,141
+						</div>
+						<h5>
+							<a href="#">다크소울 3 완전판</a>
+						</h5>
+					</div>
+					<div class="product__sidebar__view__item set-bg"
+						data-setbg="img/sidebar/tv-5.jpg">
+						<div class="ep">-15%</div>
+						<div class="view">
+							<i class="fa fa-eye"></i> 8,567
+						</div>
+						<h5>
+							<a href="#">세키로: 섀도우 다이 트와이스</a>
+						</h5>
+					</div>
+					<div class="product__sidebar__view__item set-bg"
+						data-setbg="img/sidebar/tv-1.jpg">
+						<div class="ep">신작</div>
+						<div class="view">
+							<i class="fa fa-eye"></i> 12,435
+						</div>
+						<h5>
+							<a href="#">아르마겟돈: 더 엔딩</a>
+						</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- Game Details Section End -->
+
+<!-- Search model Begin -->
+<div class="search-model">
+	<div class="h-100 d-flex align-items-center justify-content-center">
+		<div class="search-close-switch">
+			<i class="icon_close"></i>
+		</div>
+		<form class="search-model-form">
+			<input type="text" id="search-input" placeholder="게임 검색...">
+		</form>
+	</div>
+</div>
+<!-- Search model end -->
+
+<!-- Js Plugins -->
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/player.js"></script>
+<script src="js/jquery.nice-select.min.js"></script>
+<script src="js/mixitup.min.js"></script>
+<script src="js/jquery.slicknav.js"></script>
+<script src="js/owl.carousel.min.js"></script>
+<script src="js/main.js"></script>
+
+<script>
+$(document).ready(function() {
+    // 스크린샷 슬라이더 초기화
+    $('.owl-carousel').owlCarousel({
+        items: 3,
+        loop: true,
+        margin: 10,
+        nav: true,
+        responsive: {
+            0: { items: 1 },
+            600: { items: 2 },
+            1000: { items: 3 }
+        }
+    });
+
+    // 전역 변수로 선택된 에디션 정보 저장
+    let selectedEdition = null;
+    const testUserCode = "TEST_USER_001"; // 여기에 테스트용 userCode 입력
+    
+    // 초기 선택된 에디션 정보 설정 (페이지 로드 시 selected 클래스가 있는 에디션)
+    const initialSelectedEdition = $('.edition-box.selected');
+    if (initialSelectedEdition.length > 0) {
+        selectedEdition = {
+            gameCode: initialSelectedEdition.data('gameCode'),
+            editionName: initialSelectedEdition.data('editionName'),
+            price: initialSelectedEdition.data('price'),
+            userCode: testUserCode
+        };
+        console.log('초기 선택된 에디션:', selectedEdition);
+    }
+
+    // 에디션 선택
+    $('.edition-box').click(function() {
+        $('.edition-box').removeClass('selected');
+        $(this).addClass('selected');
+        
+        // 선택된 에디션 정보 업데이트
+        selectedEdition = {
+            gameCode: $(this).data('gameCode'),
+            editionName: $(this).data('editionName'),
+            price: $(this).data('price'),
+            //userCode: '${sessionScope.user.userCode}' // JSP 세션에서 유저코드 가져오기
+            userCode: testUserCode // 테스트용 userCode
+        };
+        
+        console.log('선택된 에디션:', selectedEdition);
+    });
+
+    // 장바구니 버튼 클릭 이벤트
+    $('.watch-btn').click(function(e) {
+        e.preventDefault();
+        
+        // 에디션이 선택되었는지 확인
+        if (!selectedEdition) {
+            alert('에디션을 먼저 선택해주세요!');
+            return;
+        }
+        
+        // 비로그인 상태 체크 (옵셔널)
+        if (!selectedEdition.userCode || selectedEdition.userCode === '') {
+            alert('로그인 후 이용해주세요!');
+            // 로그인 페이지로 이동 (옵션)
+            // window.location.href = 'login.do';
+            return;
+        }
+        
+        // AJAX로 장바구니에 추가
+        $.ajax({
+            url: 'addToCart.do',
+            type: 'POST',
+            data: {
+                gameCode: selectedEdition.gameCode,
+                userCode: selectedEdition.userCode
+            },
+            success: function(response) {
+                // 서버 응답에 따른 처리
+                if (response.success) {
+                    alert(selectedEdition.editionName + '이(가) 장바구니에 추가되었습니다!');
+                    // 장바구니 페이지로 이동
+                    window.location.href = 'cartPage.do';
+                } else {
+                    alert('장바구니 추가 실패: ' + response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                alert('장바구니 추가 중 오류가 발생했습니다. 다시 시도해주세요.');
+                console.error('장바구니 추가 오류:', error);
+            }
+        });
+    });
+    
+    // 위시리스트 버튼 클릭 이벤트
+    $('.follow-btn').click(function(e) {
+        e.preventDefault();
+        $(this).toggleClass('active');
+        if ($(this).hasClass('active')) {
+            $(this).html('<i class="fa fa-heart"></i> 위시리스트에 추가됨');
+        } else {
+            $(this).html('<i class="fa fa-heart-o"></i> 위시리스트');
+        }
+    });
+
+    // DLC 추가 버튼 이벤트
+    $('.add-to-cart').click(function() {
+        // DLC 정보 가져오기
+        const dlcItem = $(this).closest('.dlc-item');
+        const dlcName = dlcItem.find('.dlc-info h5').text();
+        const dlcPrice = dlcItem.find('.dlc-price').text().replace('원', '').replace(',', '');
+        const dlcId = dlcItem.data('dlcId') || 'DLC' + Math.floor(Math.random() * 1000); // 임시 ID 생성
+        
+        // AJAX로 DLC 장바구니에 추가
+        $.ajax({
+            url: 'addDlcToCart.do',
+            type: 'POST',
+            data: {
+                dlcId: dlcId,
+                userCode: selectedEdition.userCode
+            },
+            success: function(response) {
+                if (response.success) {
+                    alert(dlcName + '이(가) 장바구니에 추가되었습니다!');
+                } else {
+                    alert('DLC 추가 실패: ' + response.message);
+                }
+            },
+            error: function() {
+                alert('DLC 추가 중 오류가 발생했습니다.');
+            }
+        });
+    });
+});
+	</script>
