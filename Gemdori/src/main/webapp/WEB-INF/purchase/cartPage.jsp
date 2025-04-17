@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <style>
@@ -258,6 +258,8 @@
 									<div class="quantity-control">
 										<button class="quantity-btn decrease-btn"
 											data-cart-id="${item.cartId}">-</button>
+										<input type="text" class="quantity-input"
+											value="${item.quantity}" readonly>
 										<button class="quantity-btn increase-btn"
 											data-cart-id="${item.cartId}">+</button>
 									</div>
@@ -279,8 +281,7 @@
 								value="${totalAmount}" pattern="#,###" />원</span>
 					</div>
 					<div class="summary-row">
-						<span>할인</span> <span><fmt:formatNumber
-								value="${discountAmount}" pattern="#,###" />원</span>
+						<span>배송비</span> <span>무료</span>
 					</div>
 					<div class="summary-total">
 						<span>총 결제금액</span> <span><fmt:formatNumber
@@ -323,26 +324,119 @@
 <script src="js/main.js"></script>
 
 <script>
-	$(document).ready(function() {
+	$(document)
+			.ready(
+					function() {
+						// 수량 증가 버튼
+						$('.increase-btn')
+								.click(
+										function() {
+											var cartId = $(this)
+													.data('cart-id');
+											var quantityInput = $(this)
+													.siblings('.quantity-input');
+											var currentQuantity = parseInt(quantityInput
+													.val());
+											var newQuantity = currentQuantity + 1;
 
-		// 삭제 버튼
-		$('.remove-btn').click(function() {
-			var cartId = $(this).data('cart-id');
-			removeCartItem(cartId);
-		});
+											updateCartItemQuantity(cartId,
+													newQuantity, quantityInput);
+										});
 
-		// 결제 버튼
-		$('.checkout-btn').click(function() {
-			// 결제 페이지로 이동
-			window.location.href = 'checkout.do';
-		});
+						// 수량 감소 버튼
+						$('.decrease-btn')
+								.click(
+										function() {
+											var cartId = $(this)
+													.data('cart-id');
+											var quantityInput = $(this)
+													.siblings('.quantity-input');
+											var currentQuantity = parseInt(quantityInput
+													.val());
 
-		// 장바구니 아이템 삭제 함수
-		function removeCartItem(cartId) {
-			if (confirm('정말로 이 상품을 장바구니에서 삭제하시겠습니까?')) {
-				$
+											// 최소 수량은 1
+											if (currentQuantity > 1) {
+												var newQuantity = currentQuantity - 1;
+												updateCartItemQuantity(cartId,
+														newQuantity,
+														quantityInput);
+											}
+										});
 
-			}
-		}
-	});
+						// 삭제 버튼
+						$('.remove-btn').click(function() {
+							var cartId = $(this).data('cart-id');
+							removeCartItem(cartId);
+						});
+
+						// 결제 버튼
+						$('.checkout-btn').click(function() {
+							// 결제 페이지로 이동
+							window.location.href = 'checkout.do';
+						});
+
+						// 장바구니 수량 업데이트 함수
+						function updateCartItemQuantity(cartId, quantity,
+								quantityInput) {
+							$.ajax({
+								url : 'updateCartItem.do',
+								type : 'POST',
+								data : {
+									cartItemId : cartId,
+									quantity : quantity
+								},
+								dataType : 'json',
+								success : function(response) {
+									if (response.success) {
+										// 화면 수량 업데이트
+										quantityInput.val(quantity);
+
+										// 페이지 새로고침 (총액 계산을 위해)
+										location.reload();
+									} else {
+										alert('수량 변경 실패: ' + response.message);
+									}
+								},
+								error : function() {
+									alert('서버 오류가 발생했습니다.');
+								}
+							});
+						}
+
+						// 장바구니 아이템 삭제 함수
+						function removeCartItem(cartId) {
+							if (confirm('정말로 이 상품을 장바구니에서 삭제하시겠습니까?')) {
+								$
+										.ajax({
+											url : 'removeFromCart.do',
+											type : 'POST',
+											data : {
+												cartItemId : cartId
+											},
+											dataType : 'json',
+											success : function(response) {
+												if (response.success) {
+													// 화면에서 아이템 제거
+													$(
+															'[data-cart-id="'
+																	+ cartId
+																	+ '"]')
+															.closest(
+																	'.cart-item')
+															.remove();
+
+													// 페이지 새로고침 (총액 계산과 빈 장바구니 처리를 위해)
+													location.reload();
+												} else {
+													alert('삭제 실패: '
+															+ response.message);
+												}
+											},
+											error : function() {
+												alert('서버 오류가 발생했습니다.');
+											}
+										});
+							}
+						}
+					});
 </script>
