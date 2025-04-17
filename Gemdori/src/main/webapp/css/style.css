@@ -140,7 +140,7 @@ ol {
 
 .set-bg {
 	background-repeat: no-repeat;
-	background-size: contain;
+	background-size: cover;
 	background-position: top center;
 }
 
@@ -440,10 +440,6 @@ ol {
 /*---------------------
   Hero
 -----------------------*/
-
-.contents-section {	
-	padding-top: 50px;
-}
 
 .hero {
 	padding-top: 50px;
@@ -963,16 +959,14 @@ ol {
 
 .anime__details__text p {
 	color: #b7b7b7;
-	font-size: 16px;
+	font-size: 18px;
 	line-height: 30px;
-	height: 313px;
 }
 
 .anime__details__pic {
 	height: 440px;
 	border-radius: 5px;
 	position: relative;
-	background-color: #000;
 }
 
 .anime__details__pic .comment {
@@ -1001,7 +995,6 @@ ol {
 
 .anime__details__title {
 	margin-bottom: 20px;
-	padding: 15px;
 }
 
 .anime__details__title h3 {
@@ -1017,17 +1010,10 @@ ol {
 }
 
 .anime__details__rating {
-	text-align: left;
-	position: relative;
+	text-align: center;
+	position: absolute;
 	right: 0;
 	top: 0;
-	height: 392.5px;
-}
-
-.anime__details__rating .rating {
-	text-align: center;
-	margin-bottom: 10px;
-	height: 54.5px;
 }
 
 .anime__details__rating .rating i {
@@ -1040,25 +1026,6 @@ ol {
 	display: block;
 	font-size: 18px;
 	color: #b7b7b7;
-}
-
-.anime__details__main {
-	text-align: left;
-	position: relative;
-}
-
-.anime__details__main .about h4 {
-	color: #fff;
-	font-weight: 500;
-}
-
-.anime__details__main .about hr {
-	color: #fff;
-}
-
-.anime__details__main .about p {
-	color: #fff;
-	font-size: 18px;
 }
 
 .anime__details__widget {
@@ -1765,7 +1732,7 @@ ol {
 	top: -40px;
 	height: 330px;
 	width: 1px;
-	/* background: rgba(255, 255, 255, 0.2); */
+	background: rgba(255, 255, 255, 0.2);
 	content: "";
 }
 
