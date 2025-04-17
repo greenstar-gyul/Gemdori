@@ -44,6 +44,7 @@ public class FrontController extends HttpServlet {
 		// http://localhost:8080/BoardWeb/board.do
 		String uri = req.getRequestURI();
 		// System.out.println("요청 URI: " + uri); // /BoardWeb/board.do
+		// System.out.println("요청 URI: " + uri); // /BoardWeb/board.do
 		String context = req.getContextPath();
 		String page = uri.substring(context.length()); // "/board.do"
 //		System.out.println(page);
