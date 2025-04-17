@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gemdori.community.CommunityControl;
 import com.gemdori.main.MainControl;
 
 public class FrontController extends HttpServlet {
@@ -25,6 +26,7 @@ public class FrontController extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		map.put("/main.do", new MainControl());
+		map.put("/community.do", new CommunityControl());
 	}
 
 	// service.
@@ -40,5 +42,8 @@ public class FrontController extends HttpServlet {
 
 		Control sub = map.get(page); // 키(url) => control 반환.
 		sub.exec(req, resp);
+		System.out.println("요청 URI: " + uri);
+		System.out.println("매핑된 컨트롤러: " + sub.getClass().getName());
+
 	}
 }
