@@ -26,13 +26,14 @@ import com.gemdori.main.SearchGamesControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
+import com.gemdori.purchase.SuccessControl;
 
 
 public class FrontController extends HttpServlet {
-	// 요청url <=> 실행컨트롤.
+	// �슂泥춙rl <=> �떎�뻾而⑦듃濡�.
 	Map<String, Control> map;
 
-	// 생성자.
+	// �깮�꽦�옄.
 	public FrontController() {
 		map = new HashMap<String, Control>();
 	}
@@ -61,19 +62,19 @@ public class FrontController extends HttpServlet {
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
 		map.put("/searchGames.do", new SearchGamesControl());
-
+		map.put("/success.do", new SuccessControl());
 		map.put("/gameDetails.do", new GameDetailsControl());
-
 	}
 
 	// service.
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uri = req.getRequestURI();
+		// System.out.println("�슂泥� URI: " + uri); // /BoardWeb/board.do
 		String context = req.getContextPath();
 		String page = uri.substring(context.length()); 
 
-		Control sub = map.get(page); // 키(url) => control 반환.
+		Control sub = map.get(page); // �궎(url) => control 諛섑솚.
 		sub.exec(req, resp);
 	}
 }
