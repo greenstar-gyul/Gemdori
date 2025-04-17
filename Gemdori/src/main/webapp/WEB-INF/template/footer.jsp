@@ -16,7 +16,7 @@
             <div class="col-lg-6">
                 <div class="footer__nav">
                     <ul>
-                        <li class="active"><a href="./index.html">Home</a></li>
+                        <li class="active"><a href="main.do">Home</a></li>
                         <li><a href="./categories.html">Library</a></li>
                         <li><a href="./categories.html">Categories</a></li>
                         <li><a href="./blog.html">Community</a></li>
