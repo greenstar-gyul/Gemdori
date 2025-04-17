@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
 import com.gemdori.main.SearchGamesControl;
 import com.gemdori.purchase.CartPageControl;
@@ -35,6 +36,7 @@ public class FrontController extends HttpServlet {
 		map.put("/checkout.do", new CheckOutControl());
 		map.put("/searchGames.do", new SearchGamesControl());
 
+		map.put("/gameDetails.do", new GameDetailsControl());
 	}
 
 	// service.
