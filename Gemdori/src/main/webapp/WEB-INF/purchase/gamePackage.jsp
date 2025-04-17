@@ -740,7 +740,7 @@ $(document).ready(function() {
             type: 'POST',
             data: {
                 dlcId: dlcId,
-                userCode: '${sessionScope.user.userCode}'
+                userCode: selectedEdition.userCode
             },
             success: function(response) {
                 if (response.success) {

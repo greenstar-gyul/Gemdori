@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
-<header class="header">
+<header class="header" style="background: black">
         <div class="container">
 			<div class="row">
 				<div class="col-lg-2">
