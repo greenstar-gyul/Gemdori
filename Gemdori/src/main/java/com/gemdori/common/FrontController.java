@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gemdori.main.MainControl;
+import com.gemdori.main.SearchGamesControl;
+import com.gemdori.purchase.CartPageControl;
+import com.gemdori.purchase.CheckOutControl;
+import com.gemdori.purchase.GamePackageControl;
 
 public class FrontController extends HttpServlet {
 	// 요청url <=> 실행컨트롤.
@@ -25,9 +29,12 @@ public class FrontController extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		map.put("/main.do", new MainControl());
-//		map.put("/login.do", new LoginControl());
-//		map.put("/cartPage.do", new CartPageControl());
-//		map.put("/detail.do", new detailPageControl());
+
+		map.put("/gamePackage.do", new GamePackageControl());
+		map.put("/cartPage.do", new CartPageControl());
+		map.put("/checkout.do", new CheckOutControl());
+		map.put("/searchGames.do", new SearchGamesControl());
+
 	}
 
 	// service.
