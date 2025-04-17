@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
+
 import com.gemdori.member.CheckIdControl;
 import com.gemdori.member.FindPasswordFormControl;
 import com.gemdori.member.JoinControl;
@@ -19,6 +21,12 @@ import com.gemdori.member.LoginControl;
 import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.SendEmailControl;
 import com.gemdori.member.VerifyEmailCodeControl;
+
+import com.gemdori.main.SearchGamesControl;
+import com.gemdori.purchase.CartPageControl;
+import com.gemdori.purchase.CheckOutControl;
+import com.gemdori.purchase.GamePackageControl;
+
 
 public class FrontController extends HttpServlet {
 	// 요청url <=> 실행컨트롤.
@@ -33,6 +41,7 @@ public class FrontController extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		map.put("/main.do", new MainControl());
+
 		
 		// 회원 로그인 컨트롤
 		map.put("/loginForm.do", new LoginFormControl()); // 로그인 페이지 이동
@@ -46,6 +55,15 @@ public class FrontController extends HttpServlet {
 		map.put("/verifyEmailCode.do", new VerifyEmailCodeControl()); // 회원가입 - 이메일 인증코드 일치확인
 		
 		
+
+
+		map.put("/gamePackage.do", new GamePackageControl());
+		map.put("/cartPage.do", new CartPageControl());
+		map.put("/checkout.do", new CheckOutControl());
+		map.put("/searchGames.do", new SearchGamesControl());
+
+		map.put("/gameDetails.do", new GameDetailsControl());
+
 	}
 
 	// service.

@@ -1,4 +1,4 @@
-package com.gemdori.main;
+package com.gemdori.purchase;
 
 import java.io.IOException;
 
@@ -8,12 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gemdori.common.Control;
 
-public class MainControl implements Control {
-
+public class CheckOutControl implements Control {
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		req.getRequestDispatcher("main/main.tiles").forward(req, resp);
+		req.getRequestDispatcher("purchase/checkOut.tiles").forward(req, resp);
 	}
-
 }

@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class DataSource {
 	public static SqlSessionFactory getInstance() {
-		String resource = "com/gemdori/common/mybatis-config.xml";
+		String resource = "../resources/config/mybatis-config.xml";
 		InputStream inputStream = null;
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
@@ -20,3 +20,4 @@ public class DataSource {
 		return sqlSessionFactory;
 	}
 }
+

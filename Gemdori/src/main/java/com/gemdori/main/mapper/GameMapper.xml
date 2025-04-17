@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gemdori.main.mapper.GameMapper">
+
+    <!-- 1. 게임 코드로 게임 정보 가져오기 -->
+    <select id="getGameByCode" parameterType="string" resultType="GameVO">
+        SELECT * FROM gemdori_game_tbl WHERE game_code = #{gameCode}
+    </select>
+
+    <!-- 2. 전체 게임 목록 가져오기 -->
+    <select id="getAllGames" resultType="GameVO">
+        SELECT * FROM gemdori_game_tbl
+    </select>
+
+    <!-- 3. 장르별 게임 목록 가져오기 -->
+    <select id="getGamesByGenre" parameterType="string" resultType="GameVO">
+        SELECT * FROM gemdori_game_tbl
+        WHERE game_genre LIKE CONCAT('%', #{genre}, '%')
+    </select>
+
+    <!-- 4. 가격 범위로 게임 목록 가져오기 -->
+    <select id="getGamesByPriceRange" parameterType="map" resultType="GameVO">
+        SELECT * FROM gemdori_game_tbl
+        WHERE game_price BETWEEN #{min} AND #{max}
+    </select>
+
+    <!-- 5. 할인 중인 게임 목록 가져오기 -->
+    <select id="getDiscountedGames" resultType="GameVO">
+        SELECT * FROM gemdori_game_tbl
+        WHERE discount_per > 0
+    </select>
+
+    <!-- 6. 특정 게임의 DLC 목록 가져오기 -->
+    <select id="getDLCsByGame" parameterType="string" resultType="GameVO">
+        SELECT * FROM gemdori_game_tbl
+        WHERE dlc_game = 1 AND game_title = #{baseGameTitle}
+    </select>
+
+    <!-- 7. 게임 정보와 평점을 같이 가져오기 (추정 테이블 필요) -->
+    <select id="getGameWithRating" parameterType="string" resultType="GameVO">
+        SELECT g.*, r.avg_rating
+        FROM gemdori_game_tbl g
+        LEFT JOIN gemdori_rating_tbl r ON g.game_code = r.game_code
+        WHERE g.game_code = #{gameCode}
+    </select>
+
+    <!-- 8. 페이징 처리된 게임 목록 가져오기 -->
+    <select id="getPagedGames" parameterType="map" resultType="GameVO">
+        SELECT * FROM gemdori_game_tbl
+        ORDER BY publishing_date DESC
+        OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
+    </select>
+
+    <!-- 9. 게임 검색 -->
+    <select id="searchGames" parameterType="string" resultType="GameVO">
+        SELECT * FROM gemdori_game_tbl
+        WHERE game_title LIKE CONCAT('%', #{keyword}, '%')
+           OR game_genre LIKE CONCAT('%', #{keyword}, '%')
+           OR game_tag LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+
+</mapper>
