@@ -26,7 +26,6 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="stylesheet" href="css/gemdori/gameDetails.css" type="text/css">
     <style>
         .header {
             position: fixed;
@@ -35,7 +34,7 @@
             width: 100%;
             z-index: 1000;
             /* 다른 요소 위로 올라오도록 */
-            background-color: #121212;
+            background-color: #123458;
             /* 배경 지정 (투명하면 내용 겹침) */
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             /* 아래 그림자 효과 */
@@ -111,7 +110,6 @@
         .favorite__item p:hover {
             color: #e53637;
         }
-        
     </style>
 
 

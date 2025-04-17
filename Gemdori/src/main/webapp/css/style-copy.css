@@ -180,15 +180,13 @@ ol {
 	top: 3px;
 }
 
-.site-btn,
-.site-btn:link,
-.site-btn:visited  {
-	font-size: 18px;
+.site-btn {
+	font-size: 13px;
 	color: #ffffff;
 	background: #e53637;
 	font-weight: 700;
 	border: none;
-	border-radius: 5px !important;
+	border-radius: 2px;
 	letter-spacing: 2px;
 	text-transform: uppercase;
 	display: inline-block;
@@ -1753,14 +1751,18 @@ ol {
 }
 
 /* 이메일 인증 버튼 css */
+
+/* 인증 버튼 포함된 input 감싸는 영역 */
+/* 인증 버튼 포함된 input 박스 스타일 */
+
 /* input padding 오른쪽 추가 */
-.input__item-with-btn input {
+.input__item--with-btn input {
 	padding-left: 76px;
 	padding-right: 100px; /* 버튼 공간 확보 */
 }
 
 /* 버튼을 input 안 우측에 고정 */
-.input__item-with-btn .verify-btn {
+.input__item--with-btn .verify-btn {
 	position: absolute;
 	right: 10px;
 	/* top: 2px; */
@@ -1780,11 +1782,18 @@ ol {
 	background: #b0272b;
 }
 
+/* 공통 구조: select를 감싸는 div에 클래스 부여 */
+.select__item {
+	position: relative;
+	width: 500px;
+
+}
+
 
 /* 성별 선택 영역 배경도 정리 */
 .input__item select {
 	position: relative;
-	background: #b7b7b7;
+	background: #fff;
 	width: 370px;
 	margin-bottom: 20px;
 }
@@ -1804,26 +1813,12 @@ ol {
     height: 50px;
     width: 100%;
     font-size: 15px;
-    color: #000;
+    color: #b7b7b7;
     background: #ffffff;
     border: none;
     padding-left: 76px;
 }
 
-/* 아이콘 제거 */
-input[type="date"]::-webkit-calendar-picker-indicator {
-	opacity: 0;
-	position: absolute;
-	right: 0;
-	width: 100%;
-	height: 100%;
-	cursor: pointer;
-}
-
-/* input 클릭 시 포인터 설정 */
-input[type="date"] {
-	cursor: pointer;
-}
 /* ✅ placeholder 색상 통일 */
 .input__item input::placeholder,
 .input__item input::-webkit-input-placeholder,
@@ -1841,7 +1836,6 @@ input[type="date"] {
     left: 15px;
     top: 13px;
 }
-
 
 /* ✅ 버튼 */
 .login__form button {
@@ -1957,6 +1951,23 @@ input[type="date"] {
 .signup .login__form h5 a {
 	color: #e53637;
 	font-weight: 700;
+}
+
+.signup .login__social__links {
+	text-align: left;
+	padding-left: 40px;
+}
+
+.signup .login__social__links h3 {
+	color: #ffffff;
+	font-weight: 700;
+	font-family: "Oswald", sans-serif;
+	margin-bottom: 30px;
+}
+
+.signup .login__social__links ul li a {
+	margin: 0;
+	text-align: center;
 }
 
 /*---------------------
