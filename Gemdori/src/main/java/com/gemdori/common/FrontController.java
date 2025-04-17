@@ -29,10 +29,12 @@ public class FrontController extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		map.put("/main.do", new MainControl());
+
 		map.put("/gamePackage.do", new GamePackageControl());
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
 		map.put("/searchGames.do", new SearchGamesControl());
+
 	}
 
 	// service.

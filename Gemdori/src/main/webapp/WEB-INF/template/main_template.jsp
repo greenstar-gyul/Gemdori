@@ -35,7 +35,7 @@
             width: 100%;
             z-index: 1000;
             /* 다른 요소 위로 올라오도록 */
-            background-color: #123458;
+            background-color: #121212;
             /* 배경 지정 (투명하면 내용 겹침) */
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
             /* 아래 그림자 효과 */
