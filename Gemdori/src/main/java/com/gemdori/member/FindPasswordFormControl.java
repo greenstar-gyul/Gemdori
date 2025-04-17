@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gemdori.common.Control;
 
-public class findPasswordControl implements Control {
+public class FindPasswordFormControl implements Control {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

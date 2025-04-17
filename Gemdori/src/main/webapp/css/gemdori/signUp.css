@@ -260,3 +260,10 @@ input[type="date"] {
 .site-btn:hover {
     transform: scale(1.05);
 }
+
+.success-msg {
+	color: #e53637 !important;
+	margin-bottom: 10px !important;
+	font-weight: bold !important;
+	display: block !important;
+}

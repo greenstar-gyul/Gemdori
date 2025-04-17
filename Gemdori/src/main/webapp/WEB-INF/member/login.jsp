@@ -23,13 +23,13 @@
 			<div class="col-lg-6">
 				<div class="login__form">
 					<h3>로그인</h3>
-					<form action="#">
+					<form action="login.do" method="post">
 						<div class="input__item">
-							<input type="text" name="user_login_name" placeholder="아이디"
+							<input type="text" name="userName" placeholder="아이디"
 								required> <span class="icon_profile"></span>
 						</div>
 						<div class="input__item">
-							<input type="password" name="user_pw" placeholder="비밀번호" required>
+							<input type="password" name="userPw" placeholder="비밀번호" required>
 							<span class="icon_lock"></span>
 						</div>
 						<button type="submit" class="site-btn">로그인</button>
@@ -40,7 +40,7 @@
 			<div class="col-lg-6">
 				<div class="login__register">
 					<h3>아직 회원이 아니신가요?</h3>
-					<a href="signUp.do" class="site-btn">회원가입</a>
+					<a href="signForm.do" class="site-btn">회원가입</a>
 				</div>
 			</div>
 		</div>
