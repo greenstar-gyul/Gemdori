@@ -69,13 +69,9 @@ public class FrontController extends HttpServlet {
 	// service.
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// url vs. uri
-		// http://localhost:8080/BoardWeb/board.do
 		String uri = req.getRequestURI();
-		// System.out.println("요청 URI: " + uri); // /BoardWeb/board.do
 		String context = req.getContextPath();
-		String page = uri.substring(context.length()); // "/board.do"
-//		System.out.println(page);
+		String page = uri.substring(context.length()); 
 
 		Control sub = map.get(page); // 키(url) => control 반환.
 		sub.exec(req, resp);

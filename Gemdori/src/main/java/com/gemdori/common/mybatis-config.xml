@@ -3,18 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
+  <!-- 설정 영역 -->
 	<settings>
 		<setting name="mapUnderscoreToCamelCase" value="true" />
 		<setting name="jdbcTypeForNull" value="NULL" />
 	</settings>
 
+  <!-- VO 클래스에 대한 별칭 설정 -->
 	<typeAliases>
 		<typeAlias alias="userProfile" type="com.gemdori.member.vo.UserProfileVO" />
 		<typeAlias alias="userSign" type="com.gemdori.member.vo.UserSignVO" />
 		<typeAlias alias="userFullVO" type="com.gemdori.member.vo.UserFullVO" />
+    <typeAlias alias="game" type="com.gemdori.vo.GemdoriGameVO"/>
 	</typeAliases>
 
+  <!-- DB 환경 설정 -->
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
@@ -30,8 +33,10 @@
 		</environment>
 	</environments>
 
+  <!-- 매퍼 XML 파일 등록 -->
 	<mappers>
 		<mapper resource="com/gemdori/member/mapper/UserMapper.xml" />
+    <mapper resource="com/gemdori/mapper/GemdoriGameMapper.xml"/>
 	</mappers>
 
 </configuration>
