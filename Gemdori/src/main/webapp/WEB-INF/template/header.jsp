@@ -25,15 +25,15 @@
 						<nav class="header__menu mobile-menu">
 							<ul>
 								<li><a href="main.do">홈</a></li>
-								<li class="active"><a href="./categories.html">게임 카테고리
+								<li class="active"><a href="./searchGames.do?keyword=">게임 카테고리
 										<span class="arrow_carrot-down"></span>
 								</a>
 									<ul class="dropdown">
-										<li><a href="./categories.html">전체 게임</a></li>
-										<li><a href="./categories.html?genre=action">액션</a></li>
-										<li><a href="./categories.html?genre=rpg">RPG</a></li>
-										<li><a href="./categories.html?genre=strategy">전략</a></li>
-										<li><a href="./categories.html?genre=adventure">어드벤처</a></li>
+										<li><a href="./searchGames.do?keyword=">전체 게임</a></li>
+										<li><a href="./searchGames.do?keyword=&genre=action">액션</a></li>
+										<li><a href="./searchGames.do?keyword=&genre=rpg">RPG</a></li>
+										<li><a href="./searchGames.do?keyword=&genre=strategy">전략</a></li>
+										<li><a href="./searchGames.do?keyword=&genre=adventure">어드벤처</a></li>
 										<li><a href="./signup.html">회원가입</a></li>
 										<li><a href="./login.html">로그인</a></li>
 									</ul></li>
@@ -48,13 +48,13 @@
 						 <c:choose>
 					    <c:when test="${not empty sessionScope.loginUser}">
 					      <!-- 로그인된 상태: 마이페이지로 이동 -->
-					      <a href="${pageContext.request.contextPath}/user/mypage.do">
+					      <a href="${pageContext.request.contextPath}/mypage.do">
 					        <span class="icon_profile"></span>
 					      </a>
 					    </c:when>
 					    <c:otherwise>
 					      <!-- 비로그인 상태: 로그인 페이지로 이동 -->
-					      <a href="${pageContext.request.contextPath}/user/login.do">
+					      <a href="${pageContext.request.contextPath}/login.do">
 					        <span class="icon_profile"></span>
 					      </a>
 					    </c:otherwise>

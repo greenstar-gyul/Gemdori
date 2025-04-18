@@ -10,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.gemdori.common.Control;
 import com.gemdori.main.SearchDTO;
 import com.gemdori.main.PageDTO;
-import com.gemdori.service.GameService;
-import com.gemdori.service.GameServiceImpl;
-import com.gemdori.vo.GameVO;
+import com.gemdori.main.service.GameService;
+import com.gemdori.main.service.GameServiceImpl;
+import com.gemdori.main.vo.GameVO;
 
 /**
  * /searchGames.do

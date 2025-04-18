@@ -1,4 +1,4 @@
-package com.gemdori.service;
+package com.gemdori.main.service;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import com.gemdori.common.DataSource;
 import com.gemdori.main.SearchDTO;
 import com.gemdori.main.mapper.GameMapper;
-import com.gemdori.vo.GameVO;
+import com.gemdori.main.vo.GameVO;
 
 public class GameServiceImpl implements GameService {
 
@@ -33,5 +33,15 @@ public class GameServiceImpl implements GameService {
     public GameVO getGameByCode(String gameCode) {
         // TODO Auto-generated method stub
         return gameMapper.getGameByCode(gameCode);
+    }
+
+    @Override
+    public List<GameVO> getLatestGames() {
+        return gameMapper.getLatestGames();
+    }
+
+    @Override
+    public List<GameVO> getAllGames() {
+        return gameMapper.getAllGames();
     }
 } 

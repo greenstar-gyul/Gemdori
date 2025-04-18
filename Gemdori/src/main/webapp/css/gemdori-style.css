@@ -1155,7 +1155,7 @@ ol {
 	margin-bottom: 0;
 }
 
-.anime__details__form form textarea {
+.gemdori__details__form form textarea {
 	width: 100%;
 	font-size: 15px;
 	color: #b7b7b7;
@@ -1168,7 +1168,7 @@ ol {
 	margin-bottom: 24px;
 }
 
-.anime__details__form form button {
+.gemdori__details__form form button {
 	font-size: 11px;
 	color: #ffffff;
 	font-weight: 700;

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.gemdori.common.Control;
 import com.gemdori.purchase.service.GemdoriShoppingCartService;
 import com.gemdori.purchase.service.GemdoriShoppingCartServiceImpl;
-import com.gemdori.vo.GemdoriShoppingCartVO;
+import com.gemdori.purchase.vo.GemdoriShoppingCartVO;
 
 public class CartPageControl implements Control {
     

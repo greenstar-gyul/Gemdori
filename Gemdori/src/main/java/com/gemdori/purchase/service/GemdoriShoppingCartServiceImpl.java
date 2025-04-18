@@ -6,7 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import com.gemdori.common.DataSource;
 import com.gemdori.purchase.mapper.GemdoriShoppingCartMapper;
-import com.gemdori.vo.GemdoriShoppingCartVO;
+import com.gemdori.purchase.vo.GemdoriShoppingCartVO;
 
 import lombok.Data;
 
