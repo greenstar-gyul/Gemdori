@@ -5,7 +5,7 @@
 
 <mapper namespace="com.gemdori.mapper.GemdoriGameMapper">
 
-  <select id="selectAllGames" resultType="GemdoriGameVO">
+  <select id="selectAllGames" resultType="game">
     SELECT 
       game_code AS gameCode,
       game_title AS gameTitle,

@@ -5,21 +5,21 @@ import java.util.List;
 import com.gemdori.vo.GemdoriShoppingCartVO;
 
 public interface GemdoriShoppingCartMapper {
-	// »ç¿ëÀÚ º° Àå¹Ù±¸´Ï ¸ñ·Ï ÀüÃ¼ Á¶È¸
+	// ì‚¬ìš©ì ë³„ ì¥ë°”êµ¬ë‹ˆ ëª©ë¡ ì „ì²´ ì¡°íšŒ
 	List<GemdoriShoppingCartVO> SelectCartItemsByUser(String userCode);
 	
-	// Àå¹Ù±¸´Ï¿¡ ¾ÆÀÌÅÛ Ãß°¡ (¼º°ø½Ã 1 ¹İÈ¯)
+	// ì¥ë°”êµ¬ë‹ˆì— ì•„ì´í…œ ì¶”ê°€ (ì„±ê³µì‹œ 1 ë°˜í™˜)
 	int insertCartitem(GemdoriShoppingCartVO cartItem);
 	
-	// Àå¹Ù±¸´Ï¿¡ ¾ÆÀÌÅÛ »èÁ¦ (¼º°ø½Ã 1 ¹İÈ¯)
+	// ì¥ë°”êµ¬ë‹ˆì— ì•„ì´í…œ ì‚­ì œ (ì„±ê³µì‹œ 1 ë°˜í™˜)
 	int deleteCartItemByUserAndGame(String userCode, String gameCode);
 	
-	// Àå¹Ù±¸´Ï ´ã±ä ÃÑ·® Á¶È¸
+	// ì¥ë°”êµ¬ë‹ˆ ë‹´ê¸´ ì´ëŸ‰ ì¡°íšŒ
 	int selectCartItemCountByUser(String userCode);
 	
-	// »ç¿ëÀÚ Àå¹Ù±¸´Ï ºñ¿ì±â
+	// ì‚¬ìš©ì ì¥ë°”êµ¬ë‹ˆ ë¹„ìš°ê¸°
 	int clearCartByUser(String userCode);
 	
-	// Ãß°¡°¡´É -> Àå¹Ù±¸´Ï ³» °Ë»ö
+	// ì¶”ê°€ê°€ëŠ¥ -> ì¥ë°”êµ¬ë‹ˆ ë‚´ ê²€ìƒ‰
 	//GemdoriShoppingCartVO selectCartItemByUserAndGame(String userCode, String gameCode);
 }

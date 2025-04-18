@@ -11,10 +11,10 @@ public class GemdoriShoppingCartVO {
 	String gameCode;
 	Date cartDate;
 	
-	// °ÔÀÓ Á¤º¸ (º°µµ VO ºĞ¸®?)
+	// ê²Œì„ ì •ë³´ (ë³„ë„ VO ë¶„ë¦¬?)
     String gameTitle;
     Integer gamePrice;
     Integer gameSalePrice;
     String gameMainImage;
-    // ÇÊ¿ä¿¡ µû¶ó ´Ù¸¥ ÇÊµå Ãß°¡
+    // í•„ìš”ì— ë”°ë¼ ë‹¤ë¥¸ í•„ë“œ ì¶”ê°€
 }
