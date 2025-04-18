@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
@@ -31,20 +32,24 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="anime__details__text">
-                            <div class="anime__details__rating" style="display: block;">
-                                <p>${game.gameDesc}</p>
-                                <div class="rating">
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star"></i></a>
-                                    <a href="#"><i class="fa fa-star-half-o"></i></a>
-                                    <span>${game.avgRating} Votes</span>
-                                </div>
-                        </div>
-                        <div class="anime__details__btn" style="display: block;">
-                            <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i>add to cart</a>
-                            <a href="#" class="watch-btn"><span>Buy Now</span> <i class="fa fa-angle-right"></i></a>
+                        <div class="anime__details__rating">
+                            <div class="game-desc-contents">
+                                <h5>${game.gameTitle}</h5>
+                                <br>
+	                            <p>${game.gameDesc}</p>
+                            </div>
+                            <div class="rating">
+                                <a href="#"><i class="fa fa-star"></i></a>
+                                <a href="#"><i class="fa fa-star"></i></a>
+                                <a href="#"><i class="fa fa-star"></i></a>
+                                <a href="#"><i class="fa fa-star"></i></a>
+                                <a href="#"><i class="fa fa-star-half-o"></i></a>
+                                <span>${game.gameRating} Votes</span>
+                            </div>
+		                      <div class="anime__details__btn">
+		                          <a href="#" class="follow-btn"><i class="fa fa-heart-o"></i>add to cart</a>
+		                          <a href="#" class="watch-btn"><span>Buy Now</span> <i class="fa fa-angle-right"></i></a>
+		                      </div>
                         </div>
                     </div>
                 </div>
@@ -74,7 +79,7 @@
                                     <li><span>플랫폼</span><br> ${game.gameCategory}</li>
                                     <li><span>장르</span><br> ${game.gameGenre}</li>
                                     <li><span>언어</span><br> ${game.languageSup}</li>
-                                    <li><span>연령 제한</span><br> ${game.requiredAge}</li>
+                                    <li><span>연령 제한</span><br>${game.requiredAge == 0 ? '전체 이용가' : game.requiredAge}</li>
                                     <li><span>기본 게임</span><br> ${game.parentGame == null ? '원본 게임' : 'DLC (기반: ' + game.parentGame + ')'}</li>
                                 </ul>
                             </div>

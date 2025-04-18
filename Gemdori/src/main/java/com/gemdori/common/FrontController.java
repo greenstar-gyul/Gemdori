@@ -1,5 +1,5 @@
-package com.gemdori.common;
 
+package com.gemdori.common;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

@@ -8,6 +8,21 @@
     background-repeat: no-repeat; /* 반복 방지 */
 }
 
+.game-desc-contents {
+	height: 338.5px;	
+	text-align: left;
+}
+
+.game-desc-contents h5 {
+	font-size: 24px;
+	font-weight: 500;
+	color:#ffffff;
+}
+
+.game-desc-contents p {
+	color: #ffffff;
+}
+
 .contents-title h4, .contents-title h5 {
     color: #ffffff;
     font-weight: 600;
