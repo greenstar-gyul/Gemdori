@@ -23,13 +23,12 @@ import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LogoutControl;
 import com.gemdori.member.SendEmailControl;
 import com.gemdori.member.VerifyEmailCodeControl;
-import com.gemdori.member.joinControl;
-import com.gemdori.member.loginControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
 import com.gemdori.review.ReviewAddControl;
 import com.gemdori.purchase.SuccessControl;
+import com.gemdori.user.TempSessionControl;
 
 
 public class FrontController extends HttpServlet {
@@ -63,9 +62,6 @@ public class FrontController extends HttpServlet {
 		map.put("/sendEmailCode.do", new SendEmailControl()); // 회원가입 - 이메일 인증코드 보내기
 		map.put("/verifyEmailCode.do", new VerifyEmailCodeControl()); // 회원가입 - 이메일 인증코드 일치확인
 		
-		
-
-
 		map.put("/gamePackage.do", new GamePackageControl());
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
@@ -74,6 +70,8 @@ public class FrontController extends HttpServlet {
 		map.put("/gameDetails.do", new GameDetailsControl());
 		map.put("/reviewAdd.do", new ReviewAddControl());
 
+		
+		map.put("/tempSession.do", new TempSessionControl());
 	}
 
 	// service.

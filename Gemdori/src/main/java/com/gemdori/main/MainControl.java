@@ -11,9 +11,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.gemdori.common.Control;
+import com.gemdori.vo.GameVO;
 import com.gemdori.common.MybatisSessionFactory;
 import com.gemdori.main.mapper.GameMapper;
-import com.gemdori.vo.GameVO;
 
 public class MainControl implements Control {
 

@@ -58,6 +58,32 @@
         FROM gemdori_shopping_cart_tbl
         WHERE user_code = #{userCode}
     </select>
+    
+    <select id="selectCartTotalAmount" resultType="int" parameterType="String">
+    SELECT SUM(
+        CASE 
+            WHEN g.game_sale_price IS NOT NULL AND g.game_sale_price > 0 
+            THEN g.game_sale_price 
+            ELSE g.game_price 
+        END
+	    ) as total_amount
+	    FROM gemdori_shopping_cart_tbl sc
+	    JOIN gemdori_game_tbl g ON sc.game_code = g.game_code
+	    WHERE sc.user_code = #{userCode}
+	</select>
+
+	<select id="selectCartDiscountAmount" resultType="int" parameterType="String">
+	    SELECT SUM(
+	        CASE 
+	            WHEN g.game_sale_price IS NOT NULL AND g.game_sale_price > 0 
+	            THEN (g.game_price - g.game_sale_price)
+	            ELSE 0
+	        END
+	    ) as discount_amount
+	    FROM gemdori_shopping_cart_tbl sc
+	    JOIN gemdori_game_tbl g ON sc.game_code = g.game_code
+	    WHERE sc.user_code = #{userCode}
+	</select>
 
     <delete id="clearCartByUser" parameterType="String">
         DELETE FROM gemdori_shopping_cart_tbl
