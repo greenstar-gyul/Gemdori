@@ -1,21 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <!-- Hero Section Begin -->
 
 <section class="hero">
     <div class="container">
         <div class="hero__slider owl-carousel">
-            <c:forEach var="game" items="${gameList}">
+            <c:forEach var="game" items="${latestGameList}">
                 <div class="hero__items set-bg"
-                     data-setbg="${pageContext.request.contextPath}/resources/images/${game.gameMainImage}"
+                     data-setbg="${game.gameMainImage}"
                      style="height: 524.5px;">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="hero__text">
                                 <h2>${game.gameTitle}</h2>
-                                <p>${game.contents}</p>
+                                <p>${game.gameDesc}</p>
                                 <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
@@ -349,118 +350,28 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- 최근 게임 반복문 -->
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="img/recent/recent-1.jpg">
-                                    <div class="ep">18 / 18</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        <li>Management</li>
-                                        <li>Simulation</li>
-                                        <li>Building</li>
-                                        <li>Sandbox</li>
-                                    </ul>
-                                    <h5><a href="#">Planet Zoo: Americas Animal Pack</a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="img/recent/recent-2.jpg">
-                                    <div class="ep">18 / 18</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        <li>Singleplayer</li>
-                                        <li>Exploation</li>
-                                        <li>Co-op</li>
-                                        <li>Survival</li>
-                                        <li>3D</li>
-                                    </ul>
-                                    <h5><a href="#">Forever Skies</a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="img/recent/recent-3.jpg">
-                                    <div class="ep">18 / 18</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        <li>Simulation</li>
-                                        <li>RPG</li>
-                                        <li>Sandbox</li>
-                                        <li>Life Sim</li>
-                                        <li>3D</li>
-                                    </ul>
-                                    <h5><a href="#">Medieval Blacksmith</a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="img/recent/recent-4.jpg">
-                                    <div class="ep">18 / 18</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        <li>Nudity</li>
-                                        <li>RPG</li>
-                                        <li>Hentai</li>
-                                        <li>2D</li>
-                                    </ul>
-                                    <h5><a href="#">Exposed Livestream</a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="img/recent/recent-5.jpg">
-                                    <div class="ep">18 / 18</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        <li>Puzzle</li>
-                                        <li>First-Person</li>
-                                        <li>Philosophical</li>
-                                        <li>Adventure</li>
-                                    </ul>
-                                    <h5><a href="#">The Talos Principle: Reawakened</a></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 col-sm-6">
-                            <div class="product__item">
-                                <div class="product__item__pic set-bg" data-setbg="img/recent/recent-6.jpg">
-                                    <div class="ep">18 / 18</div>
-                                    <div class="comment"><i class="fa fa-comments"></i> 11</div>
-                                    <div class="view"><i class="fa fa-eye"></i> 9141</div>
-                                </div>
-                                <div class="product__item__text">
-                                    <ul>
-                                        <li>RPG</li>
-                                        <li>Open World Survival Craft</li>
-                                        <li>Survival</li>
-                                        <li>Indie</li>
-                                    </ul>
-                                    <h5><a href="#">Crashlands 2</a></h5>
-                                </div>
-                            </div>
-                        </div>
+                        <c:forEach var="game" items="${latestGameList}">
+						    <div class="col-lg-4 col-md-6 col-sm-6">
+						        <div class="product__item">
+						            <div class="product__item__pic set-bg" data-setbg="${game.gameMainImage}">
+						                <%-- 필요 없으면 ep/comment/view는 생략 가능 --%>
+						            </div>
+						            <div class="product__item__text">
+						                <ul>
+						                    <c:forEach var="genre" items="${fn:split(game.gameGenre, ',')}">
+						                        <li>${genre}</li>
+						                    </c:forEach>
+						                </ul>
+						                <h5><a href="#">${game.gameTitle}</a></h5>
+						            </div>
+						        </div>
+						    </div>
+						</c:forEach>
                     </div>
+                    
                 </div>
                 <div class="live__product">
                     <div class="row">

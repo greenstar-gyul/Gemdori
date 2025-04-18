@@ -495,7 +495,14 @@ ol {
 	-webkit-transition: all, 0.6s;
 	-o-transition: all, 0.6s;
 	transition: all, 0.6s;
+/* 	display: -webkit-box; */
+/* 	-webkit-line-clamp: 3; */
+/* 	line-clamp: 3; */
+/* 	-webkit-box-orient: vertical; */
+/* 	overflow: hidden; */
+/* 	text-overflow: ellipsis; */
 }
+
 
 .hero__text a {
 	position: relative;

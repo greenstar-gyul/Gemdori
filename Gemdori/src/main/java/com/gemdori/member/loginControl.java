@@ -12,7 +12,7 @@ import com.gemdori.member.service.UserService;
 import com.gemdori.member.service.UserServiceImpl;
 import com.gemdori.member.vo.UserFullVO;
 
-public class LoginControl implements Control {
+public class loginControl implements Control {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

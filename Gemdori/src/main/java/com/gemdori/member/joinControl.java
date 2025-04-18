@@ -14,7 +14,7 @@ import com.gemdori.member.service.UserServiceImpl;
 import com.gemdori.member.vo.UserProfileVO;
 import com.gemdori.member.vo.UserSignVO;
 
-public class JoinControl implements Control {
+public class joinControl implements Control {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
