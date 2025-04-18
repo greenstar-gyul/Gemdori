@@ -1,4 +1,4 @@
-package com.gemdori.vo;
+package com.gemdori.purchase.vo;
 
 import java.util.Date;
 

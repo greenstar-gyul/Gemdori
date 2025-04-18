@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.gemdori.common.Control;
 import com.gemdori.member.vo.UserProfileVO;
+import com.gemdori.review.vo.ReviewVO;
 
 
 public class ReviewAddControl implements Control {
@@ -35,7 +36,7 @@ public class ReviewAddControl implements Control {
 		ReviewVO reviewVO = new ReviewVO();
 		reviewVO.setGameCode(gameCode);
 		reviewVO.setUserCode(loginUser.getUserCode());
-		reviewVO.setRating(rating);
+		reviewVO.setRating((double) rating);
 		reviewVO.setReviewContents(reviewContents);
 		
 		

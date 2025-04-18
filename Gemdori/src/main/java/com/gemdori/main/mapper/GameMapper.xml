@@ -6,7 +6,7 @@
 <mapper namespace="com.gemdori.main.mapper.GameMapper">
 
   <!-- 검색 + 페이징 -->
-  <select id="searchGames" parameterType="map" resultType="com.gemdori.vo.GameVO">
+  <select id="searchGames" parameterType="map" resultType="com.gemdori.main.vo.GameVO">
     SELECT * FROM (
       SELECT inner_q.*, ROWNUM rnum
       FROM (
@@ -45,7 +45,7 @@
   <!-- 단건 조회 -->
   <select id="getGameByCode"
           parameterType="string"
-          resultType="com.gemdori.vo.GameVO">
+          resultType="com.gemdori.main.vo.GameVO">
     SELECT * FROM gemdori_game_tbl
      WHERE game_code = #{gameCode}
   </select>

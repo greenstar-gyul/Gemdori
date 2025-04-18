@@ -1,11 +1,12 @@
 package com.gemdori.main.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
 import com.gemdori.main.SearchDTO;
-import com.gemdori.vo.GameVO;
+import com.gemdori.main.vo.GameVO;
 
 public interface GameMapper {
 

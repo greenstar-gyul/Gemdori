@@ -15,7 +15,7 @@
 		<typeAlias alias="userSign" type="com.gemdori.member.vo.UserSignVO" />
 		<typeAlias alias="userSecurity" type="com.gemdori.member.vo.UserSecurityVO" />
 		<typeAlias alias="userFullVO" type="com.gemdori.member.vo.UserFullVO" />
-    <typeAlias alias="gameVO" type="com.gemdori.vo.GameVO"/>
+    <typeAlias alias="gameVO" type="com.gemdori.main.vo.GameVO"/>
 	</typeAliases>
 
   <!-- DB 환경 설정 -->

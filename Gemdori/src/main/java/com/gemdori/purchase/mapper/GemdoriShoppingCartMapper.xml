@@ -5,7 +5,7 @@
 
 <mapper namespace="com.gemdori.purchase.mapper.GemdoriShoppingCartMapper">
 
-    <resultMap id="cartItemDetailMap" type="com.gemdori.vo.GemdoriShoppingCartVO">
+    <resultMap id="cartItemDetailMap" type="com.gemdori.purchase.vo.GemdoriShoppingCartVO">
         <id property="cartCode" column="cart_code"/>
         <result property="userCode" column="user_code"/>
         <result property="gameCode" column="game_code"/>
@@ -36,7 +36,7 @@
             sc.cart_date DESC  /* 최근에 담은 순서로 정렬 (선택 사항) */
     </select>
 
-    <insert id="insertCartitem" parameterType="com.gemdori.vo.GemdoriShoppingCartVO">
+    <insert id="insertCartitem" parameterType="com.gemdori.purchase.vo.GemdoriShoppingCartVO">
         INSERT INTO gemdori_shopping_cart_tbl (
             cart_code,
             user_code,

@@ -10,7 +10,7 @@
   </settings>
 
   <typeAliases>
-    <typeAlias alias="game" type="com.gemdori.vo.GameVO"/>
+    <typeAlias alias="game" type="com.gemdori.main.vo.GameVO"/>
   </typeAliases>
 
   <environments default="development">

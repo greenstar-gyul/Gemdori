@@ -2,7 +2,7 @@ package com.gemdori.purchase.mapper;
 
 import java.util.List;
 
-import com.gemdori.vo.GemdoriShoppingCartVO;
+import com.gemdori.purchase.vo.GemdoriShoppingCartVO;
 
 public interface GemdoriShoppingCartMapper {
 	// 사용자 별 장바구니 목록 전체 조회

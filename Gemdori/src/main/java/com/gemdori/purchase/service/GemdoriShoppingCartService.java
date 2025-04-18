@@ -2,7 +2,7 @@ package com.gemdori.purchase.service;
 
 import java.util.List;
 
-import com.gemdori.vo.GemdoriShoppingCartVO;
+import com.gemdori.purchase.vo.GemdoriShoppingCartVO;
 
 public interface GemdoriShoppingCartService {
     // 사용자의 장바구니 목록 조회
