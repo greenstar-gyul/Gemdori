@@ -113,11 +113,43 @@
 }
 
 /* 결과 정렬 */
-.result-sorting {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+.result-options {
+	/*display: flex;*/
+	/*justify-content: space-between;*/
+	/*align-items: center;*/
+	/*margin-bottom: 20px;*/
+	gap: 16px;
 	margin-bottom: 20px;
+}
+
+.display-size-select, .result-options-select {
+	height: 30px;
+	background-color: RGBA(255, 255, 255, 0);
+	border: 0;
+	color: #ffffff;
+	text-align: center;
+	text-align-last: center;
+	display: flex;              /* flex 써서 세로 정렬까지 처리 */
+	align-items: center;        /* 세로 가운데 정렬 */
+	justify-content: center;    /* 가로 가운데 정렬 */
+	padding-left: 0;
+}
+
+.display-size-select .list, .result-options-select .list {
+	background-color: #082240;
+	border-radius: 5px;
+}
+
+.display-size-select .option, .result-options-select .option {
+	background-color: #082240;
+}
+
+.display-size-select .option:hover, .display-size-select .option.focus, .display-size-select .option.selected.focus {
+	background-color: #1c4678;
+}
+
+.result-options-select .option:hover, .result-options-select .option.focus, .result-options-select .option.selected.focus {
+	background-color: #1c4678;
 }
 
 .sort-options {
@@ -125,6 +157,12 @@
 	display: flex;
 	gap: 10px;
 	align-items: center;
+}
+
+.result-options label {
+	margin-right:10px;
+	margin-bottom: 0;
+	color: #c1c1c1;
 }
 
 .display-count {
@@ -149,14 +187,8 @@
 	color: white;
 }
 
-/* 그리드 뷰 스타일 */
-.grid-view {
-	display: block;
-}
-
-/* 리스트 뷰 스타일 */
 .list-view {
-	display: none;
+	display: block;
 }
 
 .list-item {
@@ -175,16 +207,18 @@
 
 .list-item-img {
 	width: 120px;
-	height: 150px;
+	/*height: 60px;*/
 	border-radius: 5px;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	margin-right: 20px;
+	text-align: center;
 }
 
 .list-item-img img {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: contain;
+	display: inline-block;
 }
 
 .list-item-details {
@@ -296,5 +330,9 @@
 }
 
 .search-result-summary h4 {
+	color: white;
+}
+
+.search-no-text, .search-no-text p {
 	color: white;
 }
