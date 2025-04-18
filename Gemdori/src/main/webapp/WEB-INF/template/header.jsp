@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page session="true" %>
+<%
+    com.gemdori.member.vo.UserFullVO loginUser = 
+        (com.gemdori.member.vo.UserFullVO) session.getAttribute("loginUser");
+
+    String userCode = loginUser != null ? loginUser.getUserCode() : "";
+    String userId = loginUser != null ? loginUser.getUserId() : "";
+    String userName = loginUser != null ? loginUser.getUserName() : "";
+    String email = loginUser != null ? loginUser.getUserEmail() : "";
+%>
 <header class="header" style="background: black">
   <div class="container">
 			<div class="row">
@@ -52,9 +62,24 @@
             <a href="#" class="search-switch"><span class="icon_search"></span></a>
             <a href="cartPage.do" style="position: relative;"><span class="icon_cart"></span>
             <span style="position: absolute; top: -8px; right: -8px; background-color: #e53637; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px;">2</span></a>
+					<c:if test="${not empty sessionScope.loginUser}">
+        				<a href="logout.do" title="로그아웃" style="margin-left: 10px;">
+            				임시 로그아웃
+						</a>
+    				</c:if>
 					</div>
 				</div>
 			</div>
 			<div id="mobile-menu-wrap"></div>
 		</div>
 </header>
+<script>
+    const loginUser = {
+        userCode: "<%= userCode %>",
+        userId: "<%= userId %>",
+        userName: "<%= userName %>",
+        userEmail: "<%= email %>"
+    };
+
+    console.log("🔐 로그인 유저 정보:", loginUser);
+</script>

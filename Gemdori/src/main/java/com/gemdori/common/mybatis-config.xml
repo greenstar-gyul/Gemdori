@@ -12,6 +12,7 @@
 	<typeAliases>
 		<typeAlias alias="userProfile" type="com.gemdori.member.vo.UserProfileVO" />
 		<typeAlias alias="userSign" type="com.gemdori.member.vo.UserSignVO" />
+		<typeAlias alias="userSecurity" type="com.gemdori.member.vo.UserSecurityVO" />
 		<typeAlias alias="userFullVO" type="com.gemdori.member.vo.UserFullVO" />
 	</typeAliases>
 
