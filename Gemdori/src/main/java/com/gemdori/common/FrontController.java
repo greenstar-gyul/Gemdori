@@ -1,5 +1,5 @@
-package com.gemdori.common;
 
+package com.gemdori.common;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +29,7 @@ import com.gemdori.main.SearchGamesControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
+import com.gemdori.purchase.SuccessControl;
 
 
 public class FrontController extends HttpServlet {
@@ -69,21 +70,18 @@ public class FrontController extends HttpServlet {
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
 		map.put("/searchGames.do", new SearchGamesControl());
-
+		map.put("/success.do", new SuccessControl());
 		map.put("/gameDetails.do", new GameDetailsControl());
-
 	}
 
 	// service.
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// url vs. uri
-		// http://localhost:8080/BoardWeb/board.do
 		String uri = req.getRequestURI();
 		// System.out.println("요청 URI: " + uri); // /BoardWeb/board.do
+		// System.out.println("요청 URI: " + uri); // /BoardWeb/board.do
 		String context = req.getContextPath();
-		String page = uri.substring(context.length()); // "/board.do"
-//		System.out.println(page);
+		String page = uri.substring(context.length()); 
 
 		Control sub = map.get(page); // 키(url) => control 반환.
 		sub.exec(req, resp);

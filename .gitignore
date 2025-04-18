@@ -6,7 +6,6 @@
 /.metadata/
 /Servers/
 /Gemdori/build/
-/Gemdori/target/
 /Gemdori/.settings/
 /Gemdori/.classpath
 /Gemdori/.project
@@ -14,5 +13,6 @@
 /Gemdori/git/
 /Gemdori/.gitignore
 /Gemdori/.factorypath
-
+/Gemdori/.idea/
+/.idea/
 

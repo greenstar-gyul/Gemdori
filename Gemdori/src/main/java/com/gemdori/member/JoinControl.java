@@ -20,7 +20,7 @@ public class JoinControl implements Control {
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/json;charset=utf-8");
-		// 1. 파라미터 수집
+		// 1. 파라미터 수집.
 		String userId = req.getParameter("userId");
 		String userPw = req.getParameter("userPw");
 		String userName = req.getParameter("userName");

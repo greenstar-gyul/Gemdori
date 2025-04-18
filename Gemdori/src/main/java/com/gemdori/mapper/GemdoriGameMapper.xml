@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gemdori.mapper.GemdoriGameMapper">
+
+  <select id="selectAllGames" resultType="game">
+    SELECT 
+      game_code AS gameCode,
+      game_title AS gameTitle,
+      contents,
+      game_publisher AS gamePublisher,
+      publishing_date AS publishingDate,
+      game_price AS gamePrice,
+      game_genre AS gameGenre,
+      game_category AS gameCategory,
+      game_tag AS gameTag,
+      game_main_image AS gameMainImage,
+      game_sys_req AS gameSysReq
+    FROM gemdori_game
+    ORDER BY publishing_date DESC
+  </select>
+
+</mapper>
+
+

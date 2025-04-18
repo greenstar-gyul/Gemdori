@@ -1,5 +1,28 @@
 @charset "UTF-8";
 
+.set-bg {
+    width: 100%;
+    /*height: 400px; !* 또는 원하는 높이 *!*/
+    background-size: contain;       /* 이미지 비율 유지하면서 채우기 */
+    background-position: center;  /* 중앙 정렬 */
+    background-repeat: no-repeat; /* 반복 방지 */
+}
+
+.game-desc-contents {
+	height: 338.5px;	
+	text-align: left;
+}
+
+.game-desc-contents h5 {
+	font-size: 24px;
+	font-weight: 500;
+	color:#ffffff;
+}
+
+.game-desc-contents p {
+	color: #ffffff;
+}
+
 .contents-title h4, .contents-title h5 {
     color: #ffffff;
     font-weight: 600;
@@ -42,7 +65,14 @@
     padding: 20px;
 }
 
+.contents-box p {
+    color: white;
+}
 
+.contents-box .bb_ul {
+    color: white;
+    padding-left: 20px;
+}
 
 .system-req {
     background: #1d1e39;
