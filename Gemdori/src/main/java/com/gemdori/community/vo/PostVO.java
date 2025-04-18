@@ -1,4 +1,4 @@
-package com.gemdori.community.model;
+package com.gemdori.community.vo;
 
 public class PostVO {
     private String category;

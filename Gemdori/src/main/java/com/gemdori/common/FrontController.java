@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gemdori.community.CommunityControl;
 import com.gemdori.community.PostControl;
+import com.gemdori.community.PostregistrationControl;
 import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
 import com.gemdori.main.SearchGamesControl;
@@ -30,7 +31,7 @@ import com.gemdori.purchase.SuccessControl;
 
 
 public class FrontController extends HttpServlet {
-	// 요청url <=> 실행컨트롤.
+	private static final long serialVersionUID = 1L;
 	Map<String, Control> map;
 
 	// 생성자.
@@ -65,6 +66,7 @@ public class FrontController extends HttpServlet {
 
 		map.put("/community.do", new CommunityControl());
 		map.put("/post.do", new PostControl());
+		map.put("/topicRegistration.do", new PostregistrationControl());
 		map.put("/success.do", new SuccessControl());
 		map.put("/gameDetails.do", new GameDetailsControl());
 	}

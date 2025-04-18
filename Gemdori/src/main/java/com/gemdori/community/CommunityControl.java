@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gemdori.common.Control;
-import com.gemdori.community.model.PostVO;
+import com.gemdori.community.vo.PostVO;
 
 public class CommunityControl implements Control {
 

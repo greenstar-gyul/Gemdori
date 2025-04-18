@@ -11,12 +11,12 @@
 
 <h2>글쓰기</h2>
 
-<form action="post.do" method="post">
+<form action="topicRegistration.do" method="post">
     <label>제목</label><br>
-    <input type="text" name="title" required style="width: 400px;"><br><br>
+    <input type="text" name="topicTitle" required style="width: 400px;"><br><br>
 
     <label>내용</label><br>
-    <textarea name="content" rows="10" cols="60" required></textarea><br><br>
+    <textarea name="topicContents" rows="10" cols="60" required></textarea><br><br>
 
     <button type="submit">저장</button>
 
