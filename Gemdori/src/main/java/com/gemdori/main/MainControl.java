@@ -21,10 +21,18 @@ public class MainControl implements Control {
     public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         SqlSessionFactory factory = MybatisSessionFactory.getInstance();
         try (SqlSession session = factory.openSession(true)) {
-            GameMapper mapper = session.getMapper(GameMapper.class);
-            List<GameVO> gameList = mapper.getAllGames();
+        	// 최근 게임
+        	GameMapper mapper = session.getMapper(GameMapper.class);
+            List<GameVO> latestGameList = mapper.getLatestGames();            
+            req.setAttribute("latestGameList", latestGameList);
             
+        	// 인기 게임
+        	
+        	// 모든 게임 리스트
+            List<GameVO> gameList = mapper.getAllGames();            
             req.setAttribute("gameList", gameList);
+        } catch (Exception e) {
+        	e.printStackTrace();
         }
 
         req.getRequestDispatcher("main/main.tiles").forward(req, resp);

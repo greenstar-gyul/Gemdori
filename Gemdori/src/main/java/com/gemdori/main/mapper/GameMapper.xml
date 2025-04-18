@@ -5,16 +5,50 @@
 
 <mapper namespace="com.gemdori.main.mapper.GameMapper">
 
-    <!-- 1. 게임 코드로 게임 정보 가져오기 -->
-    <select id="getGameByCode" parameterType="string" resultType="GameVO">
-        SELECT * FROM gemdori_game_tbl WHERE game_code = #{gameCode}
-    </select>
+  <!-- 검색 + 페이징 -->
+  <select id="searchGames" parameterType="map" resultType="com.gemdori.vo.GameVO">
+    SELECT * FROM (
+      SELECT inner_q.*, ROWNUM rnum
+      FROM (
+        SELECT * 
+          FROM gemdori_game_tbl
+         WHERE 1=1
+           <if test="dto.keyword != null and dto.keyword != ''">
+             AND game_title LIKE '%' || #{dto.keyword} || '%'
+           </if>
+           <if test="dto.genres != null and dto.genres != ''">
+             AND game_genre = #{dto.genres}
+           </if>
+           <!-- …추가 필터… -->
+         ORDER BY publishing_date DESC
+      ) inner_q
+      WHERE ROWNUM &lt;= #{offset} + #{limit}
+    )
+    WHERE rnum &gt; #{offset}
+  </select>
 
-    <!-- 2. 전체 게임 목록 가져오기 -->
-    <select id="getAllGames" resultType="GameVO">
-        SELECT * FROM gemdori_game_tbl
-    </select>
+  <!-- 전체 개수 -->
+  <select id="countSearchGames"
+          parameterType="com.gemdori.main.SearchDTO"
+          resultType="int">
+    SELECT COUNT(*) FROM gemdori_game_tbl
+     WHERE 1=1
+       <if test="keyword != null and keyword != ''">
+         AND game_title LIKE '%' || #{keyword} || '%'
+       </if>
+       <if test="genres != null and genres != ''">
+         AND game_genre = #{genres}
+       </if>
+       <!-- …추가 필터… -->
+  </select>
 
+  <!-- 단건 조회 -->
+  <select id="getGameByCode"
+          parameterType="string"
+          resultType="com.gemdori.vo.GameVO">
+    SELECT * FROM gemdori_game_tbl
+     WHERE game_code = #{gameCode}
+  </select>
     <!-- 3. 장르별 게임 목록 가져오기 -->
     <select id="getGamesByGenre" parameterType="string" resultType="GameVO">
         SELECT * FROM gemdori_game_tbl
@@ -60,6 +94,15 @@
         WHERE game_title LIKE CONCAT('%', #{keyword}, '%')
            OR game_genre LIKE CONCAT('%', #{keyword}, '%')
            OR game_tag LIKE CONCAT('%', #{keyword}, '%')
+    </select>
+    
+    <!-- 10. 최신 게임 6개 가져오기 -->
+    <select id="getLatestGames" resultType="GameVO">
+	    SELECT * FROM (
+	    SELECT * FROM gemdori_game_tbl
+	    WHERE PUBLISHING_DATE IS NOT NULL
+	    ORDER BY PUBLISHING_DATE DESC
+	) WHERE ROWNUM <![CDATA[ <= ]]> 6
     </select>
 
 </mapper>

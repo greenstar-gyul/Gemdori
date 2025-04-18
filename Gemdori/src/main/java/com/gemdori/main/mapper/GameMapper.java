@@ -1,14 +1,18 @@
 package com.gemdori.main.mapper;
 
 import java.util.List;
-import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.gemdori.main.SearchDTO;
 import com.gemdori.vo.GameVO;
 
 public interface GameMapper {
 
+    List<GameVO> searchGames(@Param("dto") SearchDTO dto, @Param("offset") int offset, @Param("limit")  int limit);
+    int          countSearchGames(SearchDTO dto);
+    GameVO       getGameByCode(String gameCode);
     // 1. 게임 코드로 게임 정보 가져오기
-    GameVO getGameByCode(String gameCode);
 
     // 2. 전체 게임 목록 가져오기
     List<GameVO> getAllGames();
@@ -33,4 +37,7 @@ public interface GameMapper {
 
     // 9. 게임 검색하기
     List<GameVO> searchGames(String keyword);
+    
+    // 10. 최신 게임 6개 가져오기
+    List<GameVO> getLatestGames();
 } 

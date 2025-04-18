@@ -21,7 +21,7 @@ public class GameDetailsControl implements Control {
         GameService service = new GameServiceImpl();
         GameVO game = service.getGameByCode(gameCode);
 
-        req.setAttribute("game", game);
+         req.setAttribute("game", game);
         req.getRequestDispatcher("main/gameDetails.tiles").forward(req, resp);
 	}
 

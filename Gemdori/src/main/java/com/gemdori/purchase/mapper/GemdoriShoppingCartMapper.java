@@ -6,6 +6,7 @@ import com.gemdori.vo.GemdoriShoppingCartVO;
 
 public interface GemdoriShoppingCartMapper {
 	// 사용자 별 장바구니 목록 전체 조회
+	// 사용자 별 장바구니 목록 전체 조회
 	List<GemdoriShoppingCartVO> SelectCartItemsByUser(String userCode);
 
 	// 장바구니에 아이템 추가 (성공시 1 반환)
