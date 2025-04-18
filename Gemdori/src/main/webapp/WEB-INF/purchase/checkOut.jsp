@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>결제하기</title>
+    <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- 토스페이먼츠 SDK 추가 -->
+    <script src="https://js.tosspayments.com/v2/standard"></script>
 <style>
 .header {
 	position: fixed;
@@ -244,6 +255,8 @@ body {
 	color: #e53637;
 }
 </style>
+</head>
+<body style="background-color: #0b0c2a;">
 
 <!-- Page Preloder -->
 <div id="preloder">
@@ -271,7 +284,7 @@ body {
 		<div class="row">
 			<div class="col-lg-12">
 				<div class="section-title">
-					<h4>결제하기</h4>
+					<h4 style="color: white;">결제하기</h4>
 				</div>
 			</div>
 		</div>
@@ -291,48 +304,16 @@ body {
 					</div>
 				</div>
 
-				<!-- 결제 수단 -->
+				<!-- 주문자 정보 -->
 				<div class="checkout-form">
-					<h3>결제 수단 선택</h3>
+					<h3>주문자 정보</h3>
 					<div class="form-group">
-						<div class="radio-group">
-							<label class="radio-item active"> <input type="radio"
-								name="payment-method" value="card" checked> 신용카드 / 체크카드
-							</label> <label class="radio-item"> <input type="radio"
-								name="payment-method" value="virtual-account"> 가상계좌
-							</label> <label class="radio-item"> <input type="radio"
-								name="payment-method" value="phone"> 휴대폰 결제
-							</label> <label class="radio-item"> <input type="radio"
-								name="payment-method" value="kakao-pay"> 카카오페이
-							</label>
-						</div>
+						<label for="customer-name">이름</label> 
+						<input type="text" id="customer-name" class="form-control" placeholder="주문자 이름">
 					</div>
-
-					<!-- 신용카드 입력 폼 -->
-					<div id="card-payment-form">
-						<div class="form-group">
-							<label for="card-holder">카드 소유자 이름</label> <input type="text"
-								id="card-holder" class="form-control" placeholder="카드에 표시된 이름">
-						</div>
-						<div class="form-group">
-							<label for="card-number">카드 번호</label> <input type="text"
-								id="card-number" class="form-control"
-								placeholder="0000 0000 0000 0000">
-						</div>
-						<div class="form-group expiry-cvv">
-							<div>
-								<label for="expiry-date">만료일</label> <input type="text"
-									id="expiry-date" class="form-control" placeholder="MM / YY">
-							</div>
-							<div>
-								<label for="cvv">CVV</label> <input type="text" id="cvv"
-									class="form-control" placeholder="123">
-							</div>
-						</div>
-						<div class="payment-method-icons">
-							<i class="fa fa-cc-visa"></i> <i class="fa fa-cc-mastercard"></i>
-							<i class="fa fa-cc-amex"></i> <i class="fa fa-credit-card"></i>
-						</div>
+					<div class="form-group">
+						<label for="customer-mobile">전화번호</label> 
+						<input type="text" id="customer-mobile" class="form-control" placeholder="010-0000-0000">
 					</div>
 				</div>
 
@@ -415,7 +396,7 @@ body {
 						<span>총 결제 금액</span> <span style="color: #e53637;">106,000원</span>
 					</div>
 
-					<button type="submit" class="complete-payment-btn">결제 완료하기</button>
+					<button type="button" id="payment-button" class="complete-payment-btn">결제 완료하기</button>
 				</div>
 			</div>
 		</div>
@@ -437,44 +418,110 @@ body {
 <!-- Search model end -->
 
 <!-- Js Plugins -->
-<script src="js/jquery-3.3.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/player.js"></script>
-<script src="js/jquery.nice-select.min.js"></script>
-<script src="js/mixitup.min.js"></script>
-<script src="js/jquery.slicknav.js"></script>
-<script src="js/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-	$(document).ready(
-			function() {
-				// 결제 방법 라디오 버튼 처리
-				$('.radio-item').on(
-						'click',
-						function() {
-							$('.radio-item').removeClass('active');
-							$(this).addClass('active');
-							$(this).find('input[type="radio"]').prop('checked',
-									true);
+    // 현재 URL 가져오기 (context path 포함)
+    let currentURL = window.location.origin + window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
 
-							// 여기에 결제 방법에 따른 폼 표시/숨김 로직 추가
-							var paymentMethod = $(
-									'input[name="payment-method"]:checked')
-									.val();
-							if (paymentMethod === 'card') {
-								$('#card-payment-form').show();
-							} else {
-								$('#card-payment-form').hide();
-							}
-						});
+    // 결제 정보 설정
+    const amount = {
+        value: 100, // 총 결제 금액 (원 단위)
+        currency: "KRW" // 통화
+    };
 
-				// 결제 완료 버튼 클릭 처리
-				$('.complete-payment-btn').on('click', function(e) {
-					e.preventDefault();
-					// 여기에 결제 처리 로직 추가 (JSP로 구현 예정)
-					alert('결제가 완료되었습니다!');
-					window.location.href = 'cartPage.do';
-				});
-			});
+    // 고유한 주문번호 생성 함수
+    function generateOrderId() {
+        return 'order_' + new Date().getTime() + '_' + Math.floor(Math.random() * 1000);
+    }
+
+    // 결제 초기화 (토스페이먼츠 SDK)
+    const clientKey = "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq"; // 테스트용 클라이언트 키
+    const customerKey = 'CUSTOMER_' + new Date().getTime(); // 고객 고유 번호
+    const tossPayments = TossPayments(clientKey);
+    // payment 객체 초기화
+    const payment = tossPayments.payment({
+        customerKey: customerKey
+    });
+
+    $(document).ready(function() {
+        // 페이지 로드 시 초기화 코드
+        $(document).ready(function() {
+            // 여기에 필요한 초기화 코드 추가
+        });
+
+        // 결제 버튼 클릭 시 처리
+        $('#payment-button').on('click', function(e) {
+            e.preventDefault();
+            
+            // 폼 유효성 검사
+            if (!validateForm()) {
+                return;
+            }
+
+            // 고객 정보 가져오기
+            const customerName = $('#customer-name').val();
+            const customerEmail = $('#email').val();
+            const customerMobilePhone = $('#customer-mobile').val();
+            const orderId = generateOrderId();
+            
+            // 결제 요청 - 기본 결제 수단을 CARD로 설정
+            payment.requestPayment({
+                method: "CARD", // 기본 결제 수단
+                amount: amount, // 결제 금액 객체
+                orderId: orderId, // 주문 ID
+                orderName: "게임 디지털 제품 구매", // 주문명
+                customerName: customerName, // 고객명
+                customerEmail: customerEmail, // 고객 이메일
+                customerMobilePhone: customerMobilePhone, // 고객 전화번호
+                // 절대 경로로 success.jsp와 fail.jsp 경로 설정
+                successUrl: window.location.origin + "/Gemdori/success.do", // 결제 성공 시 리다이렉트 URL
+                failUrl: window.location.origin + "/Gemdori/fail.jsp", // 결제 실패 시 리다이렉트 URL
+            })
+            .catch(function(error) {
+                // 에러 처리
+                console.error("결제 요청 에러:", error);
+                if (error.code === "USER_CANCEL") {
+                    alert("결제가 취소되었습니다.");
+                } else {
+                    alert("결제 중 오류가 발생했습니다: " + error.message);
+                }
+            });
+        });
+
+        // 폼 유효성 검사 함수
+        function validateForm() {
+            const email = $('#email').val();
+            const confirmEmail = $('#confirm-email').val();
+            const customerName = $('#customer-name').val();
+            
+            if (!email) {
+                alert("이메일 주소를 입력해주세요.");
+                $('#email').focus();
+                return false;
+            }
+            
+            if (email !== confirmEmail) {
+                alert("이메일 주소가 일치하지 않습니다.");
+                $('#confirm-email').focus();
+                return false;
+            }
+            
+            if (!customerName) {
+                alert("이름을 입력해주세요.");
+                $('#customer-name').focus();
+                return false;
+            }
+            
+            if (!$('#terms-agree').is(':checked')) {
+                alert("개인정보 수집 및 이용에 동의해주세요.");
+                return false;
+            }
+            
+            return true;
+        }
+    });
 </script>
+</body>
+</html>

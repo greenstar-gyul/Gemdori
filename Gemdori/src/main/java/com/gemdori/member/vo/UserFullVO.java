@@ -2,6 +2,9 @@ package com.gemdori.member.vo;
 
 import java.util.Date;
 
+import lombok.Data;
+
+@Data
 public class UserFullVO {
 	// 유저 로그인 정보
 	private String userCode;
@@ -19,4 +22,10 @@ public class UserFullVO {
     private String userGender;
     private String userIntro;
     private String userImage;
+    
+    // 유저 보안 정보
+	private int loginFailCount;
+	private Date lastLoginDate;
+	private int isLocked;
+	private Date updateTime;
 }

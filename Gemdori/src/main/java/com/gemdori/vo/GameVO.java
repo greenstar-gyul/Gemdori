@@ -31,7 +31,7 @@ public class GameVO {
     private int dlcGame;
 
     // 평점 컬럼 (7번 기능에서 사용)
-    private Double avgRating;
+    private Double gameRating;
 
     // DLC 게임일 경우, 원본 게임 코드 (원본 게임은 NULL)
     private String parentGame;

@@ -22,7 +22,7 @@ public class SendEmailControl implements Control {
         HttpSession session = req.getSession();
         session.setAttribute("verifyCode", code);  // code는 전송된 인증번호 문자열
         
-        System.out.println("[인증 코드] " + code);
+        System.out.println("[회원가입 인증 코드] " + code);
         // 3. 이메일 전송
         MailSender.sendMail(email, code); // 메일 전송 로직 호출
         // 4. 응답
