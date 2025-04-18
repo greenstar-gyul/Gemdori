@@ -17,9 +17,6 @@ public class VerifyEmailCodeControl implements Control {
         resp.setContentType("application/json;charset=utf-8");
 
         String userInputCode = req.getParameter("code");
-        if (userInputCode != null) {
-            userInputCode = userInputCode.trim();
-        }
         HttpSession session = req.getSession();
         String sessionCode = (String) session.getAttribute("verifyCode");
         

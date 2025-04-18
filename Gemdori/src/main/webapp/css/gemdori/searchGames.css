@@ -1,0 +1,300 @@
+@charset "UTF-8";
+/* 검색 영역 스타일 */
+.search-container {
+	background-color: #0b0c2a;
+	padding: 40px 0;
+	margin-top: 30px;
+	border-radius: 5px;
+}
+
+.search-box {
+	background-color: #1d1e39;
+	padding: 30px;
+	border-radius: 5px;
+	margin-bottom: 30px;
+}
+
+.search-form {
+	display: flex;
+	gap: 15px;
+}
+
+.search-input {
+	flex-grow: 1;
+	padding: 15px 20px;
+	border: none;
+	background-color: #151522;
+	color: #fff;
+	border-radius: 5px;
+	font-size: 16px;
+}
+
+.search-btn {
+	background-color: #e53637;
+	color: white;
+	border: none;
+	padding: 0 25px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-weight: 600;
+	transition: all 0.3s;
+}
+
+.search-btn:hover {
+	background-color: #ff4a4a;
+}
+
+.search-filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 20px;
+}
+
+.filter-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+	margin-bottom: 10px;
+}
+
+.filter-item label {
+	color: #b7b7b7;
+	font-size: 14px;
+	margin-right: 5px;
+}
+
+.filter-select {
+	background-color: rgb(233, 233, 241);
+	color: #000;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	padding: 8px 15px;
+	border-radius: 5px;
+}
+
+.nice-select.filter-select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 42px;
+  padding: 0 25px 0 15px; /* 좌우 여백 조절 */
+  box-sizing: border-box;
+}
+
+.nice-select.filter-select .current {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+
+
+/* 뷰 전환 버튼 */
+.view-switch {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.view-btn {
+	background-color: #1d1e39;
+	border: none;
+	padding: 8px 15px;
+	border-radius: 5px;
+	color: #b7b7b7;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+
+.view-btn.active {
+	background-color: #e53637;
+	color: white;
+}
+
+/* 결과 정렬 */
+.result-sorting {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 20px;
+}
+
+.sort-options {
+	color: black;
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.display-count {
+	display: flex;
+	gap: 10px;
+	align-items: center;
+}
+
+.count-btn {
+	background-color: #1d1e39;
+	border: none;
+	padding: 5px 10px;
+	border-radius: 5px;
+	color: #b7b7b7;
+	cursor: pointer;
+	transition: all 0.3s;
+	font-size: 13px;
+}
+
+.count-btn.active {
+	background-color: #e53637;
+	color: white;
+}
+
+/* 그리드 뷰 스타일 */
+.grid-view {
+	display: block;
+}
+
+/* 리스트 뷰 스타일 */
+.list-view {
+	display: none;
+}
+
+.list-item {
+	display: flex;
+	background-color: #1d1e39;
+	border-radius: 5px;
+	padding: 15px;
+	margin-bottom: 15px;
+	transition: all 0.3s;
+}
+
+.list-item:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.list-item-img {
+	width: 120px;
+	height: 150px;
+	border-radius: 5px;
+	overflow: hidden;
+	margin-right: 20px;
+}
+
+.list-item-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.list-item-details {
+	flex-grow: 1;
+}
+
+.list-item-title {
+	color: #ffffff;
+	font-size: 18px;
+	margin-bottom: 5px;
+}
+
+.list-item-info {
+	margin-bottom: 10px;
+	color: #b7b7b7;
+}
+
+.list-item-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 15px;
+}
+
+.tag {
+	background: rgba(255, 255, 255, 0.1);
+	color: #b7b7b7;
+	padding: 3px 8px;
+	border-radius: 20px;
+	font-size: 12px;
+}
+
+.list-item-stats {
+	display: flex;
+	gap: 15px;
+	color: #b7b7b7;
+	font-size: 13px;
+}
+
+.list-item-stat {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.list-item-price {
+	font-size: 18px;
+	font-weight: 600;
+	color: #e53637;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 10px;
+}
+
+/* 페이지네이션 */
+.pagination {
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
+	gap: 5px;
+}
+
+.pagination-item {
+	width: 36px;
+	height: 36px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #1d1e39;
+	color: #b7b7b7;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.3s;
+}
+
+.pagination-item.active {
+	background-color: #e53637;
+	color: white;
+}
+
+.pagination-item:hover:not(.active) {
+	background-color: #151522;
+}
+
+.pagination-arrow {
+	font-size: 14px;
+}
+
+/* 추가 스타일 - 여백 조절 */
+.top-spacing {
+	margin-top: 80px;
+}
+
+.no-results {
+	text-align: center;
+	padding: 50px 20px;
+	color: #b7b7b7;
+}
+
+.no-results i {
+	font-size: 48px;
+	color: #e53637;
+	margin-bottom: 20px;
+}
+
+.no-results h4 {
+	margin-bottom: 15px;
+	color: white;
+}
+
+.search-result-summary h4 {
+	color: white;
+}

@@ -5,6 +5,7 @@
 
 <!-- Hero Section Begin -->
 
+
 <section class="hero">
     <div class="container">
         <div class="hero__slider owl-carousel">
@@ -19,9 +20,21 @@
                                 <p>${game.gameDesc}</p>
                                 <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
                             </div>
+            <c:forEach var="game" items="${gameList}">
+                <div class="hero__items set-bg"
+                     data-setbg="${pageContext.request.contextPath}/resources/images/${game.gameMainImage}"
+                     style="height: 524.5px;">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="hero__text">
+                                <h2>${game.gameTitle}</h2>
+                                <p>${game.contents}</p>
+                                <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </c:forEach>
             </c:forEach>
         </div>
     </div>
@@ -44,7 +57,7 @@
                             <h5>Categories</h5>
                         </div>
                         <ul class="category__list">
-                            <li><a href="./categories.html?genre=action">Action</a></li>
+                            <li><a href="./categories.html?genre=action">Action!</a></li>
                             <li><a href="./categories.html?genre=fantasy">Fantasy</a></li>
                             <li><a href="./categories.html?genre=romance">Romance</a></li>
                             <li><a href="./categories.html?genre=adventure">Adventure</a></li>
@@ -492,4 +505,3 @@
     </div>
 </section>
 <!-- Product Section End -->
-

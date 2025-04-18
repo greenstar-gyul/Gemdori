@@ -1,5 +1,5 @@
-package com.gemdori.common;
 
+package com.gemdori.common;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +14,13 @@ import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
 import com.gemdori.main.SearchGamesControl;
 import com.gemdori.member.CheckIdControl;
+import com.gemdori.member.CheckIdExistsControl;
 import com.gemdori.member.FindPasswordFormControl;
+import com.gemdori.member.GenerateTempPasswordControl;
+import com.gemdori.member.JoinControl;
 import com.gemdori.member.JoinFormControl;
 import com.gemdori.member.LoginFormControl;
+import com.gemdori.member.LogoutControl;
 import com.gemdori.member.SendEmailControl;
 import com.gemdori.member.VerifyEmailCodeControl;
 import com.gemdori.member.joinControl;
@@ -25,6 +29,7 @@ import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
 import com.gemdori.review.ReviewAddControl;
+import com.gemdori.purchase.SuccessControl;
 
 
 public class FrontController extends HttpServlet {
@@ -39,13 +44,18 @@ public class FrontController extends HttpServlet {
 	// init
 	@Override
 	public void init(ServletConfig config) throws ServletException {
+		
 		map.put("/main.do", new MainControl());
 
 		
 		// 회원 로그인 컨트롤
 		map.put("/loginForm.do", new LoginFormControl()); // 로그인 페이지 이동
-		map.put("/login.do", new loginControl()); // 로그인
+		map.put("/login.do", new LoginControl()); // 로그인
+		map.put("/logout.do", new LogoutControl()); // 로그아웃
+		// 회원 비밀번호 찾기
 		map.put("/findPassword.do", new FindPasswordFormControl()); // 비밀번호 찾기 페이지 이동
+		map.put("/findUserIdCheck.do", new CheckIdExistsControl()); // 아이디 존재 확인 후 이메일 인증 코드 전송
+		map.put("/recombinationPw.do", new GenerateTempPasswordControl()); // 이메일 인증 완료 후 비밀번호 재조합
 		// 회원가입 컨트롤
 		map.put("/signForm.do", new JoinFormControl()); // 회원가입 페이지 이동
 		map.put("/signUp.do", new joinControl()); // 회원등록
@@ -60,7 +70,7 @@ public class FrontController extends HttpServlet {
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
 		map.put("/searchGames.do", new SearchGamesControl());
-
+		map.put("/success.do", new SuccessControl());
 		map.put("/gameDetails.do", new GameDetailsControl());
 		map.put("/reviewAdd.do", new ReviewAddControl());
 
@@ -70,6 +80,8 @@ public class FrontController extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String uri = req.getRequestURI();
+		// System.out.println("요청 URI: " + uri); // /BoardWeb/board.do
+		// System.out.println("요청 URI: " + uri); // /BoardWeb/board.do
 		String context = req.getContextPath();
 		String page = uri.substring(context.length()); 
 
