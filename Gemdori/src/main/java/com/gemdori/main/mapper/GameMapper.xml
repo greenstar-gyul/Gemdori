@@ -6,7 +6,7 @@
 <mapper namespace="com.gemdori.main.mapper.GameMapper">
 
   <!-- 검색 + 페이징 -->
-  <select id="searchGames" parameterType="map" resultType="com.gemdori.main.vo.GameVO">
+  <select id="searchGames" parameterType="map" resultType="gameVO">
     SELECT * FROM (
       SELECT inner_q.*, ROWNUM rnum
       FROM (
@@ -45,36 +45,36 @@
   <!-- 단건 조회 -->
   <select id="getGameByCode"
           parameterType="string"
-          resultType="com.gemdori.main.vo.GameVO">
+          resultType="gameVO">
     SELECT * FROM gemdori_game_tbl
      WHERE game_code = #{gameCode}
   </select>
     <!-- 3. 장르별 게임 목록 가져오기 -->
-    <select id="getGamesByGenre" parameterType="string" resultType="GameVO">
+    <select id="getGamesByGenre" parameterType="string" resultType="gameVO">
         SELECT * FROM gemdori_game_tbl
         WHERE game_genre LIKE CONCAT('%', #{genre}, '%')
     </select>
 
     <!-- 4. 가격 범위로 게임 목록 가져오기 -->
-    <select id="getGamesByPriceRange" parameterType="map" resultType="GameVO">
+    <select id="getGamesByPriceRange" parameterType="map" resultType="gameVO">
         SELECT * FROM gemdori_game_tbl
         WHERE game_price BETWEEN #{min} AND #{max}
     </select>
 
     <!-- 5. 할인 중인 게임 목록 가져오기 -->
-    <select id="getDiscountedGames" resultType="GameVO">
+    <select id="getDiscountedGames" resultType="gameVO">
         SELECT * FROM gemdori_game_tbl
         WHERE discount_per > 0
     </select>
 
     <!-- 6. 특정 게임의 DLC 목록 가져오기 -->
-    <select id="getDLCsByGame" parameterType="string" resultType="GameVO">
+    <select id="getDLCsByGame" parameterType="string" resultType="gameVO">
         SELECT * FROM gemdori_game_tbl
         WHERE dlc_game = 1 AND game_title = #{baseGameTitle}
     </select>
 
     <!-- 7. 게임 정보와 평점을 같이 가져오기 (추정 테이블 필요) -->
-    <select id="getGameWithRating" parameterType="string" resultType="GameVO">
+    <select id="getGameWithRating" parameterType="string" resultType="gameVO">
         SELECT g.*, r.avg_rating
         FROM gemdori_game_tbl g
         LEFT JOIN gemdori_rating_tbl r ON g.game_code = r.game_code
@@ -82,27 +82,23 @@
     </select>
 
     <!-- 8. 페이징 처리된 게임 목록 가져오기 -->
-    <select id="getPagedGames" parameterType="map" resultType="GameVO">
+    <select id="getPagedGames" parameterType="map" resultType="gameVO">
         SELECT * FROM gemdori_game_tbl
         ORDER BY publishing_date DESC
         OFFSET #{offset} ROWS FETCH NEXT #{limit} ROWS ONLY
     </select>
-
-    <!-- 9. 게임 검색 -->
-    <select id="searchGames" parameterType="string" resultType="GameVO">
-        SELECT * FROM gemdori_game_tbl
-        WHERE game_title LIKE CONCAT('%', #{keyword}, '%')
-           OR game_genre LIKE CONCAT('%', #{keyword}, '%')
-           OR game_tag LIKE CONCAT('%', #{keyword}, '%')
-    </select>
     
     <!-- 10. 최신 게임 6개 가져오기 -->
-    <select id="getLatestGames" resultType="GameVO">
+    <select id="getLatestGames" resultType="gameVO">
 	    SELECT * FROM (
 	    SELECT * FROM gemdori_game_tbl
 	    WHERE PUBLISHING_DATE IS NOT NULL
 	    ORDER BY PUBLISHING_DATE DESC
 	) WHERE ROWNUM <![CDATA[ <= ]]> 6
+    </select>
+
+    <select id="getAllGames" resultType="gameVO">
+        SELECT * FROM gemdori_game_tbl
     </select>
 
 </mapper>

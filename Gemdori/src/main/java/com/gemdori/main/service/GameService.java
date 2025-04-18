@@ -10,4 +10,6 @@ public interface GameService {
     List<GameVO> searchGames(SearchDTO dto, int offset, int limit);
     int countSearchGames(SearchDTO dto);
     GameVO getGameByCode(String gameCode);
+    List<GameVO> getLatestGames();
+    List<GameVO> getAllGames();
 }

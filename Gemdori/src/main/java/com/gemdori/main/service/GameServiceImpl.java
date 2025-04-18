@@ -34,4 +34,14 @@ public class GameServiceImpl implements GameService {
         // TODO Auto-generated method stub
         return gameMapper.getGameByCode(gameCode);
     }
+
+    @Override
+    public List<GameVO> getLatestGames() {
+        return gameMapper.getLatestGames();
+    }
+
+    @Override
+    public List<GameVO> getAllGames() {
+        return gameMapper.getAllGames();
+    }
 } 

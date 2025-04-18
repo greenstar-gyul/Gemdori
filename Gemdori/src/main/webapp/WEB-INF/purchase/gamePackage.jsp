@@ -279,12 +279,12 @@ body {
 <!-- Breadcrumb End -->
 
 <!-- Game Details Section Begin -->
-<section class="anime-details spad">
+<section class="gemdori-details spad">
 	<div class="container">
 		<div class="game__details__content">
 			<div class="row">
 				<div class="col-lg-3">
-					<div class="anime__details__pic set-bg"
+					<div class="gemdori__details__pic set-bg"
 						data-setbg="img/trending/trend-1.jpg">
 						<div class="view">
 							<i class="fa fa-eye"></i> 9,141
@@ -292,8 +292,8 @@ body {
 					</div>
 				</div>
 				<div class="col-lg-9">
-					<div class="anime__details__text">
-						<div class="anime__details__title">
+					<div class="gemdori__details__text">
+						<div class="gemdori__details__title">
 							<h3>엘든 링: 쉐도우 오브 더 어드리 트리</h3>
 							<span>ELDEN RING: Shadow of the Erdtree</span>
 						</div>
@@ -315,7 +315,7 @@ body {
 							적들과 맞서 싸우고, 복잡한 던전을 탐험하며, 힘을 증명하세요. 전설의 '어드리 트리'의 그림자 아래에서 벌어지는
 							전설적인 모험이 여러분을 기다립니다.</p>
 
-						<div class="anime__details__widget">
+						<div class="gemdori__details__widget">
 							<div class="row">
 								<div class="col-lg-6 col-md-6">
 									<ul>
@@ -471,15 +471,15 @@ body {
 				</div>
 
 				<!-- 리뷰 섹션 -->
-				<div class="anime__details__review">
+				<div class="gemdori__details__review">
 					<div class="section-title">
 						<h5>리뷰 (6)</h5>
 					</div>
-					<div class="anime__review__item">
-						<div class="anime__review__item__pic">
-							<img src="img/anime/review-1.jpg" alt="">
+					<div class="gemdori__review__item">
+						<div class="gemdori__review__item__pic">
+							<img src="img/gemdori/review-1.jpg" alt="">
 						</div>
-						<div class="anime__review__item__text">
+						<div class="gemdori__review__item__text">
 							<h6>
 								게임프로 - <span>1시간 전</span>
 							</h6>
@@ -487,22 +487,22 @@ body {
 								기대됩니다!</p>
 						</div>
 					</div>
-					<div class="anime__review__item">
-						<div class="anime__review__item__pic">
-							<img src="img/anime/review-2.jpg" alt="">
+					<div class="gemdori__review__item">
+						<div class="gemdori__review__item__pic">
+							<img src="img/gemdori/review-2.jpg" alt="">
 						</div>
-						<div class="anime__review__item__text">
+						<div class="gemdori__review__item__text">
 							<h6>
 								롤링어택 - <span>5시간 전</span>
 							</h6>
 							<p>프롬소프트웨어는 실망시키는 법이 없죠. 트레일러만 봐도 벌써 떨려요.</p>
 						</div>
 					</div>
-					<div class="anime__review__item">
-						<div class="anime__review__item__pic">
-							<img src="img/anime/review-3.jpg" alt="">
+					<div class="gemdori__review__item">
+						<div class="gemdori__review__item__pic">
+							<img src="img/gemdori/review-3.jpg" alt="">
 						</div>
-						<div class="anime__review__item__text">
+						<div class="gemdori__review__item__text">
 							<h6>
 								레벨디자이너 - <span>20시간 전</span>
 							</h6>
@@ -510,7 +510,7 @@ body {
 						</div>
 					</div>
 				</div>
-				<div class="anime__details__form">
+				<div class="gemdori__details__form">
 					<div class="section-title">
 						<h5>리뷰 작성</h5>
 					</div>
@@ -525,7 +525,7 @@ body {
 
 			<!-- 사이드바 -->
 			<div class="col-lg-4 col-md-4">
-				<div class="anime__details__sidebar">
+				<div class="gemdori__details__sidebar">
 					<div class="section-title">
 						<h5>추천 DLC 콘텐츠</h5>
 					</div>
