@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gemdori.member.mapper.UserMapper">
+	<!-- 아이디 중복 확인 => 중복 시 1 반환 -->
+	<select id="countByUserId" parameterType="string" resultType="int">
+    	SELECT COUNT(*) FROM gemdori_user_sign_tbl WHERE user_id = #{userId}
+	</select>
+	<!-- 회원가입 로그인 정보 입력 -->
+	<insert id="insertUserSign" parameterType="userSign">
+		<selectKey resultType="string" keyProperty="userCode" order="BEFORE">
+			SELECT 'U' || seq_user_id.NEXTVAL FROM dual
+		</selectKey>
+		insert into gemdori_user_sign_tbl(
+		user_code,
+		user_id,
+		user_pw,
+		user_status,
+		create_time)
+		values(
+		#{userCode},
+		#{userId},
+		#{userPw},
+		1,
+		sysdate)
+	</insert>
+	<!-- 회원가입 프로필 정보 입력 -->
+	<insert id="insertUserProfile" parameterType="userProfile">
+		insert into gemdori_user_profile_tbl(
+		user_code,
+		user_first_name,
+		user_last_name,
+		user_name,
+		user_email,
+		user_phone,
+		user_birthday,
+		user_gender)
+		values(
+		#{userCode},
+		#{userFirstName},
+		#{userLastName},
+		#{userName},
+		#{userEmail},
+		#{userPhone},
+		#{userBirthday},
+		#{userGender})
+	</insert>
+	<!-- 로그인 기능 -->
+	<select id="selectUser" parameterType="map" resultType="userFullVO">
+		SELECT 
+		    s.user_code,
+		    s.user_id,
+		    s.user_pw,
+		    s.create_time,
+		    p.user_first_name,
+		    p.user_last_name,
+		    p.user_name,
+		    p.user_email,
+		    p.user_phone,
+		    p.user_birthday,
+		    p.user_gender,
+		    p.user_intro,
+		    p.user_image
+		FROM gemdori_user_sign_tbl s
+		JOIN gemdori_user_profile_tbl p
+		ON s.user_code = p.user_code
+		WHERE s.user_id = #{userId}
+		  AND s.user_pw = #{userPw}
+		  AND s.user_status = 1
+	</select>
+</mapper>
