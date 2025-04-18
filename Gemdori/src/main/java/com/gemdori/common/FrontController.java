@@ -12,23 +12,23 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
-
+import com.gemdori.main.SearchGamesControl;
 import com.gemdori.member.CheckIdControl;
 import com.gemdori.member.CheckIdExistsControl;
 import com.gemdori.member.FindPasswordFormControl;
 import com.gemdori.member.GenerateTempPasswordControl;
 import com.gemdori.member.JoinControl;
 import com.gemdori.member.JoinFormControl;
-import com.gemdori.member.LoginControl;
 import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LogoutControl;
 import com.gemdori.member.SendEmailControl;
 import com.gemdori.member.VerifyEmailCodeControl;
-
-import com.gemdori.main.SearchGamesControl;
+import com.gemdori.member.joinControl;
+import com.gemdori.member.loginControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
+import com.gemdori.review.ReviewAddControl;
 import com.gemdori.purchase.SuccessControl;
 
 
@@ -58,7 +58,7 @@ public class FrontController extends HttpServlet {
 		map.put("/recombinationPw.do", new GenerateTempPasswordControl()); // 이메일 인증 완료 후 비밀번호 재조합
 		// 회원가입 컨트롤
 		map.put("/signForm.do", new JoinFormControl()); // 회원가입 페이지 이동
-		map.put("/signUp.do", new JoinControl()); // 회원등록
+		map.put("/signUp.do", new joinControl()); // 회원등록
 		map.put("/checkId.do", new CheckIdControl()); // 회원가입 - 아이디 중복 확인
 		map.put("/sendEmailCode.do", new SendEmailControl()); // 회원가입 - 이메일 인증코드 보내기
 		map.put("/verifyEmailCode.do", new VerifyEmailCodeControl()); // 회원가입 - 이메일 인증코드 일치확인
@@ -72,6 +72,8 @@ public class FrontController extends HttpServlet {
 		map.put("/searchGames.do", new SearchGamesControl());
 		map.put("/success.do", new SuccessControl());
 		map.put("/gameDetails.do", new GameDetailsControl());
+		map.put("/reviewAdd.do", new ReviewAddControl());
+
 	}
 
 	// service.
