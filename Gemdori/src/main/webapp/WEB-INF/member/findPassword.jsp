@@ -2,31 +2,29 @@
 <html>
 <head>
     <title>비밀번호 찾기</title>
-    <style>
-        body { font-family: 'Noto Sans KR', sans-serif; padding: 30px; background: #f5f5f5; }
-        form div { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input { width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; }
-        button { padding: 10px 20px; background: #e53637; color: white; border: none; border-radius: 4px; cursor: pointer; }
-        button:hover { background: #b0272b; }
-    </style>
+    <link rel="stylesheet" href="css/gemdori/findPassword.css" type="text/css">
 </head>
-
 <body>
     <h3>비밀번호 찾기</h3>
-    <form action="findPassword.do" method="post">
+    <form id="findPwForm" action="#" method="post">
+    <!-- 아이디 입력 영역 -->
+    <div class="input__item">
+        <input type="text" name="userId" id="userId" placeholder="아이디 입력" required>
+        <div id="idError" style="color:red; font-size:0.9em; margin-top:5px;"></div>
+    </div>
+    <button type="button" class="site-btn" id="checkIdBtn">아이디 확인</button>
+    <!-- 인증 코드 입력 영역 (처음엔 숨김) -->
+    <div id="codeArea" style="display:none;">
         <div class="input__item">
-            <input type="text" name="user_login_name" placeholder="아이디 입력" required>
+            <input type="text" name="email_code" id="emailCode" placeholder="인증 코드 입력" required>
         </div>
-        <div class="input__item input__item--with-btn">
-            <input type="email" name="user_email" placeholder="이메일 주소 입력" required>
-            <button type="button" class="verify-btn" onclick="alert('인증 코드 전송')">인증 요청</button>
-        </div>
-        <div class="input__item">
-            <input type="text" name="email_code" placeholder="인증 코드 입력" required>
-        </div>
-        <button type="submit" class="site-btn">비밀번호 찾기</button>
-    </form>
+        <div class="button__wrap">
+			<button type="button" class="site-btn" id="verifyCodeBtn">인증 확인</button>
+		</div>
+    </div>
+    <!-- 비밀번호 표시 영역 -->
+    <div id="pwResult" style="margin-top:10px; font-weight:bold;"></div>
+</form>
+<script src="js/member/findPassword.js"></script>
 </body>
-
 </html>
