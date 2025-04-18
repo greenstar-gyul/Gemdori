@@ -58,7 +58,7 @@
 	margin-bottom: 10px;
 }
 
-.cart-item-price {
+.cart-item-gamePrice {
 	color: #ffffff;
 	font-size: 22px;
 	font-weight: 600;
@@ -244,25 +244,25 @@
 					<!-- 장바구니 아이템 목록 -->
 					<c:if test="${not empty cartItems}">
 						<c:forEach var="item" items="${cartItems}">
-							<div class="cart-item" data-cart-id="${item.cartId}">
+							<div class="cart-item" data-cart-id="${item.cartCode}">
 								<div class="cart-item-image">
-									<img src="${item.imgUrl}" alt="${item.gameName}">
+									<img src="${item.gameMainImage}" alt="${item.gameTitle}">
 								</div>
 								<div class="cart-item-details">
-									<h5 class="cart-item-title">${item.gameName}</h5>
+									<h5 class="cart-item-title">${item.gameTitle}</h5>
 									<div class="cart-item-edition">${item.editionName}</div>
-									<div class="cart-item-price">
-										<fmt:formatNumber value="${item.price}" pattern="#,###" />
+									<div class="cart-item-gamePrice">
+										<fmt:formatNumber value="${item.gamePrice}" pattern="#,###" />
 										원
 									</div>
 									<div class="quantity-control">
 										<button class="quantity-btn decrease-btn"
-											data-cart-id="${item.cartId}">-</button>
+											data-cart-id="${item.cartCode}">-</button>
 										<button class="quantity-btn increase-btn"
-											data-cart-id="${item.cartId}">+</button>
+											data-cart-id="${item.cartCode}">+</button>
 									</div>
 								</div>
-								<button class="remove-btn" data-cart-id="${item.cartId}">
+								<button class="remove-btn" data-cart-id="${item.cartCode}">
 									<i class="fa fa-trash"></i>
 								</button>
 							</div>
@@ -323,26 +323,79 @@
 <script src="js/main.js"></script>
 
 <script>
-	$(document).ready(function() {
+$(document).ready(function() {
 
-		// 삭제 버튼
-		$('.remove-btn').click(function() {
-			var cartId = $(this).data('cart-id');
-			removeCartItem(cartId);
-		});
+    // 삭제 버튼
+    $('.remove-btn').click(function() {
+        var cartCode = $(this).data('cart-id');
+        removeCartItem(cartCode);
+    });
 
-		// 결제 버튼
-		$('.checkout-btn').click(function() {
-			// 결제 페이지로 이동
-			window.location.href = 'checkout.do';
-		});
+    // 결제 버튼
+    $('.checkout-btn').click(function() {
+        // 결제 페이지로 이동
+        window.location.href = 'checkout.do';
+    });
 
-		// 장바구니 아이템 삭제 함수
-		function removeCartItem(cartId) {
-			if (confirm('정말로 이 상품을 장바구니에서 삭제하시겠습니까?')) {
-				$
+    // 장바구니 아이템 삭제 함수
+    function removeCartItem(cartCode) {
+        if (confirm('정말로 이 상품을 장바구니에서 삭제하시겠습니까?')) {
+            $.ajax({
+                url: 'removeCartItem.do',
+                type: 'POST',
+                data: { cartCode: cartCode },
+                success: function(response) {
+                    // 성공 시 해당 아이템 화면에서 제거
+                    $('[data-cart-id="' + cartCode + '"]').fadeOut(300, function() {
+                        $(this).remove();
+                        
+                        // 장바구니가 비었는지 확인하고 필요시 빈 메시지 표시
+                        if ($('.cart-item').length === 0) {
+                            $('.cart-container').html(
+                                '<h4 class="cart-title">장바구니 (0개의 상품)</h4>' +
+                                '<div class="empty-cart">' +
+                                '<i class="fa fa-shopping-cart"></i>' +
+                                '<p>장바구니가 비어 있습니다.</p>' +
+                                '<a href="gamePackage.do" class="continue-shopping">게임 쇼핑하기</a>' +
+                                '</div>'
+                            );
+                        }
+                        
+                        // 합계 업데이트 (실제로는 서버에서 다시 조회해야 함)
+                        updateCartSummary();
+                    });
+                },
+                error: function(xhr, status, error) {
+                    alert('상품 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
+                    console.error('Error:', error);
+                }
+            });
+        }
+    }
+    
 
-			}
-		}
-	});
+    
+    // 장바구니 요약 정보 업데이트 함수
+    function updateCartSummary() {
+        $.ajax({
+            url: 'getCartSummary.do',
+            type: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                // 가격 정보 업데이트
+                $('.summary-row:first-child span:last-child').text(numberWithCommas(data.totalAmount) + '원');
+                $('.summary-row:nth-child(2) span:last-child').text(numberWithCommas(data.discountAmount) + '원');
+                $('.summary-total span:last-child').text(numberWithCommas(data.totalAmount) + '원');
+            },
+            error: function(xhr, status, error) {
+                console.error('합계 업데이트 중 오류:', error);
+            }
+        });
+    }
+    
+    // 숫자 포맷팅 함수 (천 단위 콤마)
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+});
 </script>
