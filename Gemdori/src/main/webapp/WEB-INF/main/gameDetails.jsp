@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
@@ -157,6 +158,8 @@
                                     "demons" LOL</p>
                                 </div>
                             </div>
+                            
+                            <!-- 리뷰 시작 -->
                             <div class="anime__review__item">
                                 <div class="anime__review__item__pic">
                                     <img src="img/anime/review-5.jpg" alt="">
@@ -180,8 +183,19 @@
                             <div class="section-title">
                                 <h5>Your Comment</h5>
                             </div>
-                            <form id="reviewForm" action="#">
-                                <textarea name="reviewContent" placeholder="Your Comment" required></textarea>
+                            <form id="reviewForm" action="reviewAdd.do" method="post">
+                            	<input type="hidden" name="gameCode" value="${game.gameCode}"/>
+                                <textarea name="reviewContents" placeholder="Your Comment" required></textarea>
+                                <!-- 별점 -->
+                                <label>Rating: </label>
+                                <select name="rating" required>
+                                	<option value="5">★★★★★</option>
+							        <option value="4">★★★★</option>
+							        <option value="3">★★★</option>
+							        <option value="2">★★</option>
+							        <option value="1">★</option>
+                                </select>
+                                
                                 <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
                             </form>
                         </div>
