@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"        prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"  %>
 
-<link rel="stylesheet" href="<c:url value='/css/gemdori/searchGames.css'/>" type="text/css">
-
 <!-- ───────── 검색 영역 ───────── -->
   <section class="search-container top-spacing">
     <div class="container">

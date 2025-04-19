@@ -30,6 +30,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+
   sizeSelect.addEventListener('change', () => {
     curSize = parseInt(sizeSelect.value, 10);
     curPage = 1;
@@ -42,6 +43,9 @@ window.addEventListener('DOMContentLoaded', () => {
     console.log("change!!");
     doSearch();
   });
+  sizeSelect.dispatchEvent(new Event('change'));
+
+  console.log(document.querySelector('#size-select'));
 
   // 검색 실행
   function doSearch() {
@@ -95,52 +99,63 @@ window.addEventListener('DOMContentLoaded', () => {
     const totalPages = Math.ceil(totalCount / curSize);
     if (totalPages < 2) return;
 
-    const makeBtn = (p, label, arrow = false) => {
-      const btn = document.createElement('button');
-      btn.textContent = label;
-      btn.className = arrow ? 'pagination-item pagination-arrow' : 'pagination-item';
-      if (p === curPage) btn.classList.add('active');
-      else btn.addEventListener('click', () => {
-        curPage = p;
-        doSearch();
-      });
-      return btn;
+    const makeBtn = (p, label, arrow = false, disabled = false) => {
+      if (disabled) {
+        const span = document.createElement('span');
+        span.textContent = label;
+        span.className = arrow ? 'pagination-item pagination-arrow disabled' : 'pagination-item disabled';
+        span.style.opacity = '0.5';
+        return span;
+      } else {
+        const btn = document.createElement('button');
+        btn.textContent = label;
+        btn.className = arrow ? 'pagination-item pagination-arrow' : 'pagination-item';
+        if (p === curPage) btn.classList.add('active');
+        btn.addEventListener('click', () => {
+          curPage = p;
+          doSearch();
+        });
+        return btn;
+      }
     };
 
-    if (curPage > 1) {
-      pagination.appendChild(makeBtn(1, '«', true));
-      pagination.appendChild(makeBtn(curPage - 1, '‹', true));
-    }
+    // 이전, 처음
+    pagination.appendChild(makeBtn(1, '«', true, curPage === 1));
+    pagination.appendChild(makeBtn(curPage - 1, '‹', true, curPage === 1));
+
+    // 숫자 버튼
     for (let p = Math.max(1, curPage - 2); p <= Math.min(totalPages, curPage + 2); p++) {
       pagination.appendChild(makeBtn(p, p.toString()));
     }
-    if (curPage < totalPages) {
-      pagination.appendChild(makeBtn(curPage + 1, '›', true));
-      pagination.appendChild(makeBtn(totalPages, '»', true));
-    }
+
+    // 다음, 마지막
+    pagination.appendChild(makeBtn(curPage + 1, '›', true, curPage === totalPages));
+    pagination.appendChild(makeBtn(totalPages, '»', true, curPage === totalPages));
   }
 
   // 템플릿 함수
   const listItemTpl = g => `
-    <div class="list-item">
-      <div class="list-item-img">
-        <img src="${g.gameMainImage}" alt="${g.gameTitle}">
+    <a href="gameDetails.do?gameCode=${g.gameCode}">
+      <div class="list-item">
+        <div class="list-item-img">
+          <img src="${g.gameMainImage}" alt="${g.gameTitle}">
+        </div>
+        <div class="list-item-details">
+          <h5 class="list-item-title">
+            ${g.gameTitle}
+          </h5>
+          <div class="list-item-info">
+            발매일: ${g.publishingDateStr || '미정'} | 개발사: ${g.gameDeveloper || '정보 없음'}
+          </div>
+          <div class="list-item-stats">
+            <i class="fa fa-star"></i> ${(g.gameRating || 0).toFixed(1)}/10
+          </div>
+          <div class="list-item-price">
+            ${priceText(g.gamePrice)}
+          </div>
+        </div>
       </div>
-      <div class="list-item-details">
-        <h5 class="list-item-title">
-          <a href="gameDetails.do?gameCode=${g.gameCode}">${g.gameTitle}</a>
-        </h5>
-        <div class="list-item-info">
-          발매일: ${g.publishingDateStr || '미정'} | 개발사: ${g.gameDeveloper || '정보 없음'}
-        </div>
-        <div class="list-item-stats">
-          <i class="fa fa-star"></i> ${(g.gameRating || 0).toFixed(1)}/10
-        </div>
-        <div class="list-item-price">
-          ${priceText(g.gamePrice)}
-        </div>
-      </div>
-    </div>`;
+    </a>`;
 
   const priceText = p => (p === 0 ? '무료 플레이' : p.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' }));
 

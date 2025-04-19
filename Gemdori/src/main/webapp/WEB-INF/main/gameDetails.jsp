@@ -2,8 +2,6 @@
          pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<link rel="stylesheet" href="css/gemdori/gameDetails.css" type="text/css">
-
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
     <div class="container">
@@ -20,7 +18,7 @@
 </div>
 <!-- Breadcrumb End -->
 
-<!-- Anime Section Begin -->
+<!-- Gemdori Section Begin -->
 <section class="gemdori-details spad">
     <div class="container">
         <div class="gemdori__details__content">
@@ -69,6 +67,29 @@
                     </div>
                     <br>
                     <!-- 나머지 영역은 원래 코드에서 필요한 만큼 계속 채워가면 됨 -->
+                    <div class="system-req">
+                        <h4 class="title">시스템 요구사항</h4>
+                        <div class="row">
+                            <c:choose>
+                                <c:when test="${game.gameSysReqR == ''}">
+                                    <div class="col-md-12 req-column">
+                                        <h5>최소 사양</h5>
+                                        ${game.gameSysReq}
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="col-md-6 req-column">
+                                        <h5>최소 사양</h5>
+                                        ${game.gameSysReq}
+                                    </div>
+                                    <div class="col-md-6 req-column">
+                                        <h5>권장 사양</h5>
+                                        ${game.gameSysReqR}
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <div class="gemdori__details__widget">
@@ -190,4 +211,5 @@
                     </div>
                 </div>
             </div>
-        </section>
+    </div>
+</section>
