@@ -56,14 +56,14 @@
 
 	
 	
-	<servlet>
-        <servlet-name>MainControl</servlet-name>
-        <servlet-class>com.gemdori.main.MainControl</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>MainControl</servlet-name>
-        <url-pattern>/gemdori</url-pattern> <!-- /gemdori 경로로 요청 시 MainControl 실행 -->
-    </servlet-mapping>
+<!--	<servlet>-->
+<!--        <servlet-name>MainControl</servlet-name>-->
+<!--        <servlet-class>com.gemdori.main.MainControl</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>MainControl</servlet-name>-->
+<!--        <url-pattern>/gemdori</url-pattern> &lt;!&ndash; /gemdori 경로로 요청 시 MainControl 실행 &ndash;&gt;-->
+<!--    </servlet-mapping>-->
 	
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

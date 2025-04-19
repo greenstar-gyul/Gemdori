@@ -28,7 +28,7 @@
                         <div class="col-lg-6">
                             <div class="hero__text">
                                 <h2>${game.gameTitle}</h2>
-                                <p>${game.contents}</p>
+                                <p>${game.gameContents}</p>
                                 <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
