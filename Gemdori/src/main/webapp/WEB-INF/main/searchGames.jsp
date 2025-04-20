@@ -3,8 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt"        prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn"  %>
 
-<link rel="stylesheet" href="<c:url value='/css/gemdori/searchGames.css'/>" type="text/css">
-
 <!-- ───────── 검색 영역 ───────── -->
   <section class="search-container top-spacing">
     <div class="container">
@@ -28,10 +26,10 @@
                   <label>장르:</label>
                   <select class="filter-select" name="genres">
                     <option value="">전체</option>
-                    <option value="action">액션</option>
+                    <option value="액션">액션</option>
                     <option value="rpg">RPG</option>
-                    <option value="strategy">전략</option>
-                    <option value="adventure">어드벤처</option>
+                    <option value="전략">전략</option>
+                    <option value="어드벤처">어드벤처</option>
                     <option value="fps">FPS</option>
                     <option value="simulation">시뮬레이션</option>
                     <option value="horror">공포</option>
@@ -150,15 +148,11 @@
           <!-- 결과 요약 -->
           <div class="search-result-summary"></div>
 
-          <!-- 뷰 전환 & 정렬 옵션 -->
-          <div class="result-sorting">
-            <div class="view-switch">
-              <button id="grid-view-btn" class="view-btn"><i class="fa fa-th-large"></i> 그리드</button>
-              <button id="list-view-btn" class="view-btn"><i class="fa fa-list"></i> 리스트</button>
-            </div>
+          <!-- 정렬 옵션 -->
+          <div class="result-options d-flex justify-content-end">
             <div class="sort-options">
-              <label style="margin-right:10px;">정렬:</label>
-              <select name="sort" class="filter-select">
+              <label for="sort-select">표시:</label>
+              <select name="sort" class="result-options-select" id="sort-select">
                 <option value="relevance">관련성</option>
                 <option value="newest">최신순</option>
                 <option value="rating">평점순</option>
@@ -166,23 +160,28 @@
                 <option value="price_high">가격 높은순</option>
               </select>
             </div>
-          </div>
 
-          <!-- 표시 개수 버튼 -->
-          <div class="display-count" style="margin-bottom:20px;">
+
+          <!-- 표시 개수 지정 -->
+          <!--<div class="display-count" style="margin-bottom:20px;">
             <label style="margin-right:10px;">표시:</label>
             <button class="count-btn">9</button>
             <button class="count-btn">18</button>
             <button class="count-btn">27</button>
-          </div>
+          </div>-->
 
-          <!-- ===== 그리드 뷰 ===== -->
-          <div class="grid-view">
-            <div class="row"></div>
+            <div class="display-count">
+              <label for="size-select">표시:</label>
+              <select class="display-size-select" name="size" id="size-select">
+                <option value="10" selected>10개</option>
+                <option value="20">20개</option>
+                <option value="30">30개</option>
+              </select>
+            </div>
           </div>
 
           <!-- ===== 리스트 뷰 ===== -->
-          <div class="list-view" style="display:none;"></div>
+          <div class="list-view"></div>
 
           <!-- 페이지네이션 -->
           <div id="pagination" class="pagination"></div>

@@ -1,29 +1,31 @@
 @charset "UTF-8";
+/* 기존 검색 영역 스타일 유지 중... */
 
+/* 추가된 상세 페이지 관련 스타일 */
 .set-bg {
     width: 100%;
-    /*height: 400px; !* 또는 원하는 높이 *!*/
-    background-size: contain;       /* 이미지 비율 유지하면서 채우기 */
-    background-position: center;  /* 중앙 정렬 */
-    background-repeat: no-repeat; /* 반복 방지 */
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .game-desc-contents {
-	height: 338.5px;	
-	text-align: left;
+    height: 338.5px;
+    text-align: left;
 }
 
 .game-desc-contents h5 {
-	font-size: 24px;
-	font-weight: 500;
-	color:#ffffff;
+    font-size: 24px;
+    font-weight: 500;
+    color: #ffffff;
 }
 
 .game-desc-contents p {
-	color: #ffffff;
+    color: #ffffff;
 }
 
-.contents-title h4, .contents-title h5 {
+.contents-title h4,
+.contents-title h5 {
     color: #ffffff;
     font-weight: 600;
     line-height: 21px;
@@ -36,7 +38,8 @@
     font-family: "Oswald", sans-serif;
 }
 
-.contents-title h4:after, .contents-title h5:after {
+.contents-title h4:after,
+.contents-title h5:after {
     position: absolute;
     left: 0;
     top: 0px;
@@ -47,22 +50,37 @@
 }
 
 .main-contents-bg {
-	background: #13142f;
-	padding-top: 15px;
-	padding-bottom: 15px;
+    background: #13142f;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
-.anime__details__widget .info-contents-bg {
-	background: #0c2037;
-	padding: 15px;
-	margin-left: 5px;
-	width: 100%;
+.gemdori__details__widget .info-contents-bg {
+    background: #0c2037;
+    padding: 15px;
+    margin-left: 5px;
+    width: 100%;
+}
+
+.info-contents-bg ul {
+    list-style: none;
+}
+
+.info-contents-bg li {
+    color: white;
+    font-size: 14px;
 }
 
 .contents-box {
-	background: #1d1e39;
+    background: #1d1e39;
     border-radius: 5px;
     padding: 20px;
+    color: white;
+}
+
+.contents-box h2 {
+    color: #bdbdbd;
+    font-weight: 600;
 }
 
 .contents-box p {
@@ -88,10 +106,6 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     padding-bottom: 10px;
 }
-
-/*.req-column {
-    margin-bottom: 20px;
-}*/
 
 .req-column h5 {
     color: #e53637;

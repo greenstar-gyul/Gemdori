@@ -65,30 +65,26 @@
 	margin-right: 5px;
 }
 
-.filter-select {
-	background-color: rgb(233, 233, 241);
-	color: #000;
-	border: 1px solid rgba(255, 255, 255, 0.1);
-	padding: 8px 15px;
+.filter-select,
+.display-size-select,
+.result-options-select {
+	background-color: #1d1e39;
+	color: #ffffff;
+	border: 1px solid #333;
+	padding: 8px 12px;
 	border-radius: 5px;
+	font-size: 14px;
+	height: 36px;
+	text-align: center;
+	text-align-last: center;
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image: url("data:image/svg+xml,%3Csvg fill='gray' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+	background-repeat: no-repeat;
+	background-position: right 10px center;
+	background-size: 16px;
 }
-
-.nice-select.filter-select {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 42px;
-  padding: 0 25px 0 15px; /* 좌우 여백 조절 */
-  box-sizing: border-box;
-}
-
-.nice-select.filter-select .current {
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-
 
 /* 뷰 전환 버튼 */
 .view-switch {
@@ -113,10 +109,8 @@
 }
 
 /* 결과 정렬 */
-.result-sorting {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
+.result-options {
+	gap: 16px;
 	margin-bottom: 20px;
 }
 
@@ -125,6 +119,12 @@
 	display: flex;
 	gap: 10px;
 	align-items: center;
+}
+
+.result-options label {
+	margin-right:10px;
+	margin-bottom: 0;
+	color: #c1c1c1;
 }
 
 .display-count {
@@ -149,14 +149,8 @@
 	color: white;
 }
 
-/* 그리드 뷰 스타일 */
-.grid-view {
-	display: block;
-}
-
-/* 리스트 뷰 스타일 */
 .list-view {
-	display: none;
+	display: block;
 }
 
 .list-item {
@@ -175,16 +169,16 @@
 
 .list-item-img {
 	width: 120px;
-	height: 150px;
 	border-radius: 5px;
-	overflow: hidden;
 	margin-right: 20px;
+	text-align: center;
 }
 
 .list-item-img img {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: contain;
+	display: inline-block;
 }
 
 .list-item-details {
@@ -273,6 +267,17 @@
 	font-size: 14px;
 }
 
+.pagination-item.disabled {
+	pointer-events: none;
+	opacity: 0.5;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	padding: 6px 12px;
+	margin: 0 2px;
+	font-size: 14px;
+	user-select: none;
+}
+
 /* 추가 스타일 - 여백 조절 */
 .top-spacing {
 	margin-top: 80px;
@@ -296,5 +301,9 @@
 }
 
 .search-result-summary h4 {
+	color: white;
+}
+
+.search-no-text, .search-no-text p {
 	color: white;
 }

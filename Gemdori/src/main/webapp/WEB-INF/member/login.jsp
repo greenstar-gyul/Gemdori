@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="css/gemdori/loginForm.css" type="text/css">
 
 <!-- Normal Breadcrumb Begin -->
 <section class="normal-breadcrumb set-bg"

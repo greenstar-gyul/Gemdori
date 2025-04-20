@@ -35,9 +35,20 @@
         Background Set
     --------------------*/
     $('.set-bg').each(function () {
-        var bg = $(this).data('setbg');
-        $(this).css('background-image', 'url(' + bg + ')');
+        const $div = $(this);
+        const bg = $div.data('setbg');
+        const fallback = $div.attr('data-fallback');
+
+        const img = new Image();
+        img.onload = function () {
+            $div.css('background-image', 'url(' + bg + ')');
+        };
+        img.onerror = function () {
+            $div.css('background-image', 'url(' + fallback + ')');
+        };
+        img.src = bg;
     });
+
 
     // Search model
     $('.search-switch').on('click', function () {
