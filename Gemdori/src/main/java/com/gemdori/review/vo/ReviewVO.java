@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class ReviewVO {
-	private String reviewCode;// 오라클 데이터타입 수정해야 할듯?
+	private String reviewCode;//
 	private String userCode;
 	private String reviewContents;
 	private double rating;
@@ -15,5 +15,5 @@ public class ReviewVO {
 	
 	// 유저 프로필 이미지
 	private String userImage;
-	private String userNickname;
+	private String userName;
 }

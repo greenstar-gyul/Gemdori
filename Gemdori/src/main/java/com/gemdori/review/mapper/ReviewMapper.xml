@@ -37,7 +37,7 @@
             r.WRITE_DATE,
             r.GAME_CODE,
             
-            p.USER_NICKNAME,
+            p.USER_NAME,
             p.USER_IMAGE
         FROM gemdori_review_tbl r
         JOIN gemdori_user_profile_tbl p ON r.USER_CODE = p.USER_CODE

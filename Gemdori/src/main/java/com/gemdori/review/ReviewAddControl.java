@@ -123,11 +123,11 @@ public class ReviewAddControl implements Control {
         reviewVO.setRating(rating);            // 유효성 검사를 통과한 별점(double 타입) 설정
         reviewVO.setReviewContents(reviewContents); // 사용자가 입력한 리뷰 내용 설정
 
-        // (참고) ReviewVO의 다른 필드들 (reviewCode, writeDate, userNickname, userImage)은
+        // (참고) ReviewVO의 다른 필드들 (reviewCode, writeDate, userName, userImage)은
         // 여기서 설정하지 않습니다.
         // - reviewCode: DB에서 INSERT 시 시퀀스로 자동 생성될 것임
         // - writeDate: DB에서 INSERT 시 SYSDATE로 자동 설정될 것임
-        // - userNickname, userImage: 리뷰 목록 조회 시 JOIN으로 가져올 정보임
+        // - userName, userImage: 리뷰 목록 조회 시 JOIN으로 가져올 정보임
 
         // --- 임시 확인용 출력 (나중에 삭제하거나 Logger로 변경) ---
         // VO 객체에 값이 잘 담겼는지 확인합니다. (ReviewVO에 toString()이 구현되어 있다면 편리)

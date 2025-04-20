@@ -17,19 +17,20 @@ import com.gemdori.member.CheckIdControl;
 import com.gemdori.member.CheckIdExistsControl;
 import com.gemdori.member.FindPasswordFormControl;
 import com.gemdori.member.GenerateTempPasswordControl;
+import com.gemdori.member.JoinControl;
 import com.gemdori.member.JoinFormControl;
-import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LoginControl;
+import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LogoutControl;
 import com.gemdori.member.SendEmailControl;
 import com.gemdori.member.VerifyEmailCodeControl;
-import com.gemdori.member.joinControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
 import com.gemdori.purchase.SuccessControl;
 import com.gemdori.review.ReviewAddControl;
-import com.gemdori.purchase.SuccessControl;
+import com.gemdori.review.ReviewListControl;
+import com.gemdori.review.ReviewRemoveControl;
 import com.gemdori.user.TempSessionControl;
 
 
@@ -53,6 +54,8 @@ public class FrontController extends HttpServlet {
 		map.put("/gameDetails.do", new GameDetailsControl());
 		map.put("/searchGames.do", new SearchGamesControl());
 		map.put("/reviewAdd.do", new ReviewAddControl());
+		map.put("/reviewList.do", new ReviewListControl()); // 리뷰 목록 조회 컨트롤러
+		map.put("/removeReview.do", new ReviewRemoveControl()); //  리뷰 삭제 컨트롤러
 
 		/* ******************************
 		 * 회원 관련 요청
