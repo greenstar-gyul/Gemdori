@@ -103,7 +103,16 @@
                                     <li><span>장르</span><br> ${game.gameGenre}</li>
                                     <li><span>언어</span><br> ${game.languageSup}</li>
                                     <li><span>연령 제한</span><br>${game.requiredAge == 0 ? '전체 이용가' : game.requiredAge}</li>
-                                    <li><span>기본 게임</span><br> ${game.parentGame == null ? '원본 게임' : 'DLC (기반: ' + game.parentGame + ')'}</li>
+                                    <li><span>기본 게임</span><br>
+                                        <c:choose>
+                                            <c:when test="${empty game.parentGame}">
+                                                원본 게임
+                                            </c:when>
+                                            <c:otherwise>
+                                                DLC <a href="gameDetails.do?gameCode=${game.parentGame}">원본 게임</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

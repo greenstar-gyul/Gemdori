@@ -14,17 +14,19 @@
           FROM gemdori_game_tbl
          WHERE 1=1
            <if test="dto.keyword != null and dto.keyword != ''">
-             AND game_title LIKE '%' || #{dto.keyword} || '%'
+             AND LOWER(game_title) LIKE '%' || LOWER(#{dto.keyword}) || '%'
            </if>
            <if test="dto.genres != null and dto.genres != ''">
-             AND game_genre = #{dto.genres}
+             AND LOWER(game_genre) LIKE '%' || LOWER(#{dto.genres}) || '%'
            </if>
            <!-- …추가 필터… -->
          ORDER BY publishing_date DESC
       ) inner_q
-      WHERE ROWNUM &lt;= #{offset} + #{limit}
+      <![CDATA[
+      WHERE ROWNUM <= #{endRow}
     )
-    WHERE rnum &gt; #{offset}
+    WHERE rnum > #{startRow}
+    ]]>
   </select>
 
   <!-- 전체 개수 -->
@@ -34,10 +36,10 @@
     SELECT COUNT(*) FROM gemdori_game_tbl
      WHERE 1=1
        <if test="keyword != null and keyword != ''">
-         AND game_title LIKE '%' || #{keyword} || '%'
+         AND LOWER(game_title) LIKE '%' || LOWER(#{keyword}) || '%'
        </if>
        <if test="genres != null and genres != ''">
-         AND game_genre = #{genres}
+         AND LOWER(game_genre) LIKE '%' || LOWER(#{genres}) || '%'
        </if>
        <!-- …추가 필터… -->
   </select>
@@ -93,6 +95,7 @@
 	    SELECT * FROM (
 	    SELECT * FROM gemdori_game_tbl
 	    WHERE PUBLISHING_DATE IS NOT NULL
+          AND PARENT_GAME IS NULL
 	    ORDER BY PUBLISHING_DATE DESC
 	) WHERE ROWNUM <![CDATA[ <= ]]> 6
     </select>

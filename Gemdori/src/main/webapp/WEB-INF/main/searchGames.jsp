@@ -26,10 +26,10 @@
                   <label>장르:</label>
                   <select class="filter-select" name="genres">
                     <option value="">전체</option>
-                    <option value="action">액션</option>
+                    <option value="액션">액션</option>
                     <option value="rpg">RPG</option>
-                    <option value="strategy">전략</option>
-                    <option value="adventure">어드벤처</option>
+                    <option value="전략">전략</option>
+                    <option value="어드벤처">어드벤처</option>
                     <option value="fps">FPS</option>
                     <option value="simulation">시뮬레이션</option>
                     <option value="horror">공포</option>
