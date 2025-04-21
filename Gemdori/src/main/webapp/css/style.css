@@ -331,7 +331,7 @@ ol {
 }
 
 .header__logo {
-	padding: 8px 0 8px 5px;
+	padding: 20px 0 17px;
 }
 
 .header__logo a {
@@ -442,7 +442,7 @@ ol {
 -----------------------*/
 
 .hero {
-	padding-top: 110px;
+	padding-top: 50px;
 }
 
 .hero__items {

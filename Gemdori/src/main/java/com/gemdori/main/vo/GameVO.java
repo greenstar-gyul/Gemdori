@@ -1,7 +1,6 @@
 package com.gemdori.main.vo;
 
 import java.util.Date;
-import java.util.List;
 
 import lombok.Data;
 
@@ -26,7 +25,7 @@ public class GameVO {
     private String gameCategory;
     private String gameTag;
     private String gameMainImage;
-    private String descImages;
+    private String ingameImages;
     private String gameSysReq;
     private String gameSysReqR;
     private int dlcGame;
@@ -36,7 +35,4 @@ public class GameVO {
 
     // DLC 게임일 경우, 원본 게임 코드 (원본 게임은 NULL)
     private String parentGame;
-    
-    // 인게임 이미지 리스트
-    private List<String> imageList;
 } 

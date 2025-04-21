@@ -10,19 +10,34 @@
     <div class="container">
         <div class="hero__slider owl-carousel">
             <c:forEach var="game" items="${latestGameList}">
-            	<a href="gameDetails.do?gameCode=${game.gameCode}" style="display: block;">
-                <div class="hero__items set-bg" data-setbg="${game.gameMainImage}" style="height: 524.5px;">
+                <div class="hero__items set-bg"
+                     data-setbg="${game.gameMainImage}"
+                     style="height: 524.5px;">
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="hero__text">
                                 <h2>${game.gameTitle}</h2>
                                 <p>${game.gameDesc}</p>
-                                <%--<a href="gameDetails.do?gameCode=${game.gameCode}"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>--%>
+                                <a href="gameDetails.do?gameCode=${game.gameCode}"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
                     </div>
+                    <c:forEach var="game" items="${gameList}">
+                        <div class="hero__items set-bg"
+                             data-setbg="https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg"
+                             style="height: 524.5px;">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="hero__text">
+                                        <h2>${game.gameTitle}</h2>
+                                        <p>${game.gameContents}</p>
+                                        <a href="gameDetails.do?gameCode=${game.gameCode}"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
-                </a>
             </c:forEach>
         </div>
     </div>
@@ -370,7 +385,7 @@
 						                        <li>${genre}</li>
 						                    </c:forEach>
 						                </ul>
-						                <h5><a href="gameDetails.do?gameCode=${game.gameCode }">${game.gameTitle}</a></h5>
+						                <h5><a href="#">${game.gameTitle}</a></h5>
 						            </div>
 						        </div>
 						    </div>

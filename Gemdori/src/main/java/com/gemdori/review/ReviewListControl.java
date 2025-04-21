@@ -1,7 +1,7 @@
 package com.gemdori.review;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -41,7 +41,7 @@ public class ReviewListControl implements Control{
             return;
         }
 
-        List<ReviewVO> reviewList = new ArrayList<>(); // 기본값으로 빈 리스트 설정
+        List<ReviewVO> reviewList = Collections.emptyList(); // 기본값으로 빈 리스트 설정
         try {
             // 3. ReviewService를 통해 리뷰 목록 조회
             ReviewService reviewService = new ReviewServiceImpl(); // (개선 필요 지점: 싱글톤 등 고려)
