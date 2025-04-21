@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="css/gemdori/loginForm.css" type="text/css">
+
 <!-- Normal Breadcrumb Begin -->
 <section class="normal-breadcrumb set-bg"
 	data-setbg="img/normal-breadcrumb.jpg">
@@ -25,13 +25,18 @@
 					<h3>로그인</h3>
 					<form action="login.do" method="post">
 						<div class="input__item">
-							<input type="text" name="userName" placeholder="아이디"
+							<input type="text" name="userId" placeholder="아이디"
 								required> <span class="icon_profile"></span>
 						</div>
 						<div class="input__item">
 							<input type="password" name="userPw" placeholder="비밀번호" required>
 							<span class="icon_lock"></span>
 						</div>
+						<c:if test="${not empty msg}">
+    						<div id="loginErrorMsg" style="color: red; font-size: 0.9em; margin-top: 5px;">
+        					${msg}
+    						</div>
+						</c:if>
 						<button type="submit" class="site-btn">로그인</button>
 					</form>
 					<a href="#" class="forget_pass" onclick="window.open('findPassword.do', 'pwPopup', 'width=500,height=400'); return false;">비밀번호를 잊으셨나요?</a>
@@ -47,13 +52,5 @@
 	</div>
 </section>
 <!-- Login Section End -->
-<script>
-function openFindPwPopup() {
-    window.open(
-        "findPassword.jsp",       // 👉 분리한 JSP 경로
-        "비밀번호 찾기",            // 팝업 이름
-        "width=450,height=400,scrollbars=no,resizable=no"
-    );
-}
-</script>
+<script src="js/member/loginForm.js"></script>
 <link rel="stylesheet" href="css/gemdori/loginForm.css" type="text/css">

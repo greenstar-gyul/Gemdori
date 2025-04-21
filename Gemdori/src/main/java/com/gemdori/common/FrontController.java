@@ -1,5 +1,5 @@
-package com.gemdori.common;
 
+package com.gemdori.common;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,17 +18,22 @@ import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
 import com.gemdori.main.SearchGamesControl;
 import com.gemdori.member.CheckIdControl;
+import com.gemdori.member.CheckIdExistsControl;
 import com.gemdori.member.FindPasswordFormControl;
+import com.gemdori.member.GenerateTempPasswordControl;
 import com.gemdori.member.JoinControl;
 import com.gemdori.member.JoinFormControl;
-import com.gemdori.member.LoginControl;
 import com.gemdori.member.LoginFormControl;
+import com.gemdori.member.LoginControl;
+import com.gemdori.member.LogoutControl;
 import com.gemdori.member.SendEmailControl;
 import com.gemdori.member.VerifyEmailCodeControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
+import com.gemdori.review.ReviewAddControl;
 import com.gemdori.purchase.SuccessControl;
+import com.gemdori.user.TempSessionControl;
 
 
 public class FrontController extends HttpServlet {
@@ -43,23 +48,36 @@ public class FrontController extends HttpServlet {
 	// init
 	@Override
 	public void init(ServletConfig config) throws ServletException {
-		map.put("/main.do", new MainControl());
 
-		
+		/* ******************************
+		 * 메인 요청
+		 * ******************************/
+		map.put("/main.do", new MainControl());
+		map.put("/gameDetails.do", new GameDetailsControl());
+		map.put("/searchGames.do", new SearchGamesControl());
+		map.put("/reviewAdd.do", new ReviewAddControl());
+
+		/* ******************************
+		 * 회원 관련 요청
+		 * ******************************/
 		// 회원 로그인 컨트롤
 		map.put("/loginForm.do", new LoginFormControl()); // 로그인 페이지 이동
 		map.put("/login.do", new LoginControl()); // 로그인
+		map.put("/logout.do", new LogoutControl()); // 로그아웃
+		// 회원 비밀번호 찾기
 		map.put("/findPassword.do", new FindPasswordFormControl()); // 비밀번호 찾기 페이지 이동
+		map.put("/findUserIdCheck.do", new CheckIdExistsControl()); // 아이디 존재 확인 후 이메일 인증 코드 전송
+		map.put("/recombinationPw.do", new GenerateTempPasswordControl()); // 이메일 인증 완료 후 비밀번호 재조합
 		// 회원가입 컨트롤
 		map.put("/signForm.do", new JoinFormControl()); // 회원가입 페이지 이동
 		map.put("/signUp.do", new JoinControl()); // 회원등록
 		map.put("/checkId.do", new CheckIdControl()); // 회원가입 - 아이디 중복 확인
 		map.put("/sendEmailCode.do", new SendEmailControl()); // 회원가입 - 이메일 인증코드 보내기
 		map.put("/verifyEmailCode.do", new VerifyEmailCodeControl()); // 회원가입 - 이메일 인증코드 일치확인
-		
-		
 
-
+		/* ******************************
+		 * 구매 관련 요청
+		 * ******************************/
 		map.put("/gamePackage.do", new GamePackageControl());
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
@@ -71,6 +89,7 @@ public class FrontController extends HttpServlet {
 		map.put("/success.do", new SuccessControl());
 		map.put("/gameDetails.do", new GameDetailsControl());
 		map.put("/topicList.do", new TopicListControl());
+		map.put("/tempSession.do", new TempSessionControl());
 	}
 
 	// service.

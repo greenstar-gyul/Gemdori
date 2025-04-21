@@ -25,8 +25,13 @@
     <link rel="stylesheet" href="css/nice-select.css" type="text/css">
     <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/gemdori-style.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
-    <link rel="stylesheet" href="css/gemdori/gameDetails.css" type="text/css">
+
+    <!-- Tiles Css Styles -->
+    <link rel="stylesheet" href="${pageContext.request.contextPath}<tiles:getAsString name='gemdoriCss'/>" />
+
+
     <style>
         .header {
             position: fixed;
@@ -112,6 +117,14 @@
             color: #e53637;
         }
         
+        .hero__text p {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
     </style>
 
 
@@ -151,7 +164,7 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/player.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
+<%--    <script src="js/jquery.nice-select.min.js"></script>--%>
     <script src="js/mixitup.min.js"></script>
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>

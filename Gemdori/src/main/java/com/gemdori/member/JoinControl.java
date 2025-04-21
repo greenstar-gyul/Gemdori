@@ -12,23 +12,24 @@ import com.gemdori.common.Control;
 import com.gemdori.member.service.UserService;
 import com.gemdori.member.service.UserServiceImpl;
 import com.gemdori.member.vo.UserProfileVO;
+import com.gemdori.member.vo.UserSecurityVO;
 import com.gemdori.member.vo.UserSignVO;
 
 public class JoinControl implements Control {
 
-	@Override
-	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		resp.setContentType("text/json;charset=utf-8");
-		// 1. 파라미터 수집.
-		String userId = req.getParameter("userId");
-		String userPw = req.getParameter("userPw");
-		String userName = req.getParameter("userName");
-		String firstName = req.getParameter("userFirstName");
-		String lastName = req.getParameter("userLastName");
-		String userEmail = req.getParameter("userEmail");
-		String userPhone = req.getParameter("userPhone");
-		String userBirthday = req.getParameter("userBirthday");
-		String userGender = req.getParameter("userGender");
+    @Override
+    public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setContentType("text/json;charset=utf-8");
+        // 1. 파라미터 수집.
+        String userId = req.getParameter("userId");
+        String userPw = req.getParameter("userPw");
+        String userName = req.getParameter("userName");
+        String firstName = req.getParameter("userFirstName");
+        String lastName = req.getParameter("userLastName");
+        String userEmail = req.getParameter("userEmail");
+        String userPhone = req.getParameter("userPhone");
+        String userBirthday = req.getParameter("userBirthday");
+        String userGender = req.getParameter("userGender");
 
         // 2. 서비스 호출
         UserService service = new UserServiceImpl();
@@ -59,8 +60,15 @@ public class JoinControl implements Control {
             }
 
             boolean isProfileSuccess = service.addUserProfile(profileVO);
+            // 보안 테이블 insert
+            UserSecurityVO securityVO = new UserSecurityVO();
+            securityVO.setUserCode(signVO.getUserCode());
+            securityVO.setLoginFailCount(0); // 기본값
+            securityVO.setIsLocked(1);       // 잠김 아님
 
-            if (isProfileSuccess) {
+            boolean isSecuritySuccess = service.addUserSecurity(securityVO);
+
+            if (isProfileSuccess && isSecuritySuccess) {
                 resp.setContentType("text/html; charset=UTF-8");
                 PrintWriter out = resp.getWriter();
                 out.println("<script>");
@@ -74,6 +82,6 @@ public class JoinControl implements Control {
         // 실패 시
         resp.sendRedirect("signForm.do");
 
-	}
+    }
 
 }
