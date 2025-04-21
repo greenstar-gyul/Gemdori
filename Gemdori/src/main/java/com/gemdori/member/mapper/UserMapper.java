@@ -27,13 +27,25 @@ public interface UserMapper {
     // 유저 보안정보 조회
 	UserSecurityVO selectUserSecurity(String userCode);
 	// 유저 로그인 실패회수 조회
-	int getLoginFailCount(String userCode);
+	Integer getLoginFailCount(String userCode);
 	// 유저 로그인 실패 카운트 증가
 	void increaseLoginFailCount(String userCode);
 	// 로그인 성공 시 실패 카운트 초기화
 	void resetLoginFailCount(String userCode);
 	// 로그인 5회 실패 시 잠금
 	void lockUserAccount(String userCode);
+	// 로그인 성공 시 마지막 로그인 일자 업데이트
+	public int updateLastLoginDate(String userCode);
 	// 비밀번호 재발급 시 유저 보안 정보 변경
 	int resetSecurityAfterPwUpdate(String userCode);
+	// 회원 프로필 수정
+	int updateUserProfile(UserProfileVO userProfile);
+	// 회원 프로필 수정 후 유저 정보 session 다시 저장
+	UserFullVO selectUserByUserCode(String userCode);
+	// 기존 비밀번호 일치 여부 확인 (userCode, userPw)
+    int checkPassword(Map<String, String> param);
+    // 비밀번호 업데이트 (userCode, userPw)
+    int newUserPassword(Map<String, String> param);
+    // 보안정보의 비밀번호 수정일자 update_time 갱신
+    int updateSecurityUpdateTime(String userCode);
 }

@@ -73,7 +73,8 @@ public class UserServiceImpl implements UserService {
     // 로그인 실패 카운트 조회
     @Override
     public int getLoginFailCount(String userCode) {
-        return mapper.getLoginFailCount(userCode);
+    	Integer count = mapper.getLoginFailCount(userCode);
+        return count != null ? count : 0;
     }
     // 로그인 실패 카운트 증가
     @Override
@@ -90,9 +91,49 @@ public class UserServiceImpl implements UserService {
     public void lockUserAccount(String userCode) {
         mapper.lockUserAccount(userCode);
     }
+    // 마지막 로그인 정보 저장
+    @Override
+    public boolean updateLastLoginDate(String userCode) {
+        return mapper.updateLastLoginDate(userCode) == 1;
+    }
     // 비밀번호 재발급 시 유저 보안 정보 변경
     @Override
     public boolean resetSecurityAfterPwUpdate(String userCode) {
         return mapper.resetSecurityAfterPwUpdate(userCode) == 1;
+    }
+    // 회원정보 수정
+    @Override
+    public boolean updateUserProfile(UserProfileVO userProfile) {
+        return mapper.updateUserProfile(userProfile) == 1;
+    }
+    // 회원정보 수정 후 session 다시 저장
+    @Override
+    public UserFullVO selectUserByUserCode(String userCode) {
+        return mapper.selectUserByUserCode(userCode);
+    }
+    // 비밀번호 변경 기능
+    @Override
+    public boolean changePassword(String userCode, String currentPw, String newPw) {
+        // 1. 현재 비밀번호 일치 여부 확인
+        Map<String, String> param = new HashMap<>();
+        param.put("userCode", userCode);
+        param.put("userPw", currentPw);
+
+        int check = mapper.checkPassword(param);
+        if (check == 0) {
+            return false; // 기존 비밀번호가 일치하지 않음
+        }
+
+        // 2. 새 비밀번호로 변경
+        param.put("userPw", newPw); // 같은 param 재사용 (key 중복으로 덮어쓰기)
+        int update = mapper.newUserPassword(param);
+
+        // 3. 보안정보 수정일자 갱신
+        if (update == 1) {
+            mapper.updateSecurityUpdateTime(userCode);
+            return true;
+        }
+
+        return false;
     }
 }

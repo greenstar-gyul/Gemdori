@@ -1,0 +1,114 @@
+/* myInfo.css - 가족적인 회원정보 페이지 */
+
+/*---------------------
+  My Info Page 기본
+-----------------------*/
+.myinfo__section {
+	padding: 80px 0;
+	background-color: #0f223a;
+	min-height: 100vh;
+	color: #fff;
+	font-family: "Mulish", sans-serif;
+}
+
+.myinfo__container {
+	max-width: 800px;
+	margin: 0 auto;
+	background: #123458;
+	padding: 40px;
+	border-radius: 10px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.myinfo__title {
+	text-align: center;
+	font-size: 32px;
+	font-weight: 700;
+	margin-bottom: 30px;
+	font-family: "Oswald", sans-serif;
+	color: #ffffff;
+}
+
+.myinfo__row {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+.myinfo__label {
+	width: 30%;
+	font-weight: 600;
+	color: #e0e0e0;
+	font-size: 16px;
+}
+
+.myinfo__value {
+	width: 65%;
+	font-size: 16px;
+	color: #ffffff;
+	word-break: break-all;
+}
+
+.myinfo__profile-img {
+	display: block;
+	margin: 30px auto;
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 3px solid #000;
+}
+
+.myinfo__btn {
+	display: block;
+	width: 200px;
+	margin: 40px auto 0;
+	background-color: #e53637;
+	color: white;
+	font-weight: 700;
+	text-transform: uppercase;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	font-size: 14px;
+	text-align: center;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.myinfo__btn-group {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	margin-top: 40px;
+	flex-wrap: wrap;
+}
+
+.myinfo__btn--danger {
+	background-color: #6c757d; /* 회색 계열 */
+}
+
+.myinfo__btn--danger:hover {
+	background-color: #5a6268;
+}
+
+.myinfo__btn:hover {
+	background-color: #c62d2d;
+}
+
+@media screen and (max-width: 768px) {
+	.myinfo__row {
+		flex-direction: column;
+	}
+	.myinfo__label, .myinfo__value {
+		width: 100%;
+	}
+	.myinfo__container {
+		padding: 20px;
+	}
+}
+
+button:hover {
+	background: #b0272b;
+	transform: scale(1.05);
+}

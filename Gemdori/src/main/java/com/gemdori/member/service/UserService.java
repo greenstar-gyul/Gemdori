@@ -32,6 +32,14 @@ public interface UserService {
     void resetLoginFailCount(String userCode);
     // 로그인 실패 5회 시 계정 잠김
     void lockUserAccount(String userCode);
+    // 마지막 로그인 시간 저장
+    boolean updateLastLoginDate(String userCode);
     // 비밀번호 재발급 시 유저 보안 정보 변경
     boolean resetSecurityAfterPwUpdate(String userCode);
+    // 회원 프로필 수정
+    boolean updateUserProfile(UserProfileVO userProfile);
+    // 회원 정보 수정 후 재확인
+    UserFullVO selectUserByUserCode(String userCode);
+    // 비밀번호 변경
+    boolean changePassword(String userCode, String currentPw, String newPw);
 }

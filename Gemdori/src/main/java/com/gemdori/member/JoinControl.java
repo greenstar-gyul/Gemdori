@@ -49,7 +49,8 @@ public class JoinControl implements Control {
             profileVO.setUserEmail(userEmail);
             profileVO.setUserPhone(userPhone);
             profileVO.setUserGender(userGender);
-
+            profileVO.setUserImage("profile_img.png");
+            
             // 생일은 문자열로 넘어오기 때문에 Date로 변환
             try {
                 if (userBirthday != null && !userBirthday.isEmpty()) {
