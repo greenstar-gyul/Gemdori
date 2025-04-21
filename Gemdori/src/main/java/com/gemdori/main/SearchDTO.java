@@ -14,4 +14,6 @@ public class SearchDTO {
     
     private int page;     // 요청된 페이지 번호 (1부터)
     private int size;     // 한 페이지당 아이템 수
+
+    private String dlc; // dlc 포함여부
 }

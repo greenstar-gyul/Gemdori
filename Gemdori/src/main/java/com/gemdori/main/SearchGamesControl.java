@@ -38,6 +38,7 @@ public class SearchGamesControl implements Control {
         dto.setPublishing(nullToEmpty(req.getParameter("publishing")));
         dto.setRating(    nullToEmpty(req.getParameter("rating"))   );
         dto.setSort(      nullToEmpty(req.getParameter("sort"))     );
+        dto.setDlc(       nullToEmpty(req.getParameter("dlc"))   );
 
         int page = parseInt(req.getParameter("page"), 1);
         int size = parseInt(req.getParameter("size"), 9);
