@@ -22,7 +22,12 @@ import com.gemdori.member.JoinFormControl;
 import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LoginControl;
 import com.gemdori.member.LogoutControl;
+import com.gemdori.member.MyInfoControl;
 import com.gemdori.member.SendEmailControl;
+import com.gemdori.member.UpdatePasswordControl;
+import com.gemdori.member.UpdatePasswordFormControl;
+import com.gemdori.member.UpdateProfileControl;
+import com.gemdori.member.UpdateProfileFormControl;
 import com.gemdori.member.VerifyEmailCodeControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
@@ -70,7 +75,13 @@ public class FrontController extends HttpServlet {
 		map.put("/checkId.do", new CheckIdControl()); // 회원가입 - 아이디 중복 확인
 		map.put("/sendEmailCode.do", new SendEmailControl()); // 회원가입 - 이메일 인증코드 보내기
 		map.put("/verifyEmailCode.do", new VerifyEmailCodeControl()); // 회원가입 - 이메일 인증코드 일치확인
-
+		// 회원정보 컨트롤
+		map.put("/myInfo.do", new MyInfoControl()); // 회원정보 페이지 이동
+		map.put("/updateProfileForm.do", new UpdateProfileFormControl()); // 회원정보 수정 페이지 이동
+		map.put("/updateProfile.do", new UpdateProfileControl()); // 회원정보 수정 업데이트
+		map.put("/updatePasswordForm.do", new UpdatePasswordFormControl()); // 회원 비밀번호 변경 페이지 이동
+		map.put("/updatePassword.do", new UpdatePasswordControl()); // 회원 비밀번호 변경
+		
 		/* ******************************
 		 * 구매 관련 요청
 		 * ******************************/

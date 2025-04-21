@@ -51,6 +51,16 @@
 		</div>
 	</div>
 </section>
+<c:if test="${param.message eq 'changeSuccess'}">
+  <script>
+    alert("비밀번호가 성공적으로 변경되었습니다.\n다시 로그인해 주세요.");
+    if (window.history.replaceState) {
+        const url = new URL(window.location);
+        url.searchParams.delete("message");
+        window.history.replaceState({}, document.title, url.pathname);
+      }
+  </script>
+</c:if>
 <!-- Login Section End -->
 <script src="js/member/loginForm.js"></script>
 <link rel="stylesheet" href="css/gemdori/loginForm.css" type="text/css">

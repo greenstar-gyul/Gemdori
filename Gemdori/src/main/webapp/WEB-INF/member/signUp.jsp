@@ -45,6 +45,7 @@
 						</div>
 						<div class="input__item">
 							<input type="password" name="userCpw" id="userCpw" placeholder="비밀번호 확인" required onblur="checkPasswordMatch()"><span class="icon_lock"></span>
+							<div id="pw-match-result" style="color: red; font-size: 0.9em; margin-top: 5px;"></div>
 						</div>
 					</div>
 				</div>
