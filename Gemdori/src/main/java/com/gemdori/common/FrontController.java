@@ -37,6 +37,8 @@ import com.gemdori.purchase.GamePackageControl;
 import com.gemdori.purchase.RemoveCartItemControl;
 import com.gemdori.purchase.SuccessControl;
 import com.gemdori.review.ReviewAddControl;
+import com.gemdori.review.ReviewListControl;
+import com.gemdori.review.ReviewRemoveControl;
 import com.gemdori.user.TempSessionControl;
 
 
@@ -60,6 +62,8 @@ public class FrontController extends HttpServlet {
 		map.put("/gameDetails.do", new GameDetailsControl());
 		map.put("/searchGames.do", new SearchGamesControl());
 		map.put("/reviewAdd.do", new ReviewAddControl());
+		map.put("/reviewList.do", new ReviewListControl()); // 리뷰 목록 조회 컨트롤러
+		map.put("/removeReview.do", new ReviewRemoveControl()); //  리뷰 삭제 컨트롤러
 
 		/* ******************************
 		 * 회원 관련 요청

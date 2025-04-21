@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- Breadcrumb Begin -->
 <div class="breadcrumb-option">
@@ -27,9 +28,13 @@
             </div>
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="gemdori__details__pic set-bg" data-setbg="${game.gameMainImage}">
-                    </div>
-                </div>
+                	<div class="hero__slider owl-carousel">
+					<c:forEach var="gameImage" items="${game.imageList}">
+						<div class="hero__items set-bg" data-setbg="${gameImage}" style="height: 524.5px;">
+						</div>
+					</c:forEach>
+					</div>
+				</div>
                 <div class="col-lg-4">
                     <div class="gemdori__details__text">
                         <div class="gemdori__details__rating">
@@ -144,82 +149,75 @@
                     </div>
                 </div>
             </div>
-                <br>
-                <div class="row">
-                    <div class="col-lg-8 col-md-8 main-contents-bg">
-                        <div class="gemdori__details__review">
-                            <div class="contents-title">
-                                <h5>Reviews</h5>
-                            </div>
-                            <div class="gemdori__review__item">
-                                <div class="gemdori__review__item__pic">
-                                    <img src="img/gemdori/review-1.jpg" alt="">
-                                </div>
-                                <div class="gemdori__review__item__text">
-                                    <h6>Chris Curry - <span>1 Hour ago</span></h6>
-                                    <p>whachikan Just noticed that someone categorized this as belonging to the genre
-                                    "demons" LOL</p>
-                                </div>
-                            </div>
-                            <div class="gemdori__review__item">
-                                <div class="gemdori__review__item__pic">
-                                    <img src="img/gemdori/review-2.jpg" alt="">
-                                </div>
-                                <div class="gemdori__review__item__text">
-                                    <h6>Lewis Mann - <span>5 Hour ago</span></h6>
-                                    <p>Finally it came out ages ago</p>
-                                </div>
-                            </div>
-                            <div class="gemdori__review__item">
-                                <div class="gemdori__review__item__pic">
-                                    <img src="img/gemdori/review-3.jpg" alt="">
-                                </div>
-                                <div class="gemdori__review__item__text">
-                                    <h6>Louis Tyler - <span>20 Hour ago</span></h6>
-                                    <p>Where is the episode 15 ? Slow update! Tch</p>
-                                </div>
-                            </div>
-                            <div class="gemdori__review__item">
-                                <div class="gemdori__review__item__pic">
-                                    <img src="img/gemdori/review-4.jpg" alt="">
-                                </div>
-                                <div class="gemdori__review__item__text">
-                                    <h6>Chris Curry - <span>1 Hour ago</span></h6>
-                                    <p>whachikan Just noticed that someone categorized this as belonging to the genre
-                                    "demons" LOL</p>
-                                </div>
-                            </div>
-                            <div class="gemdori__review__item">
-                                <div class="gemdori__review__item__pic">
-                                    <img src="img/gemdori/review-5.jpg" alt="">
-                                </div>
-                                <div class="gemdori__review__item__text">
-                                    <h6>Lewis Mann - <span>5 Hour ago</span></h6>
-                                    <p>Finally it came out ages ago</p>
-                                </div>
-                            </div>
-                            <div class="gemdori__review__item">
-                                <div class="gemdori__review__item__pic">
-                                    <img src="img/gemdori/review-6.jpg" alt="">
-                                </div>
-                                <div class="gemdori__review__item__text">
-                                    <h6>Louis Tyler - <span>20 Hour ago</span></h6>
-                                    <p>Where is the episode 15 ? Slow update! Tch</p>
-                                </div>
-                            </div>
+            <br>
+            <div class="row">
+                <div class="col-lg-8 col-md-8 main-contents-bg">
+                    <div class="gemdori__details__review">
+                        <div class="contents-title">
+                            <h5>Reviews</h5>
                         </div>
-                        <div class="gemdori__details__form">
-                            <div class="section-title">
-                                <h5>Your Comment</h5>
-                            </div>
-                            <form id="reviewForm" action="#">
-                                <textarea name="reviewContent" placeholder="Your Comment" required></textarea>
-                                <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
-                            </form>
+                        <div id="reviewListContainer">
+                            
+                            <p>리뷰를 불러오는 중입니다...</p>
                         </div>
+                    </div>
+                    <div class="gemdori__details__form">
+                        <div class="section-title">
+                            <h5>Your Comment</h5>
+                        </div>
+                        <%-- ▼▼▼ 리뷰 등록 폼 수정 시작 ▼▼▼ --%>
+                        <c:choose>
+                            <c:when test="${empty sessionScope.loginUser}">
+                                <%-- 1. 로그인 안했을 때: 로그인 안내 메시지 표시 --%>
+                                <p><a href="${pageContext.request.contextPath}/loginForm.do">로그인</a> 후 리뷰를 작성할 수 있습니다.</p>
+                            </c:when>
+                            <c:otherwise>
+                                <%-- 2. 로그인 했을 때: 폼 표시 --%>
+
+                                <%-- 2-1. 서버(Controller)에서 전달된 오류 메시지 표시 영역 --%>
+                                <div id="reviewErrorMsg" style="color: red; margin-bottom: 10px;">
+                                    <%-- requestScope에 errorMsg 속성이 있으면 그 값을 출력 --%>
+                                    <c:if test="${not empty errorMsg}">
+                                        ${errorMsg}
+                                    </c:if>
+                                </div>
+
+                                <%-- 2-2. 기존 폼 구조 유지 --%>
+                                <form id="reviewForm" action="reviewAdd.do" method="post">
+                                    <input type="hidden" name="gameCode" value="${game.gameCode}"/>
+                                    <textarea name="reviewContents" placeholder="Your Comment" required></textarea>
+
+                                    <%-- 2-3. 별점 select 수정 (0.5 단위 추가, 기본 옵션 추가) --%>
+                                    <label>Rating: </label>
+                                    <div class="star-rating" style="display: inline-block; font-size: 1.5em; cursor: pointer; color: #ffca08;">
+                                        <%--
+                                            별 아이콘 5개를 0.5점 단위로 표시하기 위해 총 10개의 반쪽 별 영역(span)을 만듭니다.
+                                            각 span은 data-value 속성에 해당 위치까지의 누적 점수를 가집니다.
+                                            초기에는 모두 빈 별(fa-star-o) 아이콘으로 표시됩니다.
+                                            (Font Awesome 라이브러리가 필요합니다.)
+                                        --%>
+                                        <span class="star" data-value="1.0"><i class="fa fa-star-o"></i></span>
+                                        <span class="star" data-value="2.0"><i class="fa fa-star-o"></i></span>
+                                        <span class="star" data-value="3.0"><i class="fa fa-star-o"></i></span>
+                                        <span class="star" data-value="4.0"><i class="fa fa-star-o"></i></span>
+                                        <span class="star" data-value="5.0"><i class="fa fa-star-o"></i></span>
+                                        <span class="current-rating" style="margin-left: 10px; font-size: 0.8em; color: #555;">(0.0 점)</span> <%-- 선택된 점수를 텍스트로 보여줄 영역 --%>
+                                    </div>
+                                    <%--
+                                        사용자가 클릭한 최종 별점 값을 서버로 전송하기 위한 hidden input 필드입니다.
+                                        name="rating"은 Controller에서 req.getParameter("rating")으로 받을 이름과 동일해야 합니다.
+                                        id="ratingValue"는 JavaScript에서 이 필드의 값을 업데이트하기 위해 사용됩니다.
+                                    --%>
+                                    <input type="hidden" name="rating" id="ratingValue" value="">
+
+                                    <button type="submit"><i class="fa fa-location-arrow"></i> Review</button>
+                                </form>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
 </section>
 <!-- Js Plugins -->
@@ -232,6 +230,10 @@
 <script src="js/owl.carousel.min.js"></script>
 <script src="js/main.js"></script>
 <script>
+const currentGameCode = "${game.gameCode}";
+const loggedInUserCode = "${sessionScope.loginUser != null ? sessionScope.loginUser.userCode : ''}";
+const contextPath = "${pageContext.request.contextPath}";
+
 <!-- 장바구니 관련 JavaScript 로직 추가 -->
 $(document).ready(function() {
     // 장바구니 추가 버튼 클릭 이벤트
@@ -376,3 +378,4 @@ $(document).ready(function() {
     checkCartStatus();
 });
 </script>
+<script src="js/main/review.js"></script>
