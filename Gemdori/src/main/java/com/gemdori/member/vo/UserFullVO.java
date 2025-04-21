@@ -22,10 +22,11 @@ public class UserFullVO {
     private String userGender;
     private String userIntro;
     private String userImage;
-    
-    // 유저 보안 정보
-	private int loginFailCount;
-	private Date lastLoginDate;
-	private int isLocked;
-	private Date updateTime;
+    private Date updateTime; // from profile_tbl => 포르필 수정 일자
+
+    // 유저 보안 정보 (security_tbl)
+    private int loginFailCount;
+    private Date lastLoginDate;
+    private int isLocked;
+    private Date securityUpdateTime; // 비밀번호 수정일자(프로필 수정일자와 DB명이 같아서 rename)
 }

@@ -192,12 +192,17 @@ document.addEventListener("DOMContentLoaded", function () {
 function checkPasswordMatch() {
 	const pw = document.getElementById("userPw");
 	const cpw = document.getElementById("userCpw");
+	const resultDiv = document.getElementById("pw-match-result");
 
-	if (pw.value && cpw.value && pw.value !== cpw.value) {
-		alert("비밀번호가 일치하지 않습니다.");
-		pw.value = "";
-		cpw.value = "";
-		pw.focus();
+	if (pw.value && cpw.value) {
+		if (pw.value !== cpw.value) {
+			resultDiv.textContent = "비밀번호가 일치하지 않습니다.";
+			cpw.focus();
+		} else {
+			resultDiv.textContent = ""; // 일치하면 메시지 제거
+		}
+	} else {
+		resultDiv.textContent = ""; // 입력이 없으면 메시지 제거
 	}
 }
 // 이름 입력 시 숫자, 특수문자 입력 방지
