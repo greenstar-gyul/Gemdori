@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gemdori.community.TopicListControl;
 import com.gemdori.community.CommunityControl;
-import com.gemdori.community.PostControl;
-import com.gemdori.community.PostregistrationControl;
+import com.gemdori.community.TopicControl;
+import com.gemdori.community.TopicregistrationControl;
 import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
 import com.gemdori.main.SearchGamesControl;
@@ -65,10 +66,11 @@ public class FrontController extends HttpServlet {
 		map.put("/searchGames.do", new SearchGamesControl());
 
 		map.put("/community.do", new CommunityControl());
-		map.put("/post.do", new PostControl());
-		map.put("/topicRegistration.do", new PostregistrationControl());
+		map.put("/topic.do", new TopicControl());
+		map.put("/topicRegistration.do", new TopicregistrationControl());
 		map.put("/success.do", new SuccessControl());
 		map.put("/gameDetails.do", new GameDetailsControl());
+		map.put("/topicList.do", new TopicListControl());
 	}
 
 	// service.
