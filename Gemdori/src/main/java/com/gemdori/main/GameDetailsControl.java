@@ -1,10 +1,14 @@
 package com.gemdori.main;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang.StringEscapeUtils;
 
 import com.gemdori.common.Control;
 import com.gemdori.main.service.GameService;
@@ -12,7 +16,6 @@ import com.gemdori.main.service.GameServiceImpl;
 import com.gemdori.main.vo.GameVO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.commons.lang.StringEscapeUtils;
 
 public class GameDetailsControl implements Control {
 
@@ -23,6 +26,16 @@ public class GameDetailsControl implements Control {
 
         GameService service = new GameServiceImpl();
         GameVO game = service.getGameByCode(gameCode);
+        
+        // Json 객체로 담긴 이미지 리스트를, Java 객체의 이미지 리스트로 변환
+        String descImagesJson = game.getDescImages(); 
+        
+        Gson gson = new GsonBuilder().create();
+        List<String> descImagesList = Arrays.asList(gson.fromJson(descImagesJson, String[].class));
+        
+        game.setImageList(descImagesList);
+        
+        System.out.println(game);
 
         // 최소사양
         String requirements = game.getGameSysReq();
