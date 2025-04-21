@@ -12,12 +12,35 @@
 										TOPIC_TITLE,
 										TOPIC_CONTENTS,
 										WRITE_DATE)
-        VALUES (TOPIC_SEQ.nextval,
+        VALUES ('T' || TOPIC_SEQ.nextval,
                 #{userCode},
                 #{gameCode},
                  #{topicTitle},
                   #{topicContents},
                   sysDate)
     </insert>
-
+    <!-- 게시글 목록 조회 -->
+    <select id="selectTopicList" resultType="com.gemdori.community.vo.TopicVO">
+        SELECT 
+            TOPIC_CODE,
+            USER_CODE,
+            GAME_CODE,
+            TOPIC_TITLE,
+            TOPIC_CONTENTS,
+            WRITE_DATE
+        FROM gemdori_topic_tbl
+    </select>
+    <!-- 게시글 상세 조회 -->
+<select id="selectTopicByCode" parameterType="String" resultType="com.gemdori.community.vo.TopicVO">
+    SELECT 
+        TOPIC_CODE,
+        USER_CODE,
+        GAME_CODE,
+        TOPIC_TITLE,
+        TOPIC_CONTENTS,
+        WRITE_DATE
+    FROM gemdori_topic_tbl
+    WHERE TOPIC_CODE = #{topicCode}
+</select>
+    
 </mapper>

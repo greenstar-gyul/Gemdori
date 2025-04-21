@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gemdori.community.TopicDetailControl;
+//import com.gemdori.community.CommunityControl;
+import com.gemdori.community.TopicFormControl;
 import com.gemdori.community.TopicListControl;
-import com.gemdori.community.CommunityControl;
-import com.gemdori.community.TopicControl;
 import com.gemdori.community.TopicregistrationControl;
 import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
@@ -23,16 +24,16 @@ import com.gemdori.member.FindPasswordFormControl;
 import com.gemdori.member.GenerateTempPasswordControl;
 import com.gemdori.member.JoinControl;
 import com.gemdori.member.JoinFormControl;
-import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LoginControl;
+import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LogoutControl;
 import com.gemdori.member.SendEmailControl;
 import com.gemdori.member.VerifyEmailCodeControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
-import com.gemdori.review.ReviewAddControl;
 import com.gemdori.purchase.SuccessControl;
+import com.gemdori.review.ReviewAddControl;
 import com.gemdori.user.TempSessionControl;
 
 
@@ -83,13 +84,16 @@ public class FrontController extends HttpServlet {
 		map.put("/checkout.do", new CheckOutControl());
 		map.put("/searchGames.do", new SearchGamesControl());
 
-		map.put("/community.do", new CommunityControl());
-		map.put("/topic.do", new TopicControl());
+		//map.put("/community.do", new CommunityControl());
+		map.put("/topicform.do", new TopicFormControl()); // 2
 		map.put("/topicRegistration.do", new TopicregistrationControl());
+		map.put("/topicDetail.do", new TopicDetailControl());
 		map.put("/success.do", new SuccessControl());
 		map.put("/gameDetails.do", new GameDetailsControl());
 		map.put("/topicList.do", new TopicListControl());
 		map.put("/tempSession.do", new TempSessionControl());
+		
+
 	}
 
 	// service.

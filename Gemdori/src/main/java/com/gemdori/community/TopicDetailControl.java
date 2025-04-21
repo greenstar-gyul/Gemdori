@@ -8,12 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.gemdori.common.Control;
 
-public class TopicControl implements Control {
+public class TopicDetailControl implements Control {
 
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// 글쓰기 화면으로 이동
-		req.getRequestDispatcher("community/post.tiles").forward(req, resp);
-	}
-}
+		// TODO Auto-generated method stub
 
+	}
+
+}

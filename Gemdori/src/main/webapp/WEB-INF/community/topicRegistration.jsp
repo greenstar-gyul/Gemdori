@@ -12,6 +12,14 @@
 <h2>글쓰기</h2>
 
 <form action="topicRegistration.do" method="post">
+
+<select name="gameCode">
+<c:forEach var="game" items="${gamelist}">
+  <option value = "${game.gameCode }"> ${game.gameTitle}
+  </option>
+  </c:forEach>
+</select>
+<br><br>
     <label>제목</label><br>
     <input type="text" name="topicTitle" required style="width: 400px;"><br><br>
 
