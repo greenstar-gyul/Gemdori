@@ -7,20 +7,118 @@
 
   <!-- 검색 + 페이징 -->
   <select id="searchGames" parameterType="map" resultType="gameVO">
-    SELECT * FROM (
-      SELECT inner_q.*, ROWNUM rnum
-      FROM (
-        SELECT * 
-          FROM gemdori_game_tbl
-         WHERE 1=1
+      SELECT * FROM (
+           SELECT inner_q.*, ROWNUM rnum
+           FROM (
+              SELECT g.game_code         AS "game_code",
+                     g.game_title        AS "game_title",
+                     g.game_desc         AS "game_desc",
+                     g.game_contents     AS "game_contents",
+                     g.game_developer    AS "game_developer",
+                     g.game_publisher    AS "game_publisher",
+                     g.publishing_date   AS "publishing_date",
+                     NVL(g.game_price,0) AS "game_price",
+                     g.game_sale_price   AS "game_salePrice",
+                     g.discount_per      AS "discount_per",
+                     g.language_sup      AS "language_sup",
+                     g.required_age      AS "required_age",
+                     g.legal_notice      AS "legal_notice",
+                     g.free_game         AS "free_game",
+                     g.website           AS "website",
+                     g.game_genre        AS "game_genre",
+                     g.game_category     AS "game_category",
+                     g.game_tag          AS "game_tag",
+                     g.game_main_image   AS "game_main_image",
+                     g.desc_images       AS "desc_images",
+                     g.game_sys_req      AS "game_sys_req",
+                     g.game_sys_req_r    AS "game_sys_req_r",
+                     g.dlc_game          AS "dlc_game",
+                     g.parent_game       AS "parent_game",
+                  (
+                  SELECT NVL(AVG(r.rating), 0)
+                  FROM gemdori_review_tbl r
+                  WHERE r.game_code = g.game_code
+                  ) AS gameRating
+           FROM gemdori_game_tbl g
+           WHERE 1=1
            <if test="dto.keyword != null and dto.keyword != ''">
              AND LOWER(game_title) LIKE '%' || LOWER(#{dto.keyword}) || '%'
            </if>
            <if test="dto.genres != null and dto.genres != ''">
              AND LOWER(game_genre) LIKE '%' || LOWER(#{dto.genres}) || '%'
            </if>
+          <!-- 가격 필터링 -->
+           <if test="dto.prices != null">
+               <if test="dto.prices == 'free'">
+                   AND game_price = 0
+               </if>
+               <if test="dto.prices == 'under20000'">
+                   <![CDATA[
+                   AND game_price < 20000
+                   ]]>
+               </if>
+               <if test="dto.prices == 'under40000'">
+                   <![CDATA[
+                   AND game_price < 40000
+                   ]]>
+               </if>
+               <if test="dto.prices == 'under60000'">
+                   <![CDATA[
+                   AND game_price < 60000
+                   ]]>
+               </if>
+               <if test="dto.prices == 'over60000'">
+                   <![CDATA[
+                   AND game_price >= 60000
+                   ]]>
+               </if>
+           </if>
+          <!-- 평점 필터링 -->
+          <if test="dto.rating != null and dto.rating != ''">
+              <choose>
+                  <when test="dto.rating == '0'">
+                    <![CDATA[
+                      AND game_rating < 1
+                      ]]>
+                  </when>
+                  <otherwise>
+                    <![CDATA[
+                      AND game_rating >= #{dto.rating}
+                      ]]>
+                  </otherwise>
+              </choose>
+          </if>
+          <!-- DLC 필터링 -->
+          <choose>
+              <when test="dto.dlc == 'origin'">
+                  AND parent_game IS NULL
+              </when>
+              <when test="dto.dlc == 'dlc'">
+                  AND parent_game IS NOT NULL
+              </when>
+          </choose>
            <!-- …추가 필터… -->
-         ORDER BY publishing_date DESC
+         <!-- 정렬 -->
+         <choose>
+             <when test="dto.sort == 'newest'">
+                 ORDER BY publishing_date DESC, game_code
+             </when>
+             <when test="dto.sort == 'oldest'">
+                 ORDER BY publishing_date, game_code
+             </when>
+             <when test="dto.sort == 'rating'">
+                 ORDER BY game_rating DESC, game_code
+             </when>
+             <when test="dto.sort == 'price_low'">
+                 ORDER BY game_price, game_code
+             </when>
+             <when test="dto.sort == 'price_high'">
+                 ORDER BY game_price DESC, game_code
+             </when>
+             <otherwise>
+                ORDER BY game_code
+             </otherwise>
+         </choose>
       ) inner_q
       <![CDATA[
       WHERE ROWNUM <= #{endRow}
@@ -30,18 +128,116 @@
   </select>
 
   <!-- 전체 개수 -->
-  <select id="countSearchGames"
-          parameterType="com.gemdori.main.SearchDTO"
-          resultType="int">
-    SELECT COUNT(*) FROM gemdori_game_tbl
-     WHERE 1=1
-       <if test="keyword != null and keyword != ''">
-         AND LOWER(game_title) LIKE '%' || LOWER(#{keyword}) || '%'
-       </if>
-       <if test="genres != null and genres != ''">
-         AND LOWER(game_genre) LIKE '%' || LOWER(#{genres}) || '%'
-       </if>
-       <!-- …추가 필터… -->
+  <select id="countSearchGames" parameterType="com.gemdori.main.SearchDTO" resultType="int">
+      SELECT COUNT(*)
+      FROM (
+      SELECT g.game_code         AS "game_code",
+             g.game_title        AS "game_title",
+             g.game_desc         AS "game_desc",
+             g.game_contents     AS "game_contents",
+             g.game_developer    AS "game_developer",
+             g.game_publisher    AS "game_publisher",
+             g.publishing_date   AS "publishing_date",
+             NVL(g.game_price,0) AS "game_price",
+             g.game_sale_price   AS "game_salePrice",
+             g.discount_per      AS "discount_per",
+             g.language_sup      AS "language_sup",
+             g.required_age      AS "required_age",
+             g.legal_notice      AS "legal_notice",
+             g.free_game         AS "free_game",
+             g.website           AS "website",
+             g.game_genre        AS "game_genre",
+             g.game_category     AS "game_category",
+             g.game_tag          AS "game_tag",
+             g.game_main_image   AS "game_main_image",
+             g.desc_images       AS "desc_images",
+             g.game_sys_req      AS "game_sys_req",
+             g.game_sys_req_r    AS "game_sys_req_r",
+             g.dlc_game          AS "dlc_game",
+             g.parent_game       AS "parent_game",
+             (
+             SELECT NVL(AVG(r.rating), 0)
+             FROM gemdori_review_tbl r
+             WHERE r.game_code = g.game_code
+             ) AS gameRating
+      FROM gemdori_game_tbl g
+      WHERE 1=1
+      <if test="keyword != null and keyword != ''">
+          AND LOWER(game_title) LIKE '%' || LOWER(#{keyword}) || '%'
+      </if>
+      <if test="genres != null and genres != ''">
+          AND LOWER(game_genre) LIKE '%' || LOWER(#{genres}) || '%'
+      </if>
+      <!-- 가격 필터링 -->
+      <if test="prices != null and prices != ''">
+          <if test="prices == 'free'">
+              AND game_price = 0
+          </if>
+          <if test="prices == 'under20000'">
+              <![CDATA[
+                   AND game_price < 20000
+                   ]]>
+          </if>
+          <if test="prices == 'under40000'">
+              <![CDATA[
+                   AND game_price < 40000
+                   ]]>
+          </if>
+          <if test="prices == 'under60000'">
+              <![CDATA[
+                   AND game_price < 60000
+                   ]]>
+          </if>
+          <if test="prices == 'over60000'">
+              <![CDATA[
+                   AND game_price >= 60000
+                   ]]>
+          </if>
+      </if>
+      <!-- 평점 필터링 -->
+      <if test="rating != null and rating != ''">
+          <choose>
+              <when test="rating == '0'">
+                  <![CDATA[
+                      AND game_rating < 1
+                      ]]>
+              </when>
+              <otherwise>
+                  <![CDATA[
+                      AND game_rating >= #{rating}
+                      ]]>
+              </otherwise>
+          </choose>
+      </if>
+      <!-- DLC 필터링 -->
+      <choose>
+          <when test="dlc == 'origin'">
+              AND parent_game IS NULL
+          </when>
+          <when test="dlc == 'dlc'">
+              AND parent_game IS NOT NULL
+          </when>
+      </choose>
+      <!-- …추가 필터… -->
+      <!-- 정렬 -->
+      <choose>
+          <when test="sort == 'newest'">
+              ORDER BY publishing_date DESC, game_code
+          </when>
+          <when test="sort == 'rating'">
+              ORDER BY game_rating DESC, game_code
+          </when>
+          <when test="sort == 'price_low'">
+              ORDER BY game_price, game_code
+          </when>
+          <when test="sort == 'price_high'">
+              ORDER BY game_price DESC, game_code
+          </when>
+          <otherwise>
+              ORDER BY game_code
+          </otherwise>
+      </choose>
+      ) inner_q
   </select>
 
   <!-- 단건 조회 -->

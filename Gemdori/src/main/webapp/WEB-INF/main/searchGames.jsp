@@ -48,14 +48,13 @@
                     <option value="over60000">6만원 이상</option>
                   </select>
                 </div>
-                <!-- 출시일 -->
+                <!-- DLC 포함여부 -->
                 <div class="filter-item">
-                  <label>출시일:</label>
-                  <select class="filter-select" name="publishing">
-                    <option value="">전체</option>
-                    <option value="week">1주일 이내</option>
-                    <option value="month">1개월 이내</option>
-                    <option value="year">1년 이내</option>
+                  <label>DLC 보기:</label>
+                  <select name="dlc" class="filter-select">
+                    <option value="all" selected>전체</option>
+                    <option value="origin">DLC 제외</option>
+                    <option value="dlc">DLC만 보기</option>
                   </select>
                 </div>
                 <!-- 평점 -->
@@ -67,6 +66,7 @@
                     <option value="3">3점 이상</option>
                     <option value="2">2점 이상</option>
                     <option value="1">1점 이상</option>
+                    <option value="0">1점 미만</option>
                   </select>
                 </div>
               </div>
@@ -155,6 +155,7 @@
               <select name="sort" class="result-options-select" id="sort-select">
                 <option value="relevance">관련성</option>
                 <option value="newest">최신순</option>
+                <option value="oldest">오래된순</option>
                 <option value="rating">평점순</option>
                 <option value="price_low">가격 낮은순</option>
                 <option value="price_high">가격 높은순</option>
