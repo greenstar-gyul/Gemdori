@@ -10,7 +10,7 @@ import com.gemdori.main.vo.GameVO;
 
 public interface GameMapper {
 
-    List<GameVO> searchGames(@Param("dto") SearchDTO dto, @Param("offset") int offset, @Param("limit")  int limit);
+    List<GameVO> searchGames(Map<String, Object> map);
     int          countSearchGames(SearchDTO dto);
     GameVO       getGameByCode(String gameCode);
     // 1. 게임 코드로 게임 정보 가져오기

@@ -18,23 +18,26 @@
                             <div class="hero__text">
                                 <h2>${game.gameTitle}</h2>
                                 <p>${game.gameDesc}</p>
-                                <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
-                            </div>
-            <c:forEach var="game" items="${gameList}">
-                <div class="hero__items set-bg"
-                     data-setbg="${pageContext.request.contextPath}/resources/images/${game.gameMainImage}"
-                     style="height: 524.5px;">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="hero__text">
-                                <h2>${game.gameTitle}</h2>
-                                <p>${game.gameContents}</p>
-                                <a href="#"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
+                                <a href="gameDetails.do?gameCode=${game.gameCode}"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
                             </div>
                         </div>
                     </div>
+                    <c:forEach var="game" items="${gameList}">
+                        <div class="hero__items set-bg"
+                             data-setbg="https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg"
+                             style="height: 524.5px;">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="hero__text">
+                                        <h2>${game.gameTitle}</h2>
+                                        <p>${game.gameContents}</p>
+                                        <a href="gameDetails.do?gameCode=${game.gameCode}"><span>Play Game</span> <i class="fa fa-angle-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
-            </c:forEach>
             </c:forEach>
         </div>
     </div>
@@ -367,9 +370,13 @@
                     <!-- 최근 게임 반복문 -->
                     <div class="row">
                         <c:forEach var="game" items="${latestGameList}">
+                            <c:set var="appid" value="${fn:substring(game.gameCode, 1, fn:length(game.gameCode))}" />
+                            <c:set var="fallbackImg" value="${fn:escapeXml(game.gameMainImage)}" />
 						    <div class="col-lg-4 col-md-6 col-sm-6">
 						        <div class="product__item">
-						            <div class="product__item__pic set-bg" data-setbg="${game.gameMainImage}">
+						            <div class="product__item__pic set-bg"
+                                         data-setbg="https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg"
+                                         data-fallback="${fallbackImg}">
 						                <%-- 필요 없으면 ep/comment/view는 생략 가능 --%>
 						            </div>
 						            <div class="product__item__text">

@@ -1,6 +1,8 @@
 package com.gemdori.main.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -20,7 +22,13 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public List<GameVO> searchGames(SearchDTO dto, int offset, int limit) {
-        return gameMapper.searchGames(dto, offset, limit);
+        Map<String, Object> map = new HashMap<String, Object>();
+        int start = offset;
+        int end = offset + limit;
+        map.put("dto", dto);
+        map.put("startRow", start);
+        map.put("endRow", end);
+        return gameMapper.searchGames(map);
     }
 
 

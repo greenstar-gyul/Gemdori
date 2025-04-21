@@ -1,7 +1,9 @@
 package com.gemdori.main;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,8 @@ import com.gemdori.main.PageDTO;
 import com.gemdori.main.service.GameService;
 import com.gemdori.main.service.GameServiceImpl;
 import com.gemdori.main.vo.GameVO;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * /searchGames.do
@@ -50,6 +54,20 @@ public class SearchGamesControl implements Control {
         // 4) 실제 검색 수행 (offset 계산)
         int offset = (page - 1) * size;
         List<GameVO> games = svc.searchGames(dto, offset, size);
+
+        // ✅ JSON 요청이면 JSON으로 응답
+        if ("1".equals(req.getParameter("ajax"))) {
+            resp.setContentType("text/json; charset=UTF-8");
+
+            Map<String, Object> result = new HashMap<>();
+            result.put("items", games);
+            result.put("total", total);
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            String json = gson.toJson(result);
+            resp.getWriter().write(json);
+            return;
+        }
 
         // 5) View에 값 전달
         req.setAttribute("games",    games);

@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<link rel="stylesheet" href="css/gemdori/gameDetails.css" type="text/css">
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- Breadcrumb Begin -->
@@ -22,7 +19,7 @@
 </div>
 <!-- Breadcrumb End -->
 
-<!-- Anime Section Begin -->
+<!-- Gemdori Section Begin -->
 <section class="gemdori-details spad">
     <div class="container">
         <div class="gemdori__details__content">
@@ -70,7 +67,30 @@
                         </div>
                     </div>
                     <br>
-                    
+                    <!-- 나머지 영역은 원래 코드에서 필요한 만큼 계속 채워가면 됨 -->
+                    <div class="system-req">
+                        <h4 class="title">시스템 요구사항</h4>
+                        <div class="row">
+                            <c:choose>
+                                <c:when test="${game.gameSysReqR == ''}">
+                                    <div class="col-md-12 req-column">
+                                        <h5>최소 사양</h5>
+                                        ${game.gameSysReq}
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="col-md-6 req-column">
+                                        <h5>최소 사양</h5>
+                                        ${game.gameSysReq}
+                                    </div>
+                                    <div class="col-md-6 req-column">
+                                        <h5>권장 사양</h5>
+                                        ${game.gameSysReqR}
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-lg-4 col-md-4">
                     <div class="gemdori__details__widget">
@@ -84,7 +104,16 @@
                                     <li><span>장르</span><br> ${game.gameGenre}</li>
                                     <li><span>언어</span><br> ${game.languageSup}</li>
                                     <li><span>연령 제한</span><br>${game.requiredAge == 0 ? '전체 이용가' : game.requiredAge}</li>
-                                    <li><span>기본 게임</span><br> ${game.parentGame == null ? '원본 게임' : 'DLC (기반: ' + game.parentGame + ')'}</li>
+                                    <li><span>기본 게임</span><br>
+                                        <c:choose>
+                                            <c:when test="${empty game.parentGame}">
+                                                원본 게임
+                                            </c:when>
+                                            <c:otherwise>
+                                                DLC <a href="gameDetails.do?gameCode=${game.parentGame}">원본 게임</a>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
