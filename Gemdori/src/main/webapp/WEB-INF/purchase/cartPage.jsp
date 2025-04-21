@@ -237,7 +237,7 @@
 						<div class="empty-cart">
 							<i class="fa fa-shopping-cart"></i>
 							<p>장바구니가 비어 있습니다.</p>
-							<a href="gamePackage.do" class="continue-shopping">게임 쇼핑하기</a>
+							<a href="searchGames.do" class="continue-shopping">게임 쇼핑하기</a>
 						</div>
 					</c:if>
 
