@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gemdori.common.Control;
+import com.gemdori.member.vo.UserFullVO;
 import com.gemdori.member.vo.UserProfileVO; // UserProfileVO 경로 확인
 import com.gemdori.review.service.ReviewService;
 import com.gemdori.service.impl.ReviewServiceImpl;
@@ -30,6 +31,9 @@ public class ReviewRemoveControl implements Control {
 
         // 1. 요청 파라미터에서 reviewCode 가져오기 (POST 방식으로 온다고 가정)
         String reviewCode = req.getParameter("reviewCode");
+        System.out.println("=========================");
+        System.out.println("review code: " + reviewCode);
+        System.out.println("=========================");
 
         // 2. reviewCode 유효성 검사
         if (reviewCode == null || reviewCode.isEmpty()) {
@@ -41,22 +45,29 @@ public class ReviewRemoveControl implements Control {
             resp.getWriter().write(gson.toJson(errorResult));
             return;
         }
-
-        // 3. 로그인 상태 확인 및 userCode 가져오기
+        
         HttpSession session = req.getSession(false);
-        UserProfileVO loginUser = null;
+
+        UserFullVO loginUser = null; // 세션에서 가져올 사용자 정보를 담을 변수
         String userCode = null;
 
+        // 세션이 존재하고, 세션 안에 로그인 정보가 있는지 확인
         if (session != null) {
+            // 세션에서 "loginUser"라는 이름으로 저장된 객체를 가져옵니다.
+            // (주의!) "loginUser"는 실제 로그인 처리 시 session.setAttribute("loginUser", ...) 했던 이름과 동일해야 합니다.
+            // 가져온 객체를 UserProfileVO 타입으로 형변환 합니다. (로그인 시 UserProfileVO 객체를 저장했다고 가정)
             Object sessionAttribute = session.getAttribute("loginUser");
-            if (sessionAttribute instanceof UserProfileVO) {
-                loginUser = (UserProfileVO) sessionAttribute;
+            if (sessionAttribute instanceof UserFullVO) { // 타입 안정성을 위해 instanceof 확인 추가
+                loginUser = (UserFullVO) sessionAttribute;
                 userCode = loginUser.getUserCode();
+                
             }
+            System.out.println("로그인 정보: " + loginUser);
         }
 
-        if (userCode == null) {
-            logger.warn("로그인되지 않은 사용자의 리뷰 삭제 시도: reviewCode={}", reviewCode);
+        // 로그인 정보가 없는 경우 (세션이 없거나, 세션에 loginUser 속성이 없거나, 타입이 맞지 않음)
+        if (loginUser == null) {
+        	logger.warn("로그인되지 않은 사용자의 리뷰 삭제 시도: reviewCode={}", reviewCode);
             resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unauthorized
             Map<String, Object> errorResult = new HashMap<>();
             errorResult.put("success", false);

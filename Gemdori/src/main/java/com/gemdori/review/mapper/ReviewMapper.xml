@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
 	
@@ -17,7 +17,7 @@
 			WRITE_DATE,
 			GAME_CODE
 		) VALUES (
-			'R' || TO_CHAR(REVIEW_SEQ.NEXTVAL + 99999),
+			'R' || TO_CHAR(REVIEW_SEQ.NEXTVAL),
 			#{userCode},
 			#{reviewContents},
 			#{rating},
@@ -28,7 +28,7 @@
 	</insert>
 	
 	<!-- 특정 게임 리뷰 목록 가져오기 -->
-    <select id="selectReviewByGameCode" parameterType="String" resultType="com.gemdori.review.vo.ReviewVO">
+    <select id="selectReviewByGameCode" parameterType="string" resultType="com.gemdori.review.vo.ReviewVO">
         SELECT
             r.REVIEW_CODE,
             r.USER_CODE,
@@ -46,12 +46,12 @@
     </select>
 
 	<!-- 리뷰 삭제 -->
-    <delete id="deleteReview" parameterType="String">
+    <delete id="deleteReview" parameterType="string">
         DELETE FROM gemdori_review_tbl
         WHERE REVIEW_CODE = #{reviewCode}
     </delete>
     
-    <select id="selectReviewByCode" parameterType="String" resultType="com.gemdori.review.vo.ReviewVO">
+    <select id="selectReviewByCode" parameterType="string" resultType="com.gemdori.review.vo.ReviewVO">
         SELECT REVIEW_CODE, USER_CODE, REVIEW_CONTENTS, RATING, WRITE_DATE, GAME_CODE
         FROM gemdori_review_tbl
         WHERE REVIEW_CODE = #{reviewCode}
