@@ -84,8 +84,11 @@
   <section class="search-results spad">
     <div class="container">
       <div class="row">
+      	<div class="col-lg-2">
+      	</div>
 
         <!-- =========== 사이드바 =========== -->
+        <%--
         <div class="col-lg-4 col-md-6 col-sm-8">
           <div class="category__sidebar" style="position: sticky; top: 80px;">
             <!-- 카테고리 박스 -->
@@ -141,7 +144,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>--%>
 
         <!-- =========== 메인 결과 =========== -->
         <div class="col-lg-8">
@@ -189,6 +192,9 @@
           <div id="pagination" class="pagination"></div>
 
         </div>
+        
+        <div class="col-lg-2">
+      	</div>
       </div>
     </div>
   </section>
