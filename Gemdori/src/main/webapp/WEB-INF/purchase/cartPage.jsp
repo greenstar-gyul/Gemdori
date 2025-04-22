@@ -318,8 +318,8 @@
 								value="${discountAmount}" pattern="#,###" />원</span>
 					</div>
 					<div class="summary-total">
-						<span>총 결제금액</span> <span id="final-amount"><fmt:formatNumber
-								value="${totalAmount - discountAmount}" pattern="#,###" />원</span>
+					    <span>총 결제금액</span> <span id="final-amount"><fmt:formatNumber
+					            value="${finalAmount}" pattern="#,###" />원</span>
 					</div>
 					<button class="checkout-btn" id="checkout-button">결제하기</button>
 
@@ -355,7 +355,22 @@ $(document).ready(function() {
     });
 });
 
-// 장바구니 아이템 삭제 함수
+//30초마다 장바구니 상태 체크
+setInterval(function() {
+    $.ajax({
+        url: 'getCartSummary.do',
+        type: 'GET',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+            // DB 상태와 화면 상태가 다르면 새로고침
+            if (data.itemCount !== parseInt($('#cart-count').text())) {
+                location.reload(true);
+            }
+        }
+    });
+}, 30000);
+
 function removeCartItem(cartCode) {
     if (confirm('정말로 이 상품을 장바구니에서 삭제하시겠습니까?')) {
         // 로딩 스피너 표시
@@ -366,19 +381,42 @@ function removeCartItem(cartCode) {
             url: 'removeCartItem.do',
             type: 'POST',
             data: { cartCode: cartCode },
+            cache: false,
             success: function(response) {
-                // 성공 시 페이지 새로고침
-                window.location.reload();
+                if (response === "success") {
+                    // 강제로 서버에서 새로 데이터 가져오기 (캐시 무시)
+                    window.location.replace('cartPage.do?refresh=' + new Date().getTime());
+                } else {
+                    $('#cart-loading').hide();
+                    alert('상품 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
+                }
             },
-            error: function(xhr, status, error) {
-                // 로딩 스피너 숨기기
+            error: function() {
                 $('#cart-loading').hide();
-                
                 alert('상품 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
-                console.error('Error:', error);
             }
         });
     }
+}
+
+//장바구니 요약 정보 업데이트 함수 수정
+function updateCartSummary() {
+    $.ajax({
+        url: 'getCartSummary.do',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            // 요약 정보 업데이트
+            $('#total-amount').text(numberWithCommas(data.totalAmount) + '원');
+            $('#discount-amount').text(numberWithCommas(data.discountAmount) + '원');
+            $('#final-amount').text(numberWithCommas(data.finalAmount) + '원'); // 직접 계산 대신 서버에서 받은 값 사용
+            $('#cart-loading').hide();
+        },
+        error: function() {
+            // 에러 시 페이지를 새로고침하는 방식으로 폴백
+            location.reload(true);
+        }
+    });
 }
 
 // 숫자 포맷팅 함수 (천 단위 콤마)

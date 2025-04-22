@@ -34,6 +34,7 @@ import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckCartControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
+import com.gemdori.purchase.GetCartSummaryControl;
 import com.gemdori.purchase.PaymentFailControl;
 import com.gemdori.purchase.PaymentSuccessControl;
 import com.gemdori.purchase.RemoveCartItemControl;
@@ -107,6 +108,7 @@ public class FrontController extends HttpServlet {
 		map.put("/tossPayment.do", new TossPaymentController());
 		map.put("/paymentSuccess.do", new PaymentSuccessControl());
 		map.put("/paymentFail.do", new PaymentFailControl());
+		map.put("/getCartSummary.do", new GetCartSummaryControl());
 	}
 
 	// service.

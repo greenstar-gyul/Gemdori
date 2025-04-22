@@ -1,6 +1,7 @@
 package com.gemdori.purchase.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -24,7 +25,7 @@ public interface GemdoriShoppingCartMapper {
     int selectCartItemCountByUser(String userCode);
     
     // 장바구니 총 금액 조회
-    int selectCartTotalAmount(String userCode);
+    Map<String, Object> selectCartTotals(String userCode);
     
     // 장바구니 할인 금액 조회
     int selectCartDiscountAmount(String userCode);

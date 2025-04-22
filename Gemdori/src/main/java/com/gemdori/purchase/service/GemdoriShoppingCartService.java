@@ -1,6 +1,7 @@
 package com.gemdori.purchase.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.gemdori.purchase.vo.GemdoriShoppingCartVO;
 
@@ -21,7 +22,7 @@ public interface GemdoriShoppingCartService {
     int getCartItemCount(String userCode);
     
     // 장바구니 총 금액
-    int getCartTotalAmount(String userCode);
+    Map<String, Object> getCartTotalAmount(String userCode);
 
     // 장바구니 할인 총액
     int getCartDiscountAmount(String userCode);

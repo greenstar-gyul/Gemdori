@@ -10,7 +10,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -57,23 +59,36 @@ public class PaymentService {
         return cartItems;
     }
     
-    // 장바구니 총 금액 계산
-    public int calculateCartTotal(String userCode) {
-        int total = 0;
+ // 장바구니 총 금액, 할인액, 최종 결제액 계산
+    public Map<String, Object> calculateCartTotal(String userCode) {
+        Map<String, Object> total = new HashMap<>();
         SqlSession sqlSession = null;
-        
+
         try {
             sqlSession = sqlSessionFactory.openSession();
             GemdoriShoppingCartMapper cartMapper = sqlSession.getMapper(GemdoriShoppingCartMapper.class);
-            total = cartMapper.selectCartTotalAmount(userCode);
+            total = cartMapper.selectCartTotals(userCode);
+            
+            // 결과가 null인 경우를 대비해 기본값 설정
+            if (total == null) {
+                total = new HashMap<>();
+                total.put("TOTAL_ORIGINAL_PRICE", 0);
+                total.put("TOTAL_DISCOUNT", 0);
+                total.put("TOTAL_PAYMENT", 0);
+            }
         } catch (Exception e) {
             e.printStackTrace();
+            // 예외 시 기본값 설정
+            total = new HashMap<>();
+            total.put("TOTAL_ORIGINAL_PRICE", 0);
+            total.put("TOTAL_DISCOUNT", 0);
+            total.put("TOTAL_PAYMENT", 0);
         } finally {
             if (sqlSession != null) {
                 sqlSession.close();
             }
         }
-        
+
         return total;
     }
     

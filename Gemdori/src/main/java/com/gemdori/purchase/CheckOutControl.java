@@ -1,7 +1,9 @@
 package com.gemdori.purchase;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID; // 고유한 주문 ID 생성을 위해 UUID 임포트
 
 import javax.servlet.ServletException;
@@ -45,9 +47,36 @@ public class CheckOutControl implements Control {
                 return;
             }
 
-            int totalAmount = cartService.getCartTotalAmount(userCode);
-            int discountAmount = cartService.getCartDiscountAmount(userCode);
-            int finalAmount = totalAmount - discountAmount;
+            Map<String, Object> cartSummary = cartService.getCartTotalAmount(userCode);
+
+            int totalAmount = 0;
+            int discountAmount = 0;
+            int finalAmount = 0;
+
+            // BigDecimal을 안전하게 int로 변환
+            if (cartSummary.get("TOTAL_ORIGINAL_PRICE") != null) {
+                if (cartSummary.get("TOTAL_ORIGINAL_PRICE") instanceof BigDecimal) {
+                    totalAmount = ((BigDecimal) cartSummary.get("TOTAL_ORIGINAL_PRICE")).intValue();
+                } else if (cartSummary.get("TOTAL_ORIGINAL_PRICE") instanceof Integer) {
+                    totalAmount = (Integer) cartSummary.get("TOTAL_ORIGINAL_PRICE");
+                }
+            }
+
+            if (cartSummary.get("TOTAL_DISCOUNT") != null) {
+                if (cartSummary.get("TOTAL_DISCOUNT") instanceof BigDecimal) {
+                    discountAmount = ((BigDecimal) cartSummary.get("TOTAL_DISCOUNT")).intValue();
+                } else if (cartSummary.get("TOTAL_DISCOUNT") instanceof Integer) {
+                    discountAmount = (Integer) cartSummary.get("TOTAL_DISCOUNT");
+                }
+            }
+
+            if (cartSummary.get("TOTAL_PAYMENT") != null) {
+                if (cartSummary.get("TOTAL_PAYMENT") instanceof BigDecimal) {
+                    finalAmount = ((BigDecimal) cartSummary.get("TOTAL_PAYMENT")).intValue();
+                } else if (cartSummary.get("TOTAL_PAYMENT") instanceof Integer) {
+                    finalAmount = (Integer) cartSummary.get("TOTAL_PAYMENT");
+                }
+            }
 
             if (finalAmount < 0) {
                 finalAmount = 0;
