@@ -41,6 +41,7 @@
 		<mapper resource="com/gemdori/member/mapper/UserMapper.xml" />
     	<mapper resource="com/gemdori/main/mapper/GameMapper.xml"/>
     	<mapper resource="com/gemdori/purchase/mapper/GemdoriShoppingCartMapper.xml"/>
+    	<mapper resource="com/gemdori/mypage/mapper/MyPageMapper.xml"/>
 	</mappers>
 
 </configuration>

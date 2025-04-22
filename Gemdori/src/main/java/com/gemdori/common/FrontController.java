@@ -28,7 +28,10 @@ import com.gemdori.member.UpdatePasswordControl;
 import com.gemdori.member.UpdatePasswordFormControl;
 import com.gemdori.member.UpdateProfileControl;
 import com.gemdori.member.UpdateProfileFormControl;
+import com.gemdori.member.UserDeleteControl;
+import com.gemdori.member.UserDeleteFormControl;
 import com.gemdori.member.VerifyEmailCodeControl;
+import com.gemdori.mypage.MyPageFormControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
@@ -81,6 +84,15 @@ public class FrontController extends HttpServlet {
 		map.put("/updateProfile.do", new UpdateProfileControl()); // 회원정보 수정 업데이트
 		map.put("/updatePasswordForm.do", new UpdatePasswordFormControl()); // 회원 비밀번호 변경 페이지 이동
 		map.put("/updatePassword.do", new UpdatePasswordControl()); // 회원 비밀번호 변경
+		map.put("/userDeleteForm.do", new UserDeleteFormControl()); // 회원탈퇴 페이지 이동
+		map.put("/userDelete.do", new UserDeleteControl()); // 회원탈퇴
+		
+		/* ******************************
+		 * 마이페이지 요청
+		 * ******************************/
+		map.put("/myPage.do", new MyPageFormControl());
+		
+		
 		
 		/* ******************************
 		 * 구매 관련 요청

@@ -116,7 +116,7 @@ String email = loginUser != null ? loginUser.getUserEmail() : "";
 								<img src="<c:url value='/img/${loginUser.userImage}'/>"
 									alt="프로필 이미지" class="profile-img" onclick="toggleDropdown()" style="margin-right: 20px;width: 30px; height: 30px; border-radius: 50%; object-fit: cover;"/>
 								<ul class="dropdown-menu" id="profileMenu">
-									<li><a href="mypage.do">마이페이지</a></li>
+									<li><a href="myPage.do">마이페이지</a></li>
 									<li><a href="myInfo.do">회원정보수정</a></li>
 									<li><a href="logout.do">로그아웃</a></li>
 								</ul>

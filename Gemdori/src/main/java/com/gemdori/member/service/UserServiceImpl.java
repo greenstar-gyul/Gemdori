@@ -111,6 +111,14 @@ public class UserServiceImpl implements UserService {
     public UserFullVO selectUserByUserCode(String userCode) {
         return mapper.selectUserByUserCode(userCode);
     }
+    // 비밀번호 체크
+    @Override
+    public boolean checkPassword(String userCode, String userPw) {
+        Map<String, String> param = new HashMap<>();
+        param.put("userCode", userCode);
+        param.put("userPw", userPw);
+        return mapper.checkPassword(param) == 1;
+    }
     // 비밀번호 변경 기능
     @Override
     public boolean changePassword(String userCode, String currentPw, String newPw) {
@@ -135,5 +143,10 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
+    }
+    // 회원탈퇴
+    @Override
+    public boolean deleteUser(String userCode) {
+        return mapper.deleteUser(userCode) == 1;
     }
 }
