@@ -142,7 +142,7 @@ function loadReviews(gameCode) {
 				reviewElement.innerHTML = `
 						<input type="hidden" value="${review.reviewCode}" name="reviewCode" id=${review.reviewCode}>
                         <div class="gemdori__review__item__pic">
-						<img src="${review.userImage ? review.userImage : contextPath + '/img/default-profile.png'}">
+						<img src="${review.userImage ? contextPath + '/img/' + review.userImage : contextPath + '/img/profile_img.png'}">
                         </div>
                         <div class="gemdori__review__item__text">
                             <h6>
