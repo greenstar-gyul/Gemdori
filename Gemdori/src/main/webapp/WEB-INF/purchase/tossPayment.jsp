@@ -1,80 +1,312 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <%-- 금액 표시용 --%>
-<%@ page import="java.util.UUID" %> <%-- 고유 ID 생성용 --%>
-
-<%
-    // 테스트용 데이터 설정 (원래는 CheckOutControl 등에서 동적으로 받아와야 함)
-    int testAmount = 1000; // 테스트 결제 금액 (100원 이상)
-    String testOrderId = "test_" + UUID.randomUUID().toString().substring(0, 18); // 테스트용 고유 주문 ID 생성
-    String testOrderName = "테스트 상품";
-    String testCustomerName = "테스트 고객";
-
-    // 현재 페이지 기준 success/fail URL 생성 (상대 경로)
-    // 실제로는 컨트롤러에서 절대 경로 URL을 생성해야 함
-    String successUrl = "paymentSuccess.jsp";
-    String failUrl = "paymentFail.jsp";
-
-    String clientKey = "test_ck_DnyRpQWGrNla9B9klynl3Kwv1M9E"; // 테스트 클라이언트 키
-%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>토스페이먼츠 테스트</title>
+    <title>결제하기 - 젬도리</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- 토스페이먼츠 SDK 추가 -->
     <script src="https://js.tosspayments.com/v2/standard"></script>
     <style>
-        body { font-family: sans-serif; padding: 20px; }
-        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #0b0c2a;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px 15px;
+        }
+        
+        .payment-box {
+            background-color: #1d1e39;
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #fff;
+        }
+        
+        .order-info {
+            margin-bottom: 30px;
+        }
+        
+        .order-info p {
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .order-info .highlight {
+            font-weight: bold;
+            color: #e53637;
+        }
+        
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .button2 {
+            background-color: #ffffff;
+            border: 2px solid transparent;
+            border-radius: 7px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 120px;
+            text-align: center;
+            color: #000000;
+            font-weight: 600;
+            margin: 5px;
+        }
+        
+        .button2:hover {
+            background-color: rgb(229, 239, 255);
+        }
+        
+        .btn-payment {
+            background-color: #e53637;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+            margin-top: 30px;
+        }
+        
+        .btn-payment:hover {
+            background-color: #c52e2e;
+        }
+        
+        .btn-payment:disabled {
+            background-color: #666;
+            cursor: not-allowed;
+        }
+        
+        .error-message {
+            color: #e53637;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .order-summary {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        
+        .breadcrumb-option {
+            padding: 35px 0;
+        }
+        
+        .breadcrumb__links {
+            display: flex;
+            align-items: center;
+        }
+        
+        .breadcrumb__links a {
+            color: #b7b7b7;
+            margin-right: 18px;
+            position: relative;
+            font-size: 15px;
+            text-decoration: none;
+        }
+        
+        .breadcrumb__links a:after {
+            content: "/";
+            position: absolute;
+            right: -12px;
+            top: 0;
+            color: #b7b7b7;
+        }
+        
+        .breadcrumb__links span {
+            color: #ffffff;
+            font-size: 15px;
+        }
+        
+        .breadcrumb__links a i {
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
+    <!-- Breadcrumb Begin -->
+    <div class="breadcrumb-option">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb__links">
+                        <a href="./index.do"><i class="fa fa-home"></i> 홈</a>
+                        <a href="./cartPage.do">장바구니</a>
+                        <a href="./checkout.do">결제하기</a>
+                        <span>결제 수단 선택</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb End -->
 
-    <h1>토스페이먼츠 기본 테스트</h1>
-
-    <p>결제할 금액: <fmt:formatNumber value="<%= testAmount %>" type="currency" currencySymbol="₩ "/></p>
-    <p>주문 번호: <%= testOrderId %></p>
-    <p>주문 이름: <%= testOrderName %></p>
-
-    <button id="payment-button"><fmt:formatNumber value="<%= testAmount %>" type="number" groupingUsed="false"/>원 결제 테스트</button>
+    <div class="container">
+        <div class="payment-box">
+            <h2 class="title">결제 수단 선택</h2>
+            
+            <div class="order-info">
+                <p>
+                    <span>주문 상품:</span>
+                    <span>${paymentOrderName}</span>
+                </p>
+                <p>
+                    <span>주문 번호:</span>
+                    <span>${paymentOrderId}</span>
+                </p>
+                <p class="highlight">
+                    <span>결제 금액:</span>
+                    <span><fmt:formatNumber value="${paymentAmount}" pattern="#,###" />원</span>
+                </p>
+            </div>
+            
+            <div id="payment-method" style="display: flex; flex-wrap: wrap; justify-content: center;">
+                <button id="CARD" class="button2" onclick="selectPaymentMethod('CARD')">
+                    <i class="fas fa-credit-card"></i><br>카드
+                </button>
+                <button id="TRANSFER" class="button2" onclick="selectPaymentMethod('TRANSFER')">
+                    <i class="fas fa-university"></i><br>계좌이체
+                </button>
+                <button id="VIRTUAL_ACCOUNT" class="button2" onclick="selectPaymentMethod('VIRTUAL_ACCOUNT')">
+                    <i class="fas fa-wallet"></i><br>가상계좌
+                </button>
+                <button id="MOBILE_PHONE" class="button2" onclick="selectPaymentMethod('MOBILE_PHONE')">
+                    <i class="fas fa-mobile-alt"></i><br>휴대폰
+                </button>
+                <button id="TOSSPAY" class="button2" onclick="selectPaymentMethod('TOSSPAY')">
+                    <i class="fas fa-won-sign"></i><br>토스페이
+                </button>
+            </div>
+            
+            <div id="error-message" class="error-message"></div>
+            
+            <button id="payment-button" class="btn-payment" disabled onclick="requestPayment()">
+                결제 수단을 선택해주세요
+            </button>
+        </div>
+    </div>
 
     <script>
-        var clientKey = '<%= clientKey %>';
-        var tossPayments = TossPayments(clientKey); // 토스페이먼츠 객체 초기화
-
-        var button = document.getElementById('payment-button'); // 버튼 요소 가져오기
-
-        // 버튼 클릭 이벤트 리스너 추가
-        button.addEventListener('click', function () {
-            console.log("결제 요청 시작");
-
-            // 하드코딩된 테스트 데이터로 결제 요청
-            tossPayments.requestPayment('카드', { // '카드' 외 다른 결제수단 가능
-                amount: <%= testAmount %>,             // 결제 금액
-                orderId: '<%= testOrderId %>',         // 고유 주문번호
-                orderName: '<%= testOrderName %>',     // 주문명
-                customerName: '<%= testCustomerName %>', // 고객명
-                successUrl: '<%= successUrl %>',       // 성공 시 이동할 URL (현재 페이지 기준 상대 경로)
-                failUrl: '<%= failUrl %>',             // 실패 시 이동할 URL (현재 페이지 기준 상대 경로)
-                // flowMode: 'DIRECT', // 필요 시 사용
-                // ... 기타 옵션 ...
-            })
-            .then(function(data) {
-                // 가상계좌 등 일부 결제수단은 성공 콜백이 여기서 호출될 수 있음
-                // 일반적으로 successUrl로 리다이렉트됨
-                console.log('결제 성공(then):', data);
-                // window.location.href = '<%= successUrl %>?paymentKey=' + data.paymentKey + '&orderId=' + data.orderId + '&amount=' + data.amount;
-             })
-            .catch(function (error) {
-                // 결제창이 닫히거나 오류 발생 시
-                console.error('결제 요청 실패/오류:', error);
-                // 실패 페이지로 리다이렉트 (선택 사항)
-                // window.location.href = '<%= failUrl %>?code=' + error.code + '&message=' + encodeURIComponent(error.message) + '&orderId=<%= testOrderId %>';
-                alert('결제 오류: ' + error.message);
-            });
-        });
+        let selectedMethod = null;
+        const paymentButton = document.getElementById('payment-button');
+        const errorMessageEl = document.getElementById('error-message');
+        
+        // 토스페이먼츠 초기화
+        const clientKey = "${tossClientKey}";
+        const customerKey = "${customerKey}"; // 사용자 고유 ID
+        
+        // 초기화 시도
+        let tossPayments = null;
+        let payment = null;
+        
+        try {
+            tossPayments = TossPayments(clientKey);
+            payment = tossPayments.payment({ customerKey });
+            console.log("토스페이먼츠 SDK 초기화 성공");
+        } catch (e) {
+            console.error("토스페이먼츠 초기화 오류:", e);
+            errorMessageEl.textContent = '결제 시스템 초기화에 실패했습니다. 관리자에게 문의해주세요.';
+        }
+        
+        // 결제 수단 선택
+        function selectPaymentMethod(method) {
+            // 이전 선택 요소 스타일 초기화
+            if (selectedMethod) {
+                document.getElementById(selectedMethod).style.backgroundColor = "#ffffff";
+            }
+            
+            // 새 선택 요소 스타일 변경
+            selectedMethod = method;
+            document.getElementById(selectedMethod).style.backgroundColor = "rgb(229, 239, 255)";
+            
+            // 버튼 활성화 및 텍스트 변경
+            paymentButton.disabled = false;
+            
+            if (selectedMethod === 'TOSSPAY') {
+                paymentButton.innerHTML = '<i class="fas fa-won-sign"></i> 토스페이로 결제하기';
+            } else {
+                paymentButton.innerHTML = '<i class="fas fa-credit-card"></i> 결제하기';
+            }
+        }
+        
+        // 결제 요청
+        async function requestPayment() {
+            if (!selectedMethod || !payment) return;
+            
+            paymentButton.disabled = true;
+            paymentButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 결제 요청 중...';
+            errorMessageEl.textContent = '';
+            
+            try {
+                // 결제 요청 공통 파라미터
+                const paymentParams = {
+                    method: selectedMethod,
+                    amount: {
+                        currency: "KRW",
+                        value: ${paymentAmount}
+                    },
+                    orderId: "${paymentOrderId}",
+                    orderName: "${paymentOrderName}",
+                    customerName: "${paymentCustomerName}",
+                    successUrl: "${paymentSuccessUrl}",
+                    failUrl: "${paymentFailUrl}"
+                };
+                
+                // 결제 요청 수행
+                await payment.requestPayment(paymentParams);
+                
+            } catch (error) {
+                console.error('결제 요청 실패:', error);
+                errorMessageEl.textContent = `결제 요청 중 오류가 발생했습니다: ${error.message}`;
+                paymentButton.disabled = false;
+                paymentButton.textContent = '다시 시도하기';
+            }
+        }
+        
+        // 0원 주문 처리 기능 (무료 게임일 경우)
+        function handleFreeOrder() {
+            window.location.href = "${paymentSuccessUrl}?paymentKey=FREE_ORDER&orderId=${paymentOrderId}&amount=0";
+        }
+        
+        // 결제 금액이 0원이면 무료 처리 버튼으로 변경
+        <c:if test="${paymentAmount <= 0}">
+            paymentButton.disabled = false;
+            paymentButton.innerHTML = '<i class="fas fa-gift"></i> 게임 라이브러리에 추가하기';
+            paymentButton.onclick = handleFreeOrder;
+            
+            // 결제 수단 선택 부분 숨기기
+            document.getElementById('payment-method').style.display = 'none';
+            document.querySelector('.title').textContent = '무료 게임 추가';
+        </c:if>
     </script>
-
 </body>
 </html>

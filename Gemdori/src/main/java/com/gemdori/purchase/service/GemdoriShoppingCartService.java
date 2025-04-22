@@ -11,8 +11,8 @@ public interface GemdoriShoppingCartService {
     // 장바구니에 아이템 추가
     boolean addItemToCart(GemdoriShoppingCartVO item);
     
-    // 장바구니에서 아이템 삭제
-    boolean removeCartItem(String userCode, String gameCode);
+    // cartCode로 장바구니 아이템 삭제
+    boolean removeCartItemByCartCode(String cartCode);
     
     // 장바구니 비우기
     boolean clearCart(String userCode);

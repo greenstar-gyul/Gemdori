@@ -31,10 +31,11 @@ public class GemdoriShoppingCartServiceImpl implements GemdoriShoppingCartServic
     }
     
     @Override
-    public boolean removeCartItem(String userCode, String gameCode) {
-        return mapper.deleteCartItemByUserAndGame(userCode, gameCode) > 0;
+    public boolean removeCartItemByCartCode(String cartCode) {
+        // 필요하다면 여기에 추가적인 검증 로직을 넣을 수 있습니다.
+        // 새로 추가한 매퍼 메소드를 호출합니다.
+        return mapper.deleteCartItemByCartCode(cartCode) > 0;
     }
-    
     @Override
     public boolean clearCart(String userCode) {
         return mapper.clearCartByUser(userCode) > 0;

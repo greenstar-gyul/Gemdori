@@ -50,10 +50,10 @@
         )
     </insert>
 
-    <delete id="deleteCartItemByUserAndGame">
-        DELETE FROM gemdori_shopping_cart_tbl
-        WHERE user_code = #{userCode} AND game_code = #{gameCode}
-    </delete>
+    <delete id="deleteCartItemByCartCode" parameterType="string">
+	    DELETE FROM gemdori_shopping_cart_tbl
+	    WHERE cart_code = #{cartCode}
+	</delete>
 
     <select id="selectCartItemCountByUser" resultType="int" parameterType="String">
         SELECT COUNT(*)

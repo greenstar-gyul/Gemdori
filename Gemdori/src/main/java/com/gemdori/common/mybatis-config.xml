@@ -16,6 +16,7 @@
 		<typeAlias alias="userSecurity" type="com.gemdori.member.vo.UserSecurityVO" />
 		<typeAlias alias="userFullVO" type="com.gemdori.member.vo.UserFullVO" />
     	<typeAlias alias="gameVO" type="com.gemdori.main.vo.GameVO"/>
+    	<typeAlias alias="purchaseHistory" type="com.gemdori.purchase.vo.PurchaseHistoryVO"/>
 	</typeAliases>
 
   <!-- DB 환경 설정 -->
@@ -25,7 +26,7 @@
 			<dataSource type="POOLED">
 				<property name="driver"
 					value="oracle.jdbc.driver.OracleDriver" />
-				<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
+				<property name="url" value="jdbc:oracle:thin:@192.168.0.25:1521:xe"/>
 				<property name="username" value="scott" />
 				<property name="password" value="tiger" />
 			</dataSource>
@@ -38,6 +39,7 @@
     	<mapper resource="com/gemdori/main/mapper/GameMapper.xml"/>
     	<mapper resource="com/gemdori/purchase/mapper/GemdoriShoppingCartMapper.xml"/>
     	<mapper resource="com/gemdori/review/mapper/ReviewMapper.xml"/>
+    	<mapper resource="com/gemdori/purchase/mapper/purchaseHistoryMapper.xml"/>
 	</mappers>
 
 </configuration>

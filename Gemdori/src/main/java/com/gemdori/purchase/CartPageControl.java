@@ -46,7 +46,7 @@ public class CartPageControl implements Control {
             // 장바구니 아이템 조회
             List<GemdoriShoppingCartVO> cartItems = cartService.getCartItemsByUser(userCode);
             req.setAttribute("cartItems", cartItems);
-            
+            System.out.println("아이템 코드: " + cartItems);
             // 총액계산, 할인 계산
             int totalAmount = cartService.getCartTotalAmount(userCode);
             int discountAmount = cartService.getCartDiscountAmount(userCode);

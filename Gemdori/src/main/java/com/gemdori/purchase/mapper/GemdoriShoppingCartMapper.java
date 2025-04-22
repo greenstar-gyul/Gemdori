@@ -15,7 +15,7 @@ public interface GemdoriShoppingCartMapper {
     List<GemdoriShoppingCartVO> SelectCartItemsByUser(String userCode);
     
     // 장바구니 항목 삭제 (userCode, gameCode 기준)
-    int deleteCartItemByUserAndGame(@Param("userCode") String userCode, @Param("gameCode") String gameCode);
+    int deleteCartItemByCartCode(String cartCode);
     
     // 장바구니 비우기
     int clearCartByUser(String userCode);
