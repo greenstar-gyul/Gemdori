@@ -116,7 +116,7 @@
                  ORDER BY game_price DESC, game_code
              </when>
              <otherwise>
-                ORDER BY game_code
+                ORDER BY TO_NUMBER(substr(game_code, 2))
              </otherwise>
          </choose>
       ) inner_q
@@ -300,4 +300,15 @@
         SELECT * FROM gemdori_game_tbl
     </select>
 
+    <update id="updateGameRating" parameterType="string">
+	    UPDATE gemdori_game_tbl g
+	    SET avg_rating = ( SELECT ROUND(AVG(r.rating), 1)
+						   FROM gemdori_review_tbl r
+						   WHERE r.game_code = g.game_code)
+    </update>
+    <select id="getGameRating" resultType="double" parameterType="string">
+        SELECT game_rating
+        FROM   gemdori_game_tbl
+        WHERE  game_code = #{gameCode}
+    </select>
 </mapper>

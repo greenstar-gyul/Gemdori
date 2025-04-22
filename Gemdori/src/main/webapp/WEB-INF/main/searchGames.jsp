@@ -30,10 +30,11 @@
                     <option value="rpg">RPG</option>
                     <option value="전략">전략</option>
                     <option value="어드벤처">어드벤처</option>
-                    <option value="fps">FPS</option>
-                    <option value="simulation">시뮬레이션</option>
-                    <option value="horror">공포</option>
-                    <option value="puzzle">퍼즐</option>
+                    <option value="캐주얼">캐주얼</option>
+                    <option value="교육">교육</option>
+                    <option value="스포츠">스포츠</option>
+                    <option value="레이싱">레이싱</option>
+                    <option value="인디">인디</option>
                   </select>
                 </div>
                 <!-- 가격 -->

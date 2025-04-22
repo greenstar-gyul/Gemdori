@@ -87,19 +87,8 @@ String email = loginUser != null ? loginUser.getUserEmail() : "";
 				<div class="header__nav">
 					<nav class="header__menu mobile-menu">
 						<ul>
-							<li><a href="main.do">홈</a></li>
-							<li class="active"><a href="./searchGames.do?keyword=">게임
-									카테고리 <span class="arrow_carrot-down"></span>
-							</a>
-								<ul class="dropdown">
-									<li><a href="./searchGames.do?keyword=">전체 게임</a></li>
-									<li><a href="./searchGames.do?keyword=&genre=action">액션</a></li>
-									<li><a href="./searchGames.do?keyword=&genre=rpg">RPG</a></li>
-									<li><a href="./searchGames.do?keyword=&genre=strategy">전략</a></li>
-									<li><a href="./searchGames.do?keyword=&genre=adventure">어드벤처</a></li>
-									<li><a href="./signup.do">회원가입</a></li>
-									<li><a href="./login.do">로그인</a></li>
-								</ul></li>
+							<li class="active"><a href="main.do">홈</a></li>
+							<li><a href="./searchGames.do">게임 찾기</a></li>
 							<c:if test="loginUser != null">
 							     <li><a href="./library.do">라이브러리</a></li>
 							</c:if>
