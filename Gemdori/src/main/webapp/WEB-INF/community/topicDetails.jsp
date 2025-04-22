@@ -39,14 +39,15 @@
                     <!-- Comment Form (Optional) -->
                     <div class="community__details__form">
                         <h4>Leave A Comment</h4>
-                        <form action="#" method="post">
+                        <form action="topicReplyAdd.do" method="post">
+                        	<input type="hidden" name="topicCode" value="${topic.topicCode }">
                             <div class="row">
                                 <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <input type="text" name="author" placeholder="Name">
+                                    <input type="hidden" name="author" placeholder="Name" value="${userCode }">
                                 </div>
                                 <div class="col-lg-12">
                                     <textarea name="comment" placeholder="Message"></textarea>
-                                    <button type="submit" class="site-btn">Send Message</button>
+                                    <button type="submit" class="site-btn">댓글 등록</button>
                                 </div>
                             </div>
                         </form>

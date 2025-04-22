@@ -1,12 +1,9 @@
 package com.gemdori.community.mapper;
 
+import java.util.List;
 import com.gemdori.community.vo.ReplyVO;
 
-public class ReplyMapper {
-
-	public void insertReply(ReplyVO reply) {
-		// TODO Auto-generated method stub
-		
-	}
-
+public interface ReplyMapper {
+    void insertReply(ReplyVO reply);
+    List<ReplyVO> selectRepliesByTopicCode(String topicCode);
 }

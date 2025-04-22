@@ -38,6 +38,7 @@
     	<mapper resource="com/gemdori/main/mapper/GameMapper.xml"/>
     	<mapper resource="com/gemdori/purchase/mapper/GemdoriShoppingCartMapper.xml"/>
     	<mapper resource="com/gemdori/community/mapper/TopicMapper.xml"/>
+    	<mapper resource="com/gemdori/community/mapper/ReplyMapper.xml"/>
 	</mappers>
 
 </configuration>
