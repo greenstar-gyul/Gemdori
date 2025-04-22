@@ -26,10 +26,12 @@ public class GameDetailsControl implements Control {
 
         GameService service = new GameServiceImpl();
         GameVO game = service.getGameByCode(gameCode);
+
+        System.out.println(game);
         
         // Json 객체로 담긴 이미지 리스트를, Java 객체의 이미지 리스트로 변환
         String descImagesJson = game.getDescImages(); 
-        
+        System.out.println(descImagesJson);
         Gson gson = new GsonBuilder().create();
         List<String> descImagesList = Arrays.asList(gson.fromJson(descImagesJson, String[].class));
         

@@ -1,5 +1,6 @@
 package com.gemdori.main.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,4 +63,14 @@ public class GameServiceImpl implements GameService {
     public double getGameRating(String gameCode) {
         return gameMapper.getGameRating(gameCode);
     }
-} 
+
+    @Override
+    public List<GameVO> getBestGames() {
+        List<String> gameCodeList = gameMapper.getBestGameCodeList();
+        List<GameVO> bestList = new ArrayList<GameVO>();
+        for (String gameCode : gameCodeList) {
+            bestList.add(getGameByCode(gameCode));
+        }
+        return bestList;
+    }
+}

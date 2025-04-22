@@ -39,7 +39,7 @@ public interface GameMapper {
     // 9. 게임 검색하기
     List<GameVO> searchGames(String keyword);
     
-    // 10. 최신 게임 6개 가져오기
+    // 10. 최신 게임 8개 가져오기
     List<GameVO> getLatestGames();
     
     // 게임의 평점 업데이트하기
@@ -47,4 +47,7 @@ public interface GameMapper {
     
     // 게임 평점 가져오기
     double getGameRating(String gameCode);
+
+    // 최고 인기 게임의 게임 코드 8개 가져오기
+    List<String> getBestGameCodeList();
 } 
