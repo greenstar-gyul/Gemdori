@@ -73,4 +73,14 @@ public class GameServiceImpl implements GameService {
         }
         return bestList;
     }
+
+    @Override
+    public List<GameVO> getPopGames() {
+        List<String> gameCodeList = gameMapper.getPopGameCodeList();
+        List<GameVO> popList = new ArrayList<GameVO>();
+        for (String gameCode : gameCodeList) {
+            popList.add(getGameByCode(gameCode));
+        }
+        return popList;
+    }
 }

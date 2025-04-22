@@ -30,7 +30,8 @@ public class MainControl implements Control {
         List<GameVO> bestGameList = gameService.getBestGames(8);
         req.setAttribute("bestGameList", bestGameList);
 
-        List<GameVO> gameList = gameService.getAllGames();
+        List<GameVO> popList = gameService.getPopGames();
+        req.setAttribute("popList", popList);
 
         req.getRequestDispatcher("main/main.tiles").forward(req, resp);
     }

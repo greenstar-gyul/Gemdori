@@ -52,5 +52,5 @@ public interface GameMapper {
     List<String> getBestGameCodeList(int n);
 
     // 최고 인기 게임 게임 코드 12개 가져오기
-    List<String> getBestGameTitleList12();
+    List<String> getPopGameCodeList();
 } 
