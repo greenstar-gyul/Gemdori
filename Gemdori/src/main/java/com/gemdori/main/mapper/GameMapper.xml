@@ -302,9 +302,9 @@
 
     <update id="updateGameRating" parameterType="string">
 	    UPDATE gemdori_game_tbl g
-	    SET avg_rating = ( SELECT ROUND(AVG(r.rating), 1)
+	    SET game_rating = ( SELECT ROUND(AVG(r.rating), 1)
 						   FROM gemdori_review_tbl r
-						   WHERE r.game_code = g.game_code)
+						   WHERE r.game_code = #{gameCode})
     </update>
     <select id="getGameRating" resultType="double" parameterType="string">
         SELECT game_rating
