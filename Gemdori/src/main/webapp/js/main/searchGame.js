@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', () => {
         .then(data => {
           renderResults(data.items, data.total);
           renderPagination(data.total);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: 'instant' });
         })
         .catch(err => {
           console.error(err);

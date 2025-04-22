@@ -97,11 +97,13 @@ String email = loginUser != null ? loginUser.getUserEmail() : "";
 									<li><a href="./searchGames.do?keyword=&genre=rpg">RPG</a></li>
 									<li><a href="./searchGames.do?keyword=&genre=strategy">전략</a></li>
 									<li><a href="./searchGames.do?keyword=&genre=adventure">어드벤처</a></li>
-									<li><a href="./signup.html">회원가입</a></li>
-									<li><a href="./login.html">로그인</a></li>
+									<li><a href="./signup.do">회원가입</a></li>
+									<li><a href="./login.do">로그인</a></li>
 								</ul></li>
-							<li><a href="./blog.html">뉴스 및 공지</a></li>
-							<li><a href="#">고객센터</a></li>
+							<c:if test="loginUser != null">
+							     <li><a href="./library.do">라이브러리</a></li>
+							</c:if>
+							<li><a href="#">커뮤니티</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -123,8 +125,7 @@ String email = loginUser != null ? loginUser.getUserEmail() : "";
 							</div>
 						</c:when>
 						<c:otherwise>
-							<a href="${pageContext.request.contextPath}/loginForm.do"> <span
-								class="icon_profile"></span>
+							<a href="${pageContext.request.contextPath}/loginForm.do"> <span class="icon_profile"></span>
 							</a>
 						</c:otherwise>
 					</c:choose>
