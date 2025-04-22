@@ -116,7 +116,7 @@
                  ORDER BY game_price DESC, game_code
              </when>
              <otherwise>
-                ORDER BY game_code
+                ORDER BY TO_NUMBER(substr(game_code, 2))
              </otherwise>
          </choose>
       ) inner_q
