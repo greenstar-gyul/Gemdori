@@ -47,11 +47,29 @@ public class GemdoriShoppingCartServiceImpl implements GemdoriShoppingCartServic
     
     @Override
     public int getCartTotalAmount(String userCode) {
-        return mapper.selectCartTotalAmount(userCode);
+        try {
+            Integer result = mapper.selectCartTotalAmount(userCode);
+            return (result != null) ? result : 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0; // 에러 발생 시 0 반환
+        }
     }
 
     @Override
     public int getCartDiscountAmount(String userCode) {
-        return mapper.selectCartDiscountAmount(userCode);
+        try {
+            Integer result = mapper.selectCartDiscountAmount(userCode);
+            return (result != null) ? result : 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0; // 에러 발생 시 0 반환
+        }
+    }
+    
+    @Override
+    public boolean checkExistingCart(String userCode, String gameCode) {
+        int count = mapper.checkExistingCart(userCode, gameCode);
+        return count > 0;
     }
 }
