@@ -54,7 +54,7 @@
 	margin: 30px auto;
 	width: 120px;
 	height: 120px;
-	border-radius: 50%;
+  	border-radius: 10px;
 	object-fit: cover;
 	border: 3px solid #000;
 }
@@ -111,4 +111,78 @@
 button:hover {
 	background: #b0272b;
 	transform: scale(1.05);
+}
+/* 프로필 변경 폼 CSS */
+.myinfo__value input[type="text"],
+.myinfo__value input[type="date"],
+.myinfo__value input[type="file"],
+.myinfo__value textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #1e2a38;
+  border: 1px solid #3c4a5d;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.myinfo__value input[type="text"]::placeholder,
+.myinfo__value input[type="file"]::placeholder,
+.myinfo__value textarea::placeholder {
+  color: #95a5b3;
+  font-size: 13px;
+}
+
+.myinfo__value input[type="text"]:focus,
+.myinfo__value input[type="date"]:focus,
+.myinfo__value textarea:focus {
+  border-color: #66b2ff;
+  box-shadow: 0 0 0 2px rgba(102, 178, 255, 0.3);
+  outline: none;
+}
+
+/* 파일 업로드 input은 마진 추가 */
+.myinfo__value input[type="file"] {
+  padding: 8px;
+  background-color: #1e2a38;
+  color: #ccc;
+  border: 1px dashed #3c4a5d;
+  cursor: pointer;
+  margin-bottom: 8px;
+  
+}
+
+/* 라디오 버튼 */
+.myinfo__value label {
+  color: #e0e0e0;
+  font-weight: normal;
+  font-size: 14px;
+  margin-right: 15px;
+}
+
+.myinfo__value input[type="radio"] {
+  margin-right: 5px;
+}
+/* password 변경 폼 CSS */
+.myinfo__value input[type="password"] {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 14px;
+  background-color: #1e2a38;
+  color: #ffffff;
+  border: 1px solid #3c4a5d;
+  border-radius: 6px;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.myinfo__value input[type="password"]::placeholder {
+  color: #95a5b3;
+  font-size: 13px;
+}
+
+.myinfo__value input[type="password"]:focus {
+  outline: none;
+  border-color: #66b2ff;
+  box-shadow: 0 0 0 2px rgba(102, 178, 255, 0.3);
 }

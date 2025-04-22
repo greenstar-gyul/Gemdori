@@ -40,6 +40,10 @@ public interface UserService {
     boolean updateUserProfile(UserProfileVO userProfile);
     // 회원 정보 수정 후 재확인
     UserFullVO selectUserByUserCode(String userCode);
+    // 비밀번호 체크
+    boolean checkPassword(String userCode, String userPw);
     // 비밀번호 변경
     boolean changePassword(String userCode, String currentPw, String newPw);
+    // 회원탈퇴
+    boolean deleteUser(String userCode);
 }

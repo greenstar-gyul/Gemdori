@@ -48,4 +48,6 @@ public interface UserMapper {
     int newUserPassword(Map<String, String> param);
     // 보안정보의 비밀번호 수정일자 update_time 갱신
     int updateSecurityUpdateTime(String userCode);
+    // 회원탈퇴
+	int deleteUser(String userCode);
 }
