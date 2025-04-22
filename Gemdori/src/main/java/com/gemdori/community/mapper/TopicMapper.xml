@@ -31,7 +31,7 @@
         FROM gemdori_topic_tbl
     </select>
     <!-- 게시글 상세 조회 -->
-<select id="selectTopicByCode" parameterType="String" resultType="com.gemdori.community.vo.TopicVO">
+<select id="selectTopic" parameterType="String" resultType="com.gemdori.community.vo.TopicVO">
     SELECT 
         TOPIC_CODE,
         USER_CODE,

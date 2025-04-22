@@ -9,13 +9,8 @@
         <div class="row d-flex justify-content-center">
             <div class="col-lg-8">
                 <div class="community__details__title">
-                    <h6>${post.category} <span>- ${post.date}</span></h6>
-                    <h2>${post.title}</h2>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="community__details__pic">
-                    <img src="${post.image}" alt="Post Image">
+                    <h6>${topic.topicTitle} <span>- ${topic.writeDate}</span></h6>
+                    <h2>${topic.topicContents}</h2>
                 </div>
             </div>
             <div class="col-lg-8">
@@ -49,9 +44,6 @@
                                 <div class="col-lg-6 col-md-6 col-sm-6">
                                     <input type="text" name="author" placeholder="Name">
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6">
-                                    <input type="email" name="email" placeholder="Email">
-                                </div>
                                 <div class="col-lg-12">
                                     <textarea name="comment" placeholder="Message"></textarea>
                                     <button type="submit" class="site-btn">Send Message</button>
@@ -64,5 +56,5 @@
         </div>
     </div>
 </section>
-<!-- Community Details Section End -->
+<!-- topic Details Section End -->
 

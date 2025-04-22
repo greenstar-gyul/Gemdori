@@ -14,6 +14,12 @@ import com.gemdori.community.TopicDetailControl;
 //import com.gemdori.community.CommunityControl;
 import com.gemdori.community.TopicFormControl;
 import com.gemdori.community.TopicListControl;
+import com.gemdori.community.TopicRemove;
+import com.gemdori.community.TopicReplyAdd;
+import com.gemdori.community.TopicReplyList;
+import com.gemdori.community.TopicReplyRemove;
+import com.gemdori.community.TopicReplyUpdate;
+import com.gemdori.community.TopicUpdate;
 import com.gemdori.community.TopicregistrationControl;
 import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
@@ -92,6 +98,12 @@ public class FrontController extends HttpServlet {
 		map.put("/gameDetails.do", new GameDetailsControl());
 		map.put("/topicList.do", new TopicListControl());
 		map.put("/tempSession.do", new TempSessionControl());
+		map.put("/topicReplyAdd.do", new TopicReplyAdd());
+		map.put("/topicReplyList.do", new TopicReplyList());
+		map.put("/topicReplyUpdate.do", new TopicReplyUpdate());
+		map.put("/topicReplyRemove.do", new TopicReplyRemove());
+		map.put("/topicUpdate.do", new TopicUpdate());
+		map.put("/topicRemove.do", new TopicRemove());
 		
 
 	}
