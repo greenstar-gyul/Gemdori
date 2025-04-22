@@ -34,18 +34,19 @@ window.addEventListener('DOMContentLoaded', () => {
   sizeSelect.addEventListener('change', () => {
     curSize = parseInt(sizeSelect.value, 10);
     curPage = 1;
-    console.log("change!!");
+    // console.log("change!!");
     doSearch();
   });
 
   sortSelect.addEventListener('change', () => {
     curPage = 1;
-    console.log("change!!");
+    // console.log("change!!");
     doSearch();
   });
-  sizeSelect.dispatchEvent(new Event('change'));
 
-  console.log(document.querySelector('#size-select'));
+  // sizeSelect.dispatchEvent(new Event('change'));
+
+  // console.log(document.querySelector('#size-select'));
 
   // 검색 실행
   function doSearch() {
@@ -63,7 +64,7 @@ window.addEventListener('DOMContentLoaded', () => {
         .then(data => {
           renderResults(data.items, data.total);
           renderPagination(data.total);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
+          window.scrollTo({ top: 0, behavior: 'instant' });
         })
         .catch(err => {
           console.error(err);

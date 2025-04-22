@@ -27,6 +27,9 @@ public class MainControl implements Control {
         List<GameVO> latestGameList = gameService.getLatestGames();
         req.setAttribute("latestGameList", latestGameList);
 
+        List<GameVO> bestGameList = gameService.getBestGames();
+        req.setAttribute("bestGameList", bestGameList);
+
         List<GameVO> gameList = gameService.getAllGames();
 
         req.getRequestDispatcher("main/main.tiles").forward(req, resp);

@@ -30,10 +30,11 @@
                     <option value="rpg">RPG</option>
                     <option value="전략">전략</option>
                     <option value="어드벤처">어드벤처</option>
-                    <option value="fps">FPS</option>
-                    <option value="simulation">시뮬레이션</option>
-                    <option value="horror">공포</option>
-                    <option value="puzzle">퍼즐</option>
+                    <option value="캐주얼">캐주얼</option>
+                    <option value="교육">교육</option>
+                    <option value="스포츠">스포츠</option>
+                    <option value="레이싱">레이싱</option>
+                    <option value="인디">인디</option>
                   </select>
                 </div>
                 <!-- 가격 -->
@@ -48,14 +49,13 @@
                     <option value="over60000">6만원 이상</option>
                   </select>
                 </div>
-                <!-- 출시일 -->
+                <!-- DLC 포함여부 -->
                 <div class="filter-item">
-                  <label>출시일:</label>
-                  <select class="filter-select" name="publishing">
-                    <option value="">전체</option>
-                    <option value="week">1주일 이내</option>
-                    <option value="month">1개월 이내</option>
-                    <option value="year">1년 이내</option>
+                  <label>DLC 보기:</label>
+                  <select name="dlc" class="filter-select">
+                    <option value="all" selected>전체</option>
+                    <option value="origin">DLC 제외</option>
+                    <option value="dlc">DLC만 보기</option>
                   </select>
                 </div>
                 <!-- 평점 -->
@@ -67,6 +67,7 @@
                     <option value="3">3점 이상</option>
                     <option value="2">2점 이상</option>
                     <option value="1">1점 이상</option>
+                    <option value="0">1점 미만</option>
                   </select>
                 </div>
               </div>
@@ -83,8 +84,11 @@
   <section class="search-results spad">
     <div class="container">
       <div class="row">
+      	<div class="col-lg-2">
+      	</div>
 
         <!-- =========== 사이드바 =========== -->
+        <%--
         <div class="col-lg-4 col-md-6 col-sm-8">
           <div class="category__sidebar" style="position: sticky; top: 80px;">
             <!-- 카테고리 박스 -->
@@ -140,7 +144,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>--%>
 
         <!-- =========== 메인 결과 =========== -->
         <div class="col-lg-8">
@@ -155,6 +159,7 @@
               <select name="sort" class="result-options-select" id="sort-select">
                 <option value="relevance">관련성</option>
                 <option value="newest">최신순</option>
+                <option value="oldest">오래된순</option>
                 <option value="rating">평점순</option>
                 <option value="price_low">가격 낮은순</option>
                 <option value="price_high">가격 높은순</option>
@@ -187,6 +192,9 @@
           <div id="pagination" class="pagination"></div>
 
         </div>
+        
+        <div class="col-lg-2">
+      	</div>
       </div>
     </div>
   </section>

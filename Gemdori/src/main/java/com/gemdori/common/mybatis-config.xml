@@ -25,7 +25,7 @@
 			<dataSource type="POOLED">
 				<property name="driver"
 					value="oracle.jdbc.driver.OracleDriver" />
-			<property name="url" value="jdbc:oracle:thin:@192.168.0.25:1521:xe" />
+				<property name="url" value="jdbc:oracle:thin:@192.168.0.25:1521:xe"/>
 				<property name="username" value="scott" />
 				<property name="password" value="tiger" />
 			</dataSource>
@@ -37,6 +37,8 @@
 		<mapper resource="com/gemdori/member/mapper/UserMapper.xml" />
     	<mapper resource="com/gemdori/main/mapper/GameMapper.xml"/>
     	<mapper resource="com/gemdori/purchase/mapper/GemdoriShoppingCartMapper.xml"/>
+    	<mapper resource="com/gemdori/mypage/mapper/MyPageMapper.xml"/>
+    	<mapper resource="com/gemdori/review/mapper/ReviewMapper.xml"/>
     	<mapper resource="com/gemdori/community/mapper/TopicMapper.xml"/>
     	<mapper resource="com/gemdori/community/mapper/ReplyMapper.xml"/>
 	</mappers>
