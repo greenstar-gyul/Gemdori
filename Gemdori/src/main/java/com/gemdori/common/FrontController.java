@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gemdori.community.*;
+//import com.gemdori.community.CommunityControl;
 import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
 import com.gemdori.main.SearchGamesControl;
@@ -19,6 +21,7 @@ import com.gemdori.member.FindPasswordFormControl;
 import com.gemdori.member.GenerateTempPasswordControl;
 import com.gemdori.member.JoinControl;
 import com.gemdori.member.JoinFormControl;
+import com.gemdori.member.LoginControl;
 import com.gemdori.member.LoginControl;
 import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LogoutControl;
@@ -46,7 +49,7 @@ import com.gemdori.user.TempSessionControl;
 
 
 public class FrontController extends HttpServlet {
-	// 요청url <=> 실행컨트롤.
+	private static final long serialVersionUID = 1L;
 	Map<String, Control> map;
 
 	// 생성자.
@@ -107,12 +110,30 @@ public class FrontController extends HttpServlet {
 		map.put("/gamePackage.do", new GamePackageControl());
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
+
+		//map.put("/community.do", new CommunityControl());
 		map.put("/success.do", new SuccessControl());
 		map.put("/tempSession.do", new TempSessionControl());
 		map.put("/addToCart.do", new AddToCartControl());
-		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkCart.do", new CheckCartControl());
-		map.put("/removeCartItem.do", new RemoveCartItemControl());		
+		map.put("/removeCartItem.do", new RemoveCartItemControl());
+
+		/* *****************
+		 * 커뮤니티
+		 * *****************/
+		map.put("/community.do", new CommunityControl());
+		map.put("/topicForm.do", new TopicFormControl()); // 2
+		map.put("/topicRegistration.do", new TopicregistrationControl());
+		map.put("/topicDetail.do", new TopicDetailControl());
+		map.put("/topicList.do", new TopicListControl());
+		map.put("/topicReplyAdd.do", new TopicReplyAdd());
+		map.put("/topicReplyList.do", new TopicReplyList());
+		map.put("/topicReplyUpdate.do", new TopicReplyUpdate());
+		map.put("/topicReplyRemove.do", new TopicReplyRemove());
+		map.put("/topicUpdate.do", new TopicUpdate());
+		map.put("/topicRemove.do", new TopicRemove());
+		
+
 	}
 
 	// service.
@@ -126,5 +147,8 @@ public class FrontController extends HttpServlet {
 
 		Control sub = map.get(page); // 키(url) => control 반환.
 		sub.exec(req, resp);
+		System.out.println("요청 URI: " + uri);
+		System.out.println("매핑된 컨트롤러: " + sub.getClass().getName());
+
 	}
 }
