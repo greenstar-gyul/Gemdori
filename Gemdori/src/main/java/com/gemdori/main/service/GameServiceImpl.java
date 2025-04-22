@@ -52,4 +52,14 @@ public class GameServiceImpl implements GameService {
     public List<GameVO> getAllGames() {
         return gameMapper.getAllGames();
     }
+
+    @Override
+    public boolean updateGameRating(String gameCode) {
+        return gameMapper.updateGameRating(gameCode) > 0;
+    }
+
+    @Override
+    public double getGameRating(String gameCode) {
+        return gameMapper.getGameRating(gameCode);
+    }
 } 

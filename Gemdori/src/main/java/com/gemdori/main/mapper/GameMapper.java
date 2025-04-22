@@ -41,4 +41,10 @@ public interface GameMapper {
     
     // 10. 최신 게임 6개 가져오기
     List<GameVO> getLatestGames();
+    
+    // 게임의 평점 업데이트하기
+    int updateGameRating(String gameCode);
+    
+    // 게임 평점 가져오기
+    double getGameRating(String gameCode);
 } 
