@@ -48,13 +48,13 @@
 </style>
 
 <!-- Normal Breadcrumb Begin -->
-<section class="normal-breadcrumb set-bg" data-setbg="img/normal-breadcrumb.jpg">
+<section class="normal-breadcrumb set-bg" data-setbg="img/gemdoribg.png">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 text-center">
                 <div class="normal__breadcrumb__text">
-                    <h2>Our Blog</h2>
-                    <p>Welcome to the official Anime blog.</p>
+                    <h2>커뮤니티</h2>
+                    <p>겜도리 공식 커뮤니티</p>
                 </div>
             </div>
         </div>
@@ -62,39 +62,38 @@
 </section>
 <!-- Normal Breadcrumb End -->
 
-<!-- 글쓰기 버튼 -->
-<div class="row mb-4">
-    <div class="col-lg-12 text-right">
-        <a href="topicform.do" class="btn btn-primary">글쓰기</a>
-    </div>
-</div>
+
 
 <!-- Blog Section Begin -->
 <section class="blog spad">
     <div class="container">
         <div class="row">
+            <!-- 글쓰기 버튼 -->
+            <div class="col-lg-12 text-right">
+                <a href="topicForm.do?gameCode=${gameCode}" class="btn btn-primary">글쓰기</a>
+            </div>
             <div class="col-lg-12">
                 <!-- 테이블 시작 -->
                 <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th>제목</th>
-                            <th>작성일</th>
                             <th>내용</th>
+                            <th>작성자</th>
+                            <th>작성일</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- 반복문을 통해 게시글 목록 출력 -->
                         <c:forEach var="post" items="${topicList}">
-                            <tr>
-                                <td>
   							<a href="topicDetail.do?topicCode=${post.topicCode}">
-    							${post.topicTitle}
-  									</a>
-								</td>
-                                <td>${post.writeDate}</td>
-                                <td>${post.topicContents}</td>
-                            </tr>
+                                <tr>
+                                    <td>${post.topicTitle}</td>
+                                    <td>${post.topicContents}</td>
+                                    <td>${post.userCode}</td>
+                                    <td>${post.writeDate}</td>
+                                </tr>
+                            </a>
                         </c:forEach>
                     </tbody>
                 </table>

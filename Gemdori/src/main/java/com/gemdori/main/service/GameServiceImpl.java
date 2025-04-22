@@ -65,8 +65,8 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public List<GameVO> getBestGames() {
-        List<String> gameCodeList = gameMapper.getBestGameCodeList();
+    public List<GameVO> getBestGames(int n) {
+        List<String> gameCodeList = gameMapper.getBestGameCodeList(n);
         List<GameVO> bestList = new ArrayList<GameVO>();
         for (String gameCode : gameCodeList) {
             bestList.add(getGameByCode(gameCode));

@@ -318,6 +318,22 @@
                 ORDER BY COUNT(r.review_code) DESC, g.game_rating DESC, TO_NUMBER(SUBSTR(g.game_code, 2))
             )
         )
-        WHERE ROWNUM <![CDATA[ <= ]]> 8
+        WHERE ROWNUM <![CDATA[ <= ]]> #{n}
+    </select>
+
+    <!-- 인기게임 12개의 게임코드 -->
+    <select id="getBestGameTitleList12" resultType="string">
+        SELECT game_code
+        FROM (
+            SELECT game_code
+            FROM (
+                SELECT g.game_code, COUNT(r.review_code) AS review_count, g.game_rating
+                FROM gemdori_game_tbl g
+                JOIN gemdori_review_tbl r ON g.game_code = r.game_code
+                GROUP BY g.game_code, g.game_rating
+                ORDER BY COUNT(r.review_code) DESC, g.game_rating DESC, TO_NUMBER(SUBSTR(g.game_code, 2))
+            )
+        )
+        WHERE ROWNUM <![CDATA[ <= ]]> 12
     </select>
 </mapper>

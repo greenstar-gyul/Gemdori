@@ -48,6 +48,9 @@ public interface GameMapper {
     // 게임 평점 가져오기
     double getGameRating(String gameCode);
 
-    // 최고 인기 게임의 게임 코드 8개 가져오기
-    List<String> getBestGameCodeList();
+    // 최고 인기 게임의 게임 코드 n개 가져오기
+    List<String> getBestGameCodeList(int n);
+
+    // 최고 인기 게임 게임 코드 12개 가져오기
+    List<String> getBestGameTitleList12();
 } 

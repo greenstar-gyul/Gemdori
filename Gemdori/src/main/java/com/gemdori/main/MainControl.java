@@ -27,7 +27,7 @@ public class MainControl implements Control {
         List<GameVO> latestGameList = gameService.getLatestGames();
         req.setAttribute("latestGameList", latestGameList);
 
-        List<GameVO> bestGameList = gameService.getBestGames();
+        List<GameVO> bestGameList = gameService.getBestGames(8);
         req.setAttribute("bestGameList", bestGameList);
 
         List<GameVO> gameList = gameService.getAllGames();

@@ -10,17 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gemdori.community.TopicDetailControl;
+import com.gemdori.community.*;
 //import com.gemdori.community.CommunityControl;
-import com.gemdori.community.TopicFormControl;
-import com.gemdori.community.TopicListControl;
-import com.gemdori.community.TopicRemove;
-import com.gemdori.community.TopicReplyAdd;
-import com.gemdori.community.TopicReplyList;
-import com.gemdori.community.TopicReplyRemove;
-import com.gemdori.community.TopicReplyUpdate;
-import com.gemdori.community.TopicUpdate;
-import com.gemdori.community.TopicregistrationControl;
 import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
 import com.gemdori.main.SearchGamesControl;
@@ -119,24 +110,22 @@ public class FrontController extends HttpServlet {
 		map.put("/gamePackage.do", new GamePackageControl());
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
-		map.put("/searchGames.do", new SearchGamesControl());
 
 		//map.put("/community.do", new CommunityControl());
-		map.put("/topicform.do", new TopicFormControl()); // 2
-		map.put("/topicRegistration.do", new TopicregistrationControl());
-		map.put("/topicDetail.do", new TopicDetailControl());
 		map.put("/success.do", new SuccessControl());
-		map.put("/gameDetails.do", new GameDetailsControl());
-		map.put("/topicList.do", new TopicListControl());
 		map.put("/tempSession.do", new TempSessionControl());
 		map.put("/addToCart.do", new AddToCartControl());
-		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkCart.do", new CheckCartControl());
-		map.put("/removeCartItem.do", new RemoveCartItemControl());		
+		map.put("/removeCartItem.do", new RemoveCartItemControl());
 
-		/******************
+		/* *****************
 		 * 커뮤니티
-		 ******************/
+		 * *****************/
+		map.put("/community.do", new CommunityControl());
+		map.put("/topicForm.do", new TopicFormControl()); // 2
+		map.put("/topicRegistration.do", new TopicregistrationControl());
+		map.put("/topicDetail.do", new TopicDetailControl());
+		map.put("/topicList.do", new TopicListControl());
 		map.put("/topicReplyAdd.do", new TopicReplyAdd());
 		map.put("/topicReplyList.do", new TopicReplyList());
 		map.put("/topicReplyUpdate.do", new TopicReplyUpdate());

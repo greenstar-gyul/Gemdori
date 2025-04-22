@@ -20,7 +20,7 @@
                   sysDate)
     </insert>
     <!-- 게시글 목록 조회 -->
-    <select id="selectTopicList" resultType="com.gemdori.community.vo.TopicVO">
+    <select id="selectTopicList" resultType="com.gemdori.community.vo.TopicVO" parameterType="string">
         SELECT 
             TOPIC_CODE,
             USER_CODE,
@@ -29,6 +29,7 @@
             TOPIC_CONTENTS,
             WRITE_DATE
         FROM gemdori_topic_tbl
+        WHERE game_code = #{gameCode}
     </select>
     <!-- 게시글 상세 조회 -->
 <select id="selectTopic" parameterType="String" resultType="com.gemdori.community.vo.TopicVO">
