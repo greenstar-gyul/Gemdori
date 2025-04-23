@@ -1,6 +1,8 @@
 package com.gemdori.purchase.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -22,33 +24,63 @@ public class GemdoriShoppingCartServiceImpl implements GemdoriShoppingCartServic
     
     @Override
     public List<GemdoriShoppingCartVO> getCartItemsByUser(String userCode) {
+    	SqlSession session = DataSource.getInstance().openSession(true);
+        GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
         return mapper.SelectCartItemsByUser(userCode);
     }
     
     @Override
     public boolean addItemToCart(GemdoriShoppingCartVO item) {
-        return mapper.insertCartitem(item) > 0;
+        SqlSession session = DataSource.getInstance().openSession(true);
+        GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
+        boolean result = freshMapper.insertCartitem(item) > 0;
+        session.commit(); // 명시적 커밋 추가
+        return result;
     }
     
     @Override
-    public boolean removeCartItem(String userCode, String gameCode) {
-        return mapper.deleteCartItemByUserAndGame(userCode, gameCode) > 0;
+    public boolean removeCartItemByCartCode(String cartCode) {
+        SqlSession session = DataSource.getInstance().openSession(true);
+        GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
+        boolean result = freshMapper.deleteCartItemByCartCode(cartCode) > 0;
+        session.commit(); // 명시적 커밋 추가
+        return result;
     }
-    
     @Override
     public boolean clearCart(String userCode) {
-        return mapper.clearCartByUser(userCode) > 0;
+        SqlSession session = DataSource.getInstance().openSession(true);
+        GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
+        boolean result = freshMapper.clearCartByUser(userCode) > 0;
+        session.commit();
+        return result;
     }
-    
+
     @Override
     public int getCartItemCount(String userCode) {
-        return mapper.selectCartItemCountByUser(userCode);
+        SqlSession session = DataSource.getInstance().openSession(true);
+        GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
+        return freshMapper.selectCartItemCountByUser(userCode);
     }
-    
+
     @Override
-    public int getCartTotalAmount(String userCode) {
+    public Map<String, Object> getCartTotalAmount(String userCode) {
         try {
-            Integer result = mapper.selectCartTotalAmount(userCode);
+            SqlSession session = DataSource.getInstance().openSession(true);
+            GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
+            Map<String, Object> result = freshMapper.selectCartTotals(userCode);
+            return (result != null) ? result : new HashMap<>(); // null이면 빈 Map 반환
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new HashMap<>(); // 에러 발생 시 빈 Map 반환
+        }
+    }
+
+    @Override
+    public int getCartDiscountAmount(String userCode) {
+        try {
+            SqlSession session = DataSource.getInstance().openSession(true);
+            GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
+            Integer result = freshMapper.selectCartDiscountAmount(userCode);
             return (result != null) ? result : 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,19 +89,17 @@ public class GemdoriShoppingCartServiceImpl implements GemdoriShoppingCartServic
     }
 
     @Override
-    public int getCartDiscountAmount(String userCode) {
-        try {
-            Integer result = mapper.selectCartDiscountAmount(userCode);
-            return (result != null) ? result : 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0; // 에러 발생 시 0 반환
-        }
+    public boolean checkExistingCart(String userCode, String gameCode) {
+        SqlSession session = DataSource.getInstance().openSession(true);
+        GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
+        int count = freshMapper.checkExistingCart(userCode, gameCode);
+        return count > 0;
     }
     
     @Override
-    public boolean checkExistingCart(String userCode, String gameCode) {
-        int count = mapper.checkExistingCart(userCode, gameCode);
-        return count > 0;
+    public List<GemdoriShoppingCartVO> getGameDetailForDirectBuy(String gameCode) {
+        SqlSession session = DataSource.getInstance().openSession(true);
+        GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
+        return freshMapper.selectGameDetailForDirectBuy(gameCode);
     }
 }

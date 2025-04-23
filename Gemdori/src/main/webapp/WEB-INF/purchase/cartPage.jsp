@@ -199,6 +199,24 @@
 	font-size: 24px;
 	color: #b7b7b7;
 }
+
+/* 로딩 스피너 */
+.loading-spinner {
+    display: none;
+    text-align: center;
+    padding: 20px;
+}
+
+.loading-spinner i {
+    font-size: 24px;
+    color: #e53637;
+    animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 </style>
 
 <!-- Page Preloder -->
@@ -228,7 +246,7 @@
 				<div class="cart-container">
 					<h4 class="cart-title">
 						장바구니 (
-						<c:out value="${cartItems.size()}" />
+						<span id="cart-count"><c:out value="${cartItems.size()}" /></span>
 						개의 상품)
 					</h4>
 
@@ -241,33 +259,50 @@
 						</div>
 					</c:if>
 
+                    <!-- 로딩 스피너 -->
+                    <div class="loading-spinner" id="cart-loading">
+                        <i class="fa fa-spinner"></i>
+                        <p>처리 중입니다...</p>
+                    </div>
+
 					<!-- 장바구니 아이템 목록 -->
-					<c:if test="${not empty cartItems}">
-						<c:forEach var="item" items="${cartItems}">
-							<div class="cart-item" data-cart-id="${item.cartCode}">
-								<div class="cart-item-image">
-									<img src="${item.gameMainImage}" alt="${item.gameTitle}">
-								</div>
-								<div class="cart-item-details">
-									<h5 class="cart-item-title">${item.gameTitle}</h5>
-									<div class="cart-item-edition">${item.editionName}</div>
-									<div class="cart-item-gamePrice">
-										<fmt:formatNumber value="${item.gamePrice}" pattern="#,###" />
-										원
+					<div id="cart-items-container">
+						<c:if test="${not empty cartItems}">
+							<c:forEach var="item" items="${cartItems}">
+								<div class="cart-item" data-cart-id="${item.cartCode}">
+									<div class="cart-item-image">
+										<img src="${item.gameMainImage}" alt="${item.gameTitle}">
 									</div>
-									<div class="quantity-control">
-										<button class="quantity-btn decrease-btn"
-											data-cart-id="${item.cartCode}">-</button>
-										<button class="quantity-btn increase-btn"
-											data-cart-id="${item.cartCode}">+</button>
+									<div class="cart-item-details">
+										<h5 class="cart-item-title">${item.gameTitle}</h5>
+										<div class="cart-item-edition">${item.editionName}</div>
+										<div class="cart-item-gamePrice">
+											<c:choose>
+												<c:when test="${item.gameSalePrice > 0 && item.gameSalePrice < item.gamePrice}">
+													<span style="text-decoration: line-through; color: #b7b7b7; font-size: 16px; margin-right: 10px;">
+														<fmt:formatNumber value="${item.gamePrice}" pattern="#,###" />원
+													</span>
+													<fmt:formatNumber value="${item.gameSalePrice}" pattern="#,###" />원
+													<span style="color: #3fd13f; font-size: 14px; margin-left: 10px;">
+														<c:set var="discountRate" value="${100 - ((item.gameSalePrice / item.gamePrice) * 100)}" />
+														<fmt:formatNumber value="${discountRate}" pattern="#,##0" />% 할인
+													</span>
+												</c:when>
+												<c:otherwise>
+													<fmt:formatNumber value="${item.gamePrice}" pattern="#,###" />원
+												</c:otherwise>
+											</c:choose>
+										</div>
+										<div class="quantity-control">
+											<button class="remove-btn" data-cart-id="${item.cartCode}" onclick="removeCartItem('${item.cartCode}')">
+												<i class="fa fa-trash"></i> 삭제
+											</button>
+										</div>
 									</div>
 								</div>
-								<button class="remove-btn" data-cart-id="${item.cartCode}">
-									<i class="fa fa-trash"></i>
-								</button>
-							</div>
-						</c:forEach>
-					</c:if>
+							</c:forEach>
+						</c:if>
+					</div>
 				</div>
 			</div>
 
@@ -275,22 +310,24 @@
 				<div class="cart-summary">
 					<h4 class="summary-title">주문 요약</h4>
 					<div class="summary-row">
-						<span>상품 금액</span> <span><fmt:formatNumber
+						<span>상품 금액</span> <span id="total-amount"><fmt:formatNumber
 								value="${totalAmount}" pattern="#,###" />원</span>
 					</div>
 					<div class="summary-row">
-						<span>할인</span> <span><fmt:formatNumber
+						<span>할인</span> <span id="discount-amount"><fmt:formatNumber
 								value="${discountAmount}" pattern="#,###" />원</span>
 					</div>
 					<div class="summary-total">
-						<span>총 결제금액</span> <span><fmt:formatNumber
-								value="${totalAmount}" pattern="#,###" />원</span>
+					    <span>총 결제금액</span> <span id="final-amount"><fmt:formatNumber
+					            value="${finalAmount}" pattern="#,###" />원</span>
 					</div>
-					<button class="checkout-btn">결제하기</button>
+					<button class="checkout-btn" id="checkout-button">결제하기</button>
 
 					<div class="payment-methods">
-						<i class="fa fa-cc-visa"></i> <i class="fa fa-cc-mastercard"></i>
-						<i class="fa fa-cc-paypal"></i> <i class="fa fa-cc-amex"></i>
+						<i class="fab fa-cc-visa"></i> 
+                        <i class="fab fa-cc-mastercard"></i>
+						<i class="fab fa-cc-paypal"></i> 
+                        <i class="fab fa-cc-amex"></i>
 					</div>
 				</div>
 			</div>
@@ -298,19 +335,6 @@
 	</div>
 </section>
 <!-- Cart Section End -->
-
-<!-- Search model Begin -->
-<div class="search-model">
-	<div class="h-100 d-flex align-items-center justify-content-center">
-		<div class="search-close-switch">
-			<i class="icon_close"></i>
-		</div>
-		<form class="search-model-form">
-			<input type="text" id="search-input" placeholder="게임 검색...">
-		</form>
-	</div>
-</div>
-<!-- Search model end -->
 
 <!-- Js Plugins -->
 <script src="js/jquery-3.3.1.min.js"></script>
@@ -324,78 +348,79 @@
 
 <script>
 $(document).ready(function() {
-
-    // 삭제 버튼
-    $('.remove-btn').click(function() {
-        var cartCode = $(this).data('cart-id');
-        removeCartItem(cartCode);
-    });
-
     // 결제 버튼
-    $('.checkout-btn').click(function() {
+    $('#checkout-button').click(function() {
         // 결제 페이지로 이동
         window.location.href = 'checkout.do';
     });
+});
 
-    // 장바구니 아이템 삭제 함수
-    function removeCartItem(cartCode) {
-        if (confirm('정말로 이 상품을 장바구니에서 삭제하시겠습니까?')) {
-            $.ajax({
-                url: 'removeCartItem.do',
-                type: 'POST',
-                data: { cartCode: cartCode },
-                success: function(response) {
-                    // 성공 시 해당 아이템 화면에서 제거
-                    $('[data-cart-id="' + cartCode + '"]').fadeOut(300, function() {
-                        $(this).remove();
-                        
-                        // 장바구니가 비었는지 확인하고 필요시 빈 메시지 표시
-                        if ($('.cart-item').length === 0) {
-                            $('.cart-container').html(
-                                '<h4 class="cart-title">장바구니 (0개의 상품)</h4>' +
-                                '<div class="empty-cart">' +
-                                '<i class="fa fa-shopping-cart"></i>' +
-                                '<p>장바구니가 비어 있습니다.</p>' +
-                                '<a href="gamePackage.do" class="continue-shopping">게임 쇼핑하기</a>' +
-                                '</div>'
-                            );
-                        }
-                        
-                        // 합계 업데이트 (실제로는 서버에서 다시 조회해야 함)
-                        updateCartSummary();
-                    });
-                },
-                error: function(xhr, status, error) {
-                    alert('상품 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
-                    console.error('Error:', error);
-                }
-            });
+//30초마다 장바구니 상태 체크
+setInterval(function() {
+    $.ajax({
+        url: 'getCartSummary.do',
+        type: 'GET',
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+            // DB 상태와 화면 상태가 다르면 새로고침
+            if (data.itemCount !== parseInt($('#cart-count').text())) {
+                location.reload(true);
+            }
         }
-    }
-    
+    });
+}, 30000);
 
-    
-    // 장바구니 요약 정보 업데이트 함수
-    function updateCartSummary() {
+function removeCartItem(cartCode) {
+    if (confirm('정말로 이 상품을 장바구니에서 삭제하시겠습니까?')) {
+        // 로딩 스피너 표시
+        $('#cart-loading').show();
+        
+        // 삭제 요청 전송
         $.ajax({
-            url: 'getCartSummary.do',
-            type: 'GET',
-            dataType: 'json',
-            success: function(data) {
-                // 가격 정보 업데이트
-                $('.summary-row:first-child span:last-child').text(numberWithCommas(data.totalAmount) + '원');
-                $('.summary-row:nth-child(2) span:last-child').text(numberWithCommas(data.discountAmount) + '원');
-                $('.summary-total span:last-child').text(numberWithCommas(data.totalAmount) + '원');
+            url: 'removeCartItem.do',
+            type: 'POST',
+            data: { cartCode: cartCode },
+            cache: false,
+            success: function(response) {
+                if (response === "success") {
+                    // 강제로 서버에서 새로 데이터 가져오기 (캐시 무시)
+                    window.location.replace('cartPage.do?refresh=' + new Date().getTime());
+                } else {
+                    $('#cart-loading').hide();
+                    alert('상품 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
+                }
             },
-            error: function(xhr, status, error) {
-                console.error('합계 업데이트 중 오류:', error);
+            error: function() {
+                $('#cart-loading').hide();
+                alert('상품 삭제 중 오류가 발생했습니다. 다시 시도해주세요.');
             }
         });
     }
-    
-    // 숫자 포맷팅 함수 (천 단위 콤마)
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-});
+}
+
+//장바구니 요약 정보 업데이트 함수 수정
+function updateCartSummary() {
+    $.ajax({
+        url: 'getCartSummary.do',
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+            // 요약 정보 업데이트
+            $('#total-amount').text(numberWithCommas(data.totalAmount) + '원');
+            $('#discount-amount').text(numberWithCommas(data.discountAmount) + '원');
+            $('#final-amount').text(numberWithCommas(data.finalAmount) + '원'); // 직접 계산 대신 서버에서 받은 값 사용
+            $('#cart-loading').hide();
+        },
+        error: function() {
+            // 에러 시 페이지를 새로고침하는 방식으로 폴백
+            location.reload(true);
+        }
+    });
+}
+
+// 숫자 포맷팅 함수 (천 단위 콤마)
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 </script>

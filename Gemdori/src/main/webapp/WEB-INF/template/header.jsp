@@ -89,10 +89,7 @@ String email = loginUser != null ? loginUser.getUserEmail() : "";
 						<ul>
 							<li class="active"><a href="main.do">홈</a></li>
 							<li><a href="./searchGames.do">게임 찾기</a></li>
-							<c:if test="loginUser != null">
-							     <li><a href="./library.do">라이브러리</a></li>
-							</c:if>
-							<li><a href="#">커뮤니티</a></li>
+							<li><a href="./community.do">커뮤니티</a></li>
 						</ul>
 					</nav>
 				</div>

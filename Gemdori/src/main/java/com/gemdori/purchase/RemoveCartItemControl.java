@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.gemdori.common.Control;
+import com.gemdori.member.vo.UserFullVO;
 import com.gemdori.purchase.service.GemdoriShoppingCartService;
 import com.gemdori.purchase.service.GemdoriShoppingCartServiceImpl;
 
@@ -26,38 +27,41 @@ public class RemoveCartItemControl implements Control {
         resp.setContentType("text/plain; charset=UTF-8");
         PrintWriter out = resp.getWriter();
         
-        // 세션에서 사용자 코드 가져오기
         HttpSession session = req.getSession();
-        String userCode = (String) session.getAttribute("userCode");
+        UserFullVO loginUser = (UserFullVO) session.getAttribute("loginUser");
         
         // 로그인 체크
-        if (userCode == null || userCode.isEmpty()) {
+        if (loginUser == null || loginUser.getUserCode() == null || loginUser.getUserCode().isEmpty()) {
             out.print("login_required");
             return;
         }
         
+        String userCode = loginUser.getUserCode();
+        
         try {
-            // gameCode 파라미터 받기
-            String gameCode = req.getParameter("gameCode");
-            
-            // cartCode 파라미터 (삭제용)
+            // cartCode 파라미터
             String cartCode = req.getParameter("cartCode");
+            System.out.println("삭제 요청 cartCode: [" + cartCode + "]");
             
-            // gameCode만 있는 경우 게임코드로 삭제
-            if (gameCode != null && !gameCode.isEmpty()) {
-                boolean result = cartService.removeCartItem(userCode, gameCode);
-                
-                if (result) {
-                    out.print("success");
-                } else {
-                    out.print("fail");
-                }
+            // cartCode 유효성 검사
+            if (cartCode == null || cartCode.isEmpty()) {
+                out.print("invalid_param");
                 return;
             }
+
+            // 장바구니 아이템 삭제
+            boolean result = cartService.removeCartItemByCartCode(cartCode);
             
-            // 장바구니 삭제 실패
-            out.print("invalid_param");
-            
+            // 아이템이 삭제되었다면, 세션에서도 해당 아이템 제거
+            if (result) {
+                // 세션에 저장된 장바구니 정보가 있다면 제거
+                session.removeAttribute("cartItems");
+                
+                // 결과 응답
+                out.print("success");
+            } else {
+                out.print("fail");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             out.print("error");
