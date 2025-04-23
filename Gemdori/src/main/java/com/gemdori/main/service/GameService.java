@@ -14,4 +14,5 @@ public interface GameService {
     List<GameVO> getAllGames();
     boolean updateGameRating(String gameCode);
     double getGameRating(String gameCode);
+    List<GameVO> getBestGames();
 }

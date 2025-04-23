@@ -10,7 +10,6 @@
 
 let reviewListContainer = null;
 
-
 // ============================================
 // ▼▼▼ DOMContentLoaded 이벤트 리스너 ▼▼▼
 // ============================================
@@ -194,34 +193,37 @@ function formatDate(dateString) {
 // --- 리뷰 삭제 함수 ---
 function deleteReview(e) {
 	let reviewCode = e.currentTarget.value;
-	console.log('reviewCode: ' + reviewCode);
-	if (!reviewCode) {
-		console.error('삭제할 리뷰 코드가 없습니다.');
-		return;
-	}
-	if (!confirm('정말 이 리뷰를 삭제하시겠습니까?')) {
-		return;
-	}
-	const formData = new URLSearchParams();
-	formData.append("reviewCode", reviewCode);
+    console.log('reviewCode: ' + reviewCode);
 
-	fetch(`${contextPath}/removeReview.do`, {
-		method: 'POST',
-		headers: {
-			"Content-Type": "application/x-www-form-urlencoded"
-		},
-		body: formData
-	})
+    if (!reviewCode) {
+        console.error('삭제할 리뷰 코드가 없습니다.');
+        return;
+    }
 
-		.then(response => response.json())
-		.then(result => {
-			alert(result.message); // 결과 메시지 알림
-			if (result.success) {
-				loadReviews(currentGameCode); // 성공 시 목록 새로고침
-			}
-		})
-		.catch(error => {
-			console.error('리뷰 삭제 요청 오류:', error);
-			alert('리뷰 삭제 중 오류가 발생했습니다.');
-		});
+    if (!confirm('정말 이 리뷰를 삭제하시겠습니까?')) {
+        return;
+    }
+
+    // 동적으로 폼 생성
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = `${contextPath}/removeReview.do`;
+
+    // 리뷰 코드 입력 필드
+    const inputReview = document.createElement('input');
+    inputReview.type = 'hidden';
+    inputReview.name = 'reviewCode';
+    inputReview.value = reviewCode;
+    form.appendChild(inputReview);
+
+    // 현재 게임 코드도 함께 전달 (상세페이지로 돌아가기 위함)
+    const inputGame = document.createElement('input');
+    inputGame.type = 'hidden';
+    inputGame.name = 'gameCode';
+    inputGame.value = currentGameCode; // 전역 변수로 지정되어 있어야 함
+    form.appendChild(inputGame);
+
+    // 폼을 body에 붙이고 제출
+    document.body.appendChild(form);
+    form.submit();
 } // --- 리뷰 삭제 함수 끝 ---

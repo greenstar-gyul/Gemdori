@@ -23,7 +23,8 @@
 				<div class="myinfo__label">닉네임</div>
 				<div class="myinfo__value">
 					<input type="text" name="userName" value="${user.userName}"
-						required>
+						minlength="2" maxlength="8" required
+						placeholder="2~8자 닉네임을 입력해주세요" />
 				</div>
 			</div>
 
@@ -40,18 +41,23 @@
 
 			<div class="myinfo__row">
 				<div class="myinfo__label" for="userBirthday">생일</div>
-				<div class="myinfo__value" onclick="document.getElementById('userBirthday').showPicker()"
+				<div class="myinfo__value"
+					onclick="document.getElementById('userBirthday').showPicker()"
 					style="cursor: pointer;">
-					<span id="displayBirthday"><fmt:formatDate value="${user.userBirthday}" pattern="yyyy-MM-dd" /></span> <input type="date"
-						id="userBirthday" name="userBirthday"
+					<span id="displayBirthday"><fmt:formatDate
+							value="${user.userBirthday}" pattern="yyyy-MM-dd" /></span> <input
+						type="date" id="userBirthday" name="userBirthday"
 						style="opacity: 0; position: absolute;" />
 				</div>
 			</div>
-
+	
 			<div class="myinfo__row">
 				<div class="myinfo__label">프로필 정보</div>
 				<div class="myinfo__value">
-					<textarea name="userIntro" rows="4" style="width: 100%;">${user.userIntro}</textarea>
+					<textarea name="userIntro" rows="4" style="width: 100%;"
+						maxlength="100" placeholder="자기소개를 100자 이내로 작성해주세요">${user.userIntro}</textarea>
+					<div style="font-size: 12px; text-align: right;" id="introCount">0
+						/ 100자</div>
 				</div>
 			</div>
 

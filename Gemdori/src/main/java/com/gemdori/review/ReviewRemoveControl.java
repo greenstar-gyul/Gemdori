@@ -1,8 +1,6 @@
 package com.gemdori.review;
 
 import java.io.IOException;
-import java.util.HashMap; // Java 8 이하 호환 위해 Map.of 대신 사용
-import java.util.Map;    // Java 8 이하 호환 위해 Map.of 대신 사용
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,8 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.gemdori.common.Control;
+import com.gemdori.main.service.GameService;
+import com.gemdori.main.service.GameServiceImpl;
 import com.gemdori.member.vo.UserFullVO;
-import com.gemdori.member.vo.UserProfileVO; // UserProfileVO 경로 확인
 import com.gemdori.review.service.ReviewService;
 import com.gemdori.service.impl.ReviewServiceImpl;
 import com.google.gson.Gson;
@@ -26,86 +25,61 @@ public class ReviewRemoveControl implements Control {
 
     @Override
     public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 응답 타입을 JSON으로 설정
-        resp.setContentType("application/json; charset=utf-8");
+    	// 1. 요청 파라미터에서 reviewCode 가져오기
+    	String reviewCode = req.getParameter("reviewCode");
 
-        // 1. 요청 파라미터에서 reviewCode 가져오기 (POST 방식으로 온다고 가정)
-        String reviewCode = req.getParameter("reviewCode");
-        System.out.println("=========================");
-        System.out.println("review code: " + reviewCode);
-        System.out.println("=========================");
+    	// 2. 유효성 검사
+    	if (reviewCode == null || reviewCode.isEmpty()) {
+    	    logger.warn("리뷰 삭제 요청에 reviewCode 파라미터가 누락되었습니다.");
+    	    // 리다이렉트로 실패 메시지 전달 (예: 쿼리 파라미터로)
+    	    resp.sendRedirect("gameDetails.do?error=리뷰코드없음");
+    	    return;
+    	}
 
-        // 2. reviewCode 유효성 검사
-        if (reviewCode == null || reviewCode.isEmpty()) {
-            logger.warn("리뷰 삭제 요청에 reviewCode 파라미터가 누락되었습니다.");
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            Map<String, Object> errorResult = new HashMap<>();
-            errorResult.put("success", false);
-            errorResult.put("message", "삭제할 리뷰 코드가 필요합니다.");
-            resp.getWriter().write(gson.toJson(errorResult));
-            return;
-        }
-        
-        HttpSession session = req.getSession(false);
+    	// 3. 로그인 검사
+    	HttpSession session = req.getSession(false);
+    	UserFullVO loginUser = null;
+    	String userCode = null;
 
-        UserFullVO loginUser = null; // 세션에서 가져올 사용자 정보를 담을 변수
-        String userCode = null;
+    	if (session != null) {
+    	    Object sessionAttribute = session.getAttribute("loginUser");
+    	    if (sessionAttribute instanceof UserFullVO) {
+    	        loginUser = (UserFullVO) sessionAttribute;
+    	        userCode = loginUser.getUserCode();
+    	    }
+    	}
 
-        // 세션이 존재하고, 세션 안에 로그인 정보가 있는지 확인
-        if (session != null) {
-            // 세션에서 "loginUser"라는 이름으로 저장된 객체를 가져옵니다.
-            // (주의!) "loginUser"는 실제 로그인 처리 시 session.setAttribute("loginUser", ...) 했던 이름과 동일해야 합니다.
-            // 가져온 객체를 UserProfileVO 타입으로 형변환 합니다. (로그인 시 UserProfileVO 객체를 저장했다고 가정)
-            Object sessionAttribute = session.getAttribute("loginUser");
-            if (sessionAttribute instanceof UserFullVO) { // 타입 안정성을 위해 instanceof 확인 추가
-                loginUser = (UserFullVO) sessionAttribute;
-                userCode = loginUser.getUserCode();
-                
-            }
-            System.out.println("로그인 정보: " + loginUser);
-        }
+    	if (loginUser == null) {
+    	    logger.warn("로그인되지 않은 사용자의 리뷰 삭제 시도: reviewCode={}", reviewCode);
+    	    resp.sendRedirect("login.do?redirect=gameDetails.do"); // 로그인 페이지로 리다이렉트
+    	    return;
+    	}
 
-        // 로그인 정보가 없는 경우 (세션이 없거나, 세션에 loginUser 속성이 없거나, 타입이 맞지 않음)
-        if (loginUser == null) {
-        	logger.warn("로그인되지 않은 사용자의 리뷰 삭제 시도: reviewCode={}", reviewCode);
-            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401 Unauthorized
-            Map<String, Object> errorResult = new HashMap<>();
-            errorResult.put("success", false);
-            errorResult.put("message", "리뷰를 삭제하려면 로그인이 필요합니다.");
-            resp.getWriter().write(gson.toJson(errorResult));
-            return;
-        }
+    	// 4. 리뷰 삭제 시도
+    	ReviewService reviewService = new ReviewServiceImpl();
+    	boolean success = false;
 
-        // 4. ReviewService 호출하여 삭제 시도
-        ReviewService reviewService = new ReviewServiceImpl(); // (개선 필요: 싱글톤 등)
-        boolean success = false;
-        String message = "";
-        Map<String, Object> result = new HashMap<>();
+    	try {
+    	    success = reviewService.removeReview(reviewCode, userCode);
+    	    if (success) {
+    	        logger.info("리뷰 삭제 성공: reviewCode={}, userCode={}", reviewCode, userCode);
+    	    } else {
+    	        logger.warn("리뷰 삭제 실패 또는 권한 없음: reviewCode={}, userCode={}", reviewCode, userCode);
+    	    }
+    	} catch (Exception e) {
+    	    logger.error("리뷰 삭제 중 오류 발생", e);
+    	}
 
-        try {
-            success = reviewService.removeReview(reviewCode, userCode);
-            if (success) {
-                logger.info("리뷰 삭제 성공: reviewCode={}, userCode={}", reviewCode, userCode);
-                message = "리뷰가 성공적으로 삭제되었습니다.";
-            } else {
-                // removeReview 내부에서 권한 없거나 리뷰가 없는 경우 false 반환
-                logger.warn("리뷰 삭제 실패 또는 권한 없음: reviewCode={}, userCode={}", reviewCode, userCode);
-                message = "리뷰를 삭제할 수 없거나 권한이 없습니다.";
-                // 실패 시에는 별도 상태 코드 없이 200 OK에 실패 메시지 전달
-            }
-            result.put("success", success);
-            result.put("message", message);
+    	// 5. 삭제 후 원래 게임 상세 페이지로 이동 (리뷰 목록 포함)
+    	String gameCode = req.getParameter("gameCode"); // 함께 전달되었는지 확인 필요
+    	if (gameCode == null || gameCode.isEmpty()) {
+    	    // gameCode 없으면 메인으로
+    	    resp.sendRedirect("main.do");
+    	} else {
+    		GameService svc = new GameServiceImpl();
+    		svc.updateGameRating(gameCode);
+    	    resp.sendRedirect("gameDetails.do?gameCode=" + gameCode);
+    	}
 
-        } catch (Exception e) {
-            logger.error("리뷰 삭제 중 오류 발생: reviewCode={}, userCode={}", reviewCode, userCode, e);
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR); // 500 Internal Server Error
-            result.put("success", false);
-            result.put("message", "리뷰 삭제 중 오류가 발생했습니다.");
-            resp.getWriter().write(gson.toJson(result));
-            return;
-        }
-
-        // 5. 결과 JSON 응답 전송
-        resp.getWriter().write(gson.toJson(result));
     }
 }
