@@ -6,7 +6,7 @@ import com.gemdori.community.vo.TopicVO;
 
 public interface TopicMapper {
 	void insertTopic(TopicVO post);
-	List<TopicVO> selectTopicList();
+	List<TopicVO> selectTopicList(String gameCode);
 	TopicVO selectTopic(String topicCode);
 
 

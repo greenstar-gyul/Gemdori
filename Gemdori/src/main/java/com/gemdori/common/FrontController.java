@@ -10,17 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gemdori.community.TopicDetailControl;
+import com.gemdori.community.*;
 //import com.gemdori.community.CommunityControl;
-import com.gemdori.community.TopicFormControl;
-import com.gemdori.community.TopicListControl;
-import com.gemdori.community.TopicRemove;
-import com.gemdori.community.TopicReplyAdd;
-import com.gemdori.community.TopicReplyList;
-import com.gemdori.community.TopicReplyRemove;
-import com.gemdori.community.TopicReplyUpdate;
-import com.gemdori.community.TopicUpdate;
-import com.gemdori.community.TopicregistrationControl;
 import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
 import com.gemdori.main.SearchGamesControl;
@@ -31,15 +22,29 @@ import com.gemdori.member.GenerateTempPasswordControl;
 import com.gemdori.member.JoinControl;
 import com.gemdori.member.JoinFormControl;
 import com.gemdori.member.LoginControl;
+import com.gemdori.member.LoginControl;
 import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LogoutControl;
+import com.gemdori.member.MyInfoControl;
 import com.gemdori.member.SendEmailControl;
+import com.gemdori.member.UpdatePasswordControl;
+import com.gemdori.member.UpdatePasswordFormControl;
+import com.gemdori.member.UpdateProfileControl;
+import com.gemdori.member.UpdateProfileFormControl;
+import com.gemdori.member.UserDeleteControl;
+import com.gemdori.member.UserDeleteFormControl;
 import com.gemdori.member.VerifyEmailCodeControl;
+import com.gemdori.purchase.AddToCartControl;
+import com.gemdori.mypage.MyPageFormControl;
 import com.gemdori.purchase.CartPageControl;
+import com.gemdori.purchase.CheckCartControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
+import com.gemdori.purchase.RemoveCartItemControl;
 import com.gemdori.purchase.SuccessControl;
 import com.gemdori.review.ReviewAddControl;
+import com.gemdori.review.ReviewListControl;
+import com.gemdori.review.ReviewRemoveControl;
 import com.gemdori.user.TempSessionControl;
 
 
@@ -63,6 +68,8 @@ public class FrontController extends HttpServlet {
 		map.put("/gameDetails.do", new GameDetailsControl());
 		map.put("/searchGames.do", new SearchGamesControl());
 		map.put("/reviewAdd.do", new ReviewAddControl());
+		map.put("/reviewList.do", new ReviewListControl()); // 리뷰 목록 조회 컨트롤러
+		map.put("/removeReview.do", new ReviewRemoveControl()); //  리뷰 삭제 컨트롤러
 
 		/* ******************************
 		 * 회원 관련 요청
@@ -81,23 +88,44 @@ public class FrontController extends HttpServlet {
 		map.put("/checkId.do", new CheckIdControl()); // 회원가입 - 아이디 중복 확인
 		map.put("/sendEmailCode.do", new SendEmailControl()); // 회원가입 - 이메일 인증코드 보내기
 		map.put("/verifyEmailCode.do", new VerifyEmailCodeControl()); // 회원가입 - 이메일 인증코드 일치확인
-
+		// 회원정보 컨트롤
+		map.put("/myInfo.do", new MyInfoControl()); // 회원정보 페이지 이동
+		map.put("/updateProfileForm.do", new UpdateProfileFormControl()); // 회원정보 수정 페이지 이동
+		map.put("/updateProfile.do", new UpdateProfileControl()); // 회원정보 수정 업데이트
+		map.put("/updatePasswordForm.do", new UpdatePasswordFormControl()); // 회원 비밀번호 변경 페이지 이동
+		map.put("/updatePassword.do", new UpdatePasswordControl()); // 회원 비밀번호 변경
+		map.put("/userDeleteForm.do", new UserDeleteFormControl()); // 회원탈퇴 페이지 이동
+		map.put("/userDelete.do", new UserDeleteControl()); // 회원탈퇴
+		
+		/* ******************************
+		 * 마이페이지 요청
+		 * ******************************/
+		map.put("/myPage.do", new MyPageFormControl());
+		
+		
+		
 		/* ******************************
 		 * 구매 관련 요청
 		 * ******************************/
 		map.put("/gamePackage.do", new GamePackageControl());
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
-		map.put("/searchGames.do", new SearchGamesControl());
 
 		//map.put("/community.do", new CommunityControl());
-		map.put("/topicform.do", new TopicFormControl()); // 2
+		map.put("/success.do", new SuccessControl());
+		map.put("/tempSession.do", new TempSessionControl());
+		map.put("/addToCart.do", new AddToCartControl());
+		map.put("/checkCart.do", new CheckCartControl());
+		map.put("/removeCartItem.do", new RemoveCartItemControl());
+
+		/* *****************
+		 * 커뮤니티
+		 * *****************/
+		map.put("/community.do", new CommunityControl());
+		map.put("/topicForm.do", new TopicFormControl()); // 2
 		map.put("/topicRegistration.do", new TopicregistrationControl());
 		map.put("/topicDetail.do", new TopicDetailControl());
-		map.put("/success.do", new SuccessControl());
-		map.put("/gameDetails.do", new GameDetailsControl());
 		map.put("/topicList.do", new TopicListControl());
-		map.put("/tempSession.do", new TempSessionControl());
 		map.put("/topicReplyAdd.do", new TopicReplyAdd());
 		map.put("/topicReplyList.do", new TopicReplyList());
 		map.put("/topicReplyUpdate.do", new TopicReplyUpdate());

@@ -21,8 +21,10 @@ public class TopicListControl implements Control {
         // SqlSession을 사용하여 DB에 접근
         SqlSession sqlSession = DataSource.getInstance().openSession();
         TopicMapper mapper = sqlSession.getMapper(TopicMapper.class);
-        List<TopicVO> topicList = mapper.selectTopicList();
+        String gameCode = req.getParameter("gameCode");
+        List<TopicVO> topicList = mapper.selectTopicList(gameCode);
         req.setAttribute("topicList", topicList);
+        req.setAttribute("gameCode", gameCode);
         req.getRequestDispatcher("community/topicList.tiles").forward(req, resp);
 
         

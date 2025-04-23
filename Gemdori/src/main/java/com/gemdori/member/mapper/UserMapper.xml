@@ -6,7 +6,10 @@
 <mapper namespace="com.gemdori.member.mapper.UserMapper">
 	<!-- 아이디 중복 확인 => 중복 시 1 반환 -->
 	<select id="countByUserId" parameterType="string" resultType="int">
-    	SELECT COUNT(*) FROM gemdori_user_sign_tbl WHERE user_id = #{userId}
+    	SELECT COUNT(*) 
+		FROM gemdori_user_sign_tbl 
+		WHERE user_id = #{userId} 
+		  AND user_status = 1
 	</select>
 	<!-- 회원가입 로그인 정보 입력 -->
 	<insert id="insertUserSign" parameterType="userSign">
@@ -36,7 +39,8 @@
 		user_email,
 		user_phone,
 		user_birthday,
-		user_gender)
+		user_gender,
+		user_image)
 		values(
 		#{userCode},
 		#{userFirstName},
@@ -45,7 +49,8 @@
 		#{userEmail},
 		#{userPhone},
 		#{userBirthday},
-		#{userGender})
+		#{userGender},
+		#{userImage})
 	</insert>
 	<insert id="insertUserSecurity" parameterType="userSecurity">
     	insert into gemdori_user_security_tbl (
@@ -67,6 +72,7 @@
 		    s.user_id,
 		    s.user_pw,
 		    s.create_time,
+		    
 		    p.user_first_name,
 		    p.user_last_name,
 		    p.user_name,
@@ -75,10 +81,21 @@
 		    p.user_birthday,
 		    p.user_gender,
 		    p.user_intro,
-		    p.user_image
+		    p.user_image,
+		    p.update_time,
+	
+		    sec.login_fail_count,
+		    sec.last_login_date,
+		    sec.is_locked,
+		    sec.update_time AS security_update_time
 		FROM gemdori_user_sign_tbl s
+	
 		JOIN gemdori_user_profile_tbl p
-		ON s.user_code = p.user_code
+		  ON s.user_code = p.user_code
+	
+		LEFT JOIN gemdori_user_security_tbl sec
+		  ON s.user_code = sec.user_code
+	
 		WHERE s.user_id = #{userId}
 		  AND s.user_pw = #{userPw}
 		  AND s.user_status = 1
@@ -102,7 +119,7 @@
 	    SELECT * FROM gemdori_user_security_tbl WHERE user_code = #{userCode}
 	</select>
 	<!-- 로그인 실패 카운트 조회 -->
-	<select id="getLoginFailCount" resultType="int" parameterType="string">
+	<select id="getLoginFailCount" resultType="Integer" parameterType="string">
 	    SELECT login_fail_count FROM gemdori_user_security_tbl WHERE user_code = #{userCode}
 	</select>
 	<!-- 로그인 실패 카운트 증가 -->
@@ -123,12 +140,78 @@
 	    SET is_locked = -1
 	    WHERE user_code = #{userCode}
 	</update>
+	<!-- 로그인 성공 시 마지막 로그인 시간 업데이트 -->
+	<update id="updateLastLoginDate" parameterType="string">
+    	UPDATE gemdori_user_security_tbl
+    	SET last_login_date = SYSDATE
+    	WHERE user_code = #{userCode}
+	</update>
 	<!-- 비밀번호 재발급 시 보안 정보 변경 -->
 	<update id="resetSecurityAfterPwUpdate" parameterType="string">
 	    UPDATE gemdori_user_security_tbl
 	    SET login_fail_count = 0,
 	        is_locked = 1,
 	        update_time = SYSDATE
+	    WHERE user_code = #{userCode}
+	</update>
+	<!-- 유저 프로필 업데이트 -->
+	<update id="updateUserProfile" parameterType="userProfile">
+	    UPDATE gemdori_user_profile_tbl
+	    SET 
+	        user_name = #{userName},
+	        user_gender = #{userGender},
+	        user_birthday = #{userBirthday},
+	        user_intro = #{userIntro},
+	        user_image = #{userImage},
+	        update_time = SYSDATE
+	    WHERE user_code = #{userCode}
+	</update>
+	<!-- 업데이트 성공 시 userPw 정보 없이 session 업데이트 -->
+	<select id="selectUserByUserCode" parameterType="string" resultType="userFullVO">
+	    SELECT 
+	        us.user_code,
+	        us.user_id,
+	        up.user_first_name,
+	        up.user_last_name,
+	        up.user_phone,
+	        up.user_email,
+	        up.user_name,
+	        up.user_gender,
+	        up.user_birthday,
+	        up.user_intro,
+	        up.user_image,
+	        up.update_time,
+	        se.last_login_date,
+	        se.update_time AS security_update_time
+	    FROM gemdori_user_sign_tbl us
+	    JOIN gemdori_user_profile_tbl up ON us.user_code = up.user_code
+	    LEFT JOIN gemdori_user_security_tbl se ON us.user_code = se.user_code
+	    WHERE us.user_code = #{userCode}
+	</select>
+	<!-- 기존 비밀번호 확인 -->
+	<select id="checkPassword" parameterType="map" resultType="int">
+	    SELECT COUNT(*) 
+	    FROM gemdori_user_sign_tbl 
+	    WHERE user_code = #{userCode} 
+		AND user_pw = #{userPw}
+		AND user_status = 1
+	</select>
+	<!-- 비밀번호 변경 -->
+	<update id="newUserPassword" parameterType="map">
+	    UPDATE gemdori_user_sign_tbl
+	    SET user_pw = #{userPw}
+	    WHERE user_code = #{userCode}
+	</update>
+	<!-- 보안정보 수정일자 갱신 -->
+    <update id="updateSecurityUpdateTime" parameterType="string">
+        UPDATE gemdori_user_security_tbl
+        SET update_time = SYSDATE
+        WHERE user_code = #{userCode}
+    </update>
+    <!-- 회원탈퇴 -->
+    <update id="deleteUser" parameterType="string">
+	    UPDATE gemdori_user_sign_tbl
+	    SET user_status = -1
 	    WHERE user_code = #{userCode}
 	</update>
 </mapper>

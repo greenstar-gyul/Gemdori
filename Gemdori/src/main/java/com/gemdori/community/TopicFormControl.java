@@ -22,8 +22,9 @@ public class TopicFormControl implements Control {
     	GameMapper mapper = sqlSession.getMapper(GameMapper.class);
 
     	List<GameVO> list = mapper.getAllGames();
-
+		String gameCode = req.getParameter("gameCode");
         req.setAttribute("gamelist", list);
+		req.setAttribute("gameCode", gameCode);
 		// 글쓰기 화면으로 이동 
 		req.getRequestDispatcher("community/topicRegistration.tiles").forward(req, resp);
 	}

@@ -1,88 +1,122 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="java.util.Base64"%>
-<%@ page import="java.util.Base64.Encoder"%>
-<%@ page import="java.net.*"%>
-<%@ page import="org.json.simple.*"%>
-<%@ page import="org.json.simple.parser.*"%>
-<%@ page import="java.io.*"%>
-<%@ page import="java.nio.charset.StandardCharsets"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<%
-// 먼저 요청 파라미터 받기
-String orderId = request.getParameter("orderId");
-String paymentKey = request.getParameter("paymentKey");
-String amount = request.getParameter("amount");
+<!-- Breadcrumb Begin -->
+<div class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__links">
+                    <a href="./index.do"><i class="fa fa-home"></i> 홈</a>
+                    <a href="./cartPage.do">장바구니</a>
+                    <a href="./checkout.do">결제하기</a>
+                    <span>결제 완료</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Breadcrumb End -->
 
-// API 호출 준비
-String secretKey = "test_sk_zXLkKEypNArWmo50nX3lmeaxYG5R:";
-Encoder encoder = Base64.getEncoder();
-byte[] encodedBytes = encoder.encode(secretKey.getBytes("UTF-8"));
-String authorizations = "Basic " + new String(encodedBytes, 0, encodedBytes.length);
-
-// URL 인코딩
-paymentKey = URLEncoder.encode(paymentKey, StandardCharsets.UTF_8);
-
-// API 연결 설정
-URL url = new URL("https://api.tosspayments.com/v1/payments/confirm");
-HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-connection.setRequestProperty("Authorization", authorizations);
-connection.setRequestProperty("Content-Type", "application/json");
-connection.setRequestMethod("POST");
-connection.setDoOutput(true);
-
-// 요청 데이터 설정
-JSONObject obj = new JSONObject();
-obj.put("paymentKey", paymentKey);
-obj.put("orderId", orderId);
-obj.put("amount", amount);
-
-// 요청 보내기
-OutputStream outputStream = connection.getOutputStream();
-outputStream.write(obj.toString().getBytes("UTF-8"));
-
-// 응답 처리
-int code = connection.getResponseCode();
-boolean isSuccess = code == 200 ? true : false;
-InputStream responseStream = isSuccess ? connection.getInputStream() : connection.getErrorStream();
-Reader reader = new InputStreamReader(responseStream, StandardCharsets.UTF_8);
-JSONParser parser = new JSONParser();
-JSONObject jsonObject = (JSONObject) parser.parse(reader);
-responseStream.close();
-%>
-
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <title>결제 결과</title>
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-</head>
-<body>
-    <section>
-        <% if (isSuccess) { %>
-            <h1>결제 성공</h1>
-            <p>결과 데이터 : <%= jsonObject.toJSONString() %></p>
-            <p>orderName : <%= jsonObject.get("orderName") %></p>
-            <p>method : <%= jsonObject.get("method") %></p>
-            <p>
-            <% if(jsonObject.get("method").equals("카드")) { 
-                out.println(((JSONObject)jsonObject.get("card")).get("number"));
-            } %>
-            <% if(jsonObject.get("method").equals("가상계좌")) {
-                out.println(((JSONObject)jsonObject.get("virtualAccount")).get("accountNumber"));
-            } %>
-            <% if(jsonObject.get("method").equals("계좌이체")) {
-                out.println(((JSONObject)jsonObject.get("transfer")).get("bank"));
-            } %>
-            <% if(jsonObject.get("method").equals("휴대폰")) {
-                out.println(((JSONObject)jsonObject.get("mobilePhone")).get("customerMobilePhone"));
-            } %>
-            </p>
-        <% } else { %>
-            <h1>결제 실패</h1>
-            <p><%= jsonObject.get("message") %></p>
-            <span>에러코드: <%= jsonObject.get("code") %></span>
-        <% } %>
-    </section>
-</body>
-</html>
+<!-- Payment Result Section Begin -->
+<section class="payment-result spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="payment-result-box" style="background-color: #1d1e39; padding: 40px; border-radius: 5px; color: white;">
+                    <c:choose>
+                        <c:when test="${isSuccess}">
+                            <!-- 결제 성공 화면 -->
+                            <div class="text-center mb-5">
+                                <i class="fa fa-check-circle" style="font-size: 80px; color: #4CAF50;"></i>
+                                <h2 class="mt-4" style="color: white;">결제가 완료되었습니다!</h2>
+                                <p class="text-muted">주문하신 상품은 곧 이메일로 전송됩니다.</p>
+                            </div>
+                            
+                            <!-- 주문 상세 정보 -->
+                            <div class="order-details mb-5">
+                                <h4 style="color: white; border-bottom: 1px solid rgba(255, 255, 255, 0.1); padding-bottom: 15px; margin-bottom: 20px;">주문 정보</h4>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <p><strong>주문 번호:</strong></p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>${jsonObject.orderId}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <p><strong>주문 상품:</strong></p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>${jsonObject.orderName}</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <p><strong>결제 금액:</strong></p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p><fmt:formatNumber value="${jsonObject.totalAmount}" pattern="#,###" /> 원</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <p><strong>결제 방법:</strong></p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>
+                                            <c:choose>
+                                                <c:when test="${jsonObject.method eq 'card'}">신용카드</c:when>
+                                                <c:when test="${jsonObject.method eq 'virtual_account'}">가상계좌</c:when>
+                                                <c:when test="${jsonObject.method eq 'transfer'}">계좌이체</c:when>
+                                                <c:when test="${jsonObject.method eq 'mobile_phone'}">휴대폰 결제</c:when>
+                                                <c:otherwise>${jsonObject.method}</c:otherwise>
+                                            </c:choose>
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-md-4">
+                                        <p><strong>결제 시간:</strong></p>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p>${jsonObject.approvedAt}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 버튼 영역 -->
+                            <div class="text-center mt-4">
+                                <a href="main.do" class="btn btn-danger" style="background-color: #e53637; border: none; padding: 10px 30px; margin-right: 10px;">홈으로</a>
+                                <a href="#" class="btn btn-outline-light" style="padding: 10px 30px;">주문 내역</a>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <!-- 결제 실패 화면 -->
+                            <div class="text-center mb-5">
+                                <i class="fa fa-times-circle" style="font-size: 80px; color: #F44336;"></i>
+                                <h2 class="mt-4" style="color: white;">결제에 실패했습니다.</h2>
+                                <p class="text-muted">${jsonObject.message}</p>
+                                <p>에러 코드: ${jsonObject.code}</p>
+                            </div>
+                            
+                            <!-- 버튼 영역 -->
+                            <div class="text-center mt-4">
+                                <a href="checkout.do" class="btn btn-danger" style="background-color: #e53637; border: none; padding: 10px 30px; margin-right: 10px;">다시 시도</a>
+                                <a href="cartPage.do" class="btn btn-outline-light" style="padding: 10px 30px;">장바구니로</a>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Payment Result Section End -->

@@ -1,12 +1,15 @@
 package com.gemdori.community;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gemdori.main.service.GameService;
+import com.gemdori.main.service.GameServiceImpl;
 import org.apache.ibatis.session.SqlSession;
 
 import com.gemdori.common.Control;
@@ -18,14 +21,15 @@ public class CommunityControl implements Control {
 
     @Override
     public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    	SqlSession sqlSession = DataSource.getInstance().openSession(true);
-    	GameMapper mapper = sqlSession.getMapper(GameMapper.class);
+        GameService svc = new GameServiceImpl();
+    	List<GameVO> list = svc.getAllGames();
 
-    	List<GameVO> list = mapper.getAllGames();
+        req.setAttribute("gameList", list);
 
-        req.setAttribute("gamelist", list);
+        List<GameVO> popList = svc.getBestGames(12);
+        req.setAttribute("popList", popList);
 
         // community.tiles 로 포워딩
-        req.getRequestDispatcher("community/community.tiles").forward(req, resp);
+        req.getRequestDispatcher("community/communityMain.tiles").forward(req, resp);
     }
 }

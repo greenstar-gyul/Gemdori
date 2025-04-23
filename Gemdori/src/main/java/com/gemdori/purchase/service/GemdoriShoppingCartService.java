@@ -25,4 +25,7 @@ public interface GemdoriShoppingCartService {
 
     // 장바구니 할인 총액
     int getCartDiscountAmount(String userCode);
+    
+    // 특정 상품이 장바구니에 이미 존재하는지 확인
+    boolean checkExistingCart(String userCode, String gameCode);
 }

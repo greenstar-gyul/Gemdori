@@ -12,48 +12,53 @@ import com.gemdori.common.Control;
 import com.gemdori.purchase.service.GemdoriShoppingCartService;
 import com.gemdori.purchase.service.GemdoriShoppingCartServiceImpl;
 import com.gemdori.purchase.vo.GemdoriShoppingCartVO;
+import com.gemdori.member.vo.UserFullVO; // 이 import 추가 필요 (패키지명은 실제 UserFullVO가 있는 패키지로 수정)
 
 public class CartPageControl implements Control {
     
     private GemdoriShoppingCartService cartService;
     
-    // 기본 생성자 - 서비스 객체를 생성해서 초기화
     public CartPageControl() {
         this.cartService = new GemdoriShoppingCartServiceImpl();
     }
     
-    // 테스트용 생성자 (의존성 주입)
     public CartPageControl(GemdoriShoppingCartService cartService) {
         this.cartService = cartService;
     }
 
     @Override
     public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // 세션에서 사용자 코드 가져오기
+        // 세션에서 loginUser 객체 가져오기
         HttpSession session = req.getSession();
-        String userCode = (String) session.getAttribute("userCode");
+        UserFullVO loginUser = (UserFullVO) session.getAttribute("loginUser");
         
-        // userCode가 없을 경우 빈 처리 (로그인 필요 메시지나 리다이렉트 등 가능)
-        if (userCode != null) {
+        // loginUser가 null이거나 userCode가 없으면 로그인 페이지로 리다이렉트
+        if (loginUser == null) {
+            resp.sendRedirect("login.do?redirect=cartPage.do");
+            return;
+        }
+        
+        // loginUser에서 userCode 가져오기
+        String userCode = loginUser.getUserCode();
+        System.out.println("사용자 코드: " + userCode);
+        
+        try {
             // 장바구니 아이템 조회
             List<GemdoriShoppingCartVO> cartItems = cartService.getCartItemsByUser(userCode);
             req.setAttribute("cartItems", cartItems);
             
-            // 총액계산 , 할인 계산
+            // 총액계산, 할인 계산
             int totalAmount = cartService.getCartTotalAmount(userCode);
             int discountAmount = cartService.getCartDiscountAmount(userCode);
             
             req.setAttribute("totalAmount", totalAmount);
             req.setAttribute("discountAmount", discountAmount);
-        } else {
-            // 로그인하지 않은 경우 빈 목록 설정 또는 메시지 설정
-            req.setAttribute("cartItems", List.of());
-            req.setAttribute("totalAmount", 0);
-            req.setAttribute("discountAmount", 0);
-            // 필요하다면 로그인 필요 메시지 추가
-            req.setAttribute("message", "장바구니를 보려면 로그인이 필요합니다.");
+            
+            // 페이지 표시
+            req.getRequestDispatcher("purchase/cartPage.tiles").forward(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.sendRedirect("main.do?error=cart_error");
         }
-        
-        req.getRequestDispatcher("purchase/cartPage.tiles").forward(req, resp);
     }
 }

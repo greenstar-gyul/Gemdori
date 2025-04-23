@@ -25,21 +25,23 @@
 					<h3>로그인</h3>
 					<form action="login.do" method="post">
 						<div class="input__item">
-							<input type="text" name="userId" placeholder="아이디"
-								required> <span class="icon_profile"></span>
+							<input type="text" name="userId" placeholder="아이디" required>
+							<span class="icon_profile"></span>
 						</div>
 						<div class="input__item">
 							<input type="password" name="userPw" placeholder="비밀번호" required>
 							<span class="icon_lock"></span>
 						</div>
 						<c:if test="${not empty msg}">
-    						<div id="loginErrorMsg" style="color: red; font-size: 0.9em; margin-top: 5px;">
-        					${msg}
-    						</div>
+							<div id="loginErrorMsg"
+								style="color: red; font-size: 0.9em; margin-top: 5px;">
+								${msg}</div>
 						</c:if>
 						<button type="submit" class="site-btn">로그인</button>
 					</form>
-					<a href="#" class="forget_pass" onclick="window.open('findPassword.do', 'pwPopup', 'width=500,height=400'); return false;">비밀번호를 잊으셨나요?</a>
+					<a href="#" class="forget_pass"
+						onclick="window.open('findPassword.do', 'pwPopup', 'width=500,height=400'); return false;">비밀번호를
+						잊으셨나요?</a>
 				</div>
 			</div>
 			<div class="col-lg-6">

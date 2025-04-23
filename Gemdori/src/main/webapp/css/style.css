@@ -331,7 +331,7 @@ ol {
 }
 
 .header__logo {
-	padding: 20px 0 17px;
+	padding: 8px 0 8px 5px;
 }
 
 .header__logo a {
@@ -442,7 +442,7 @@ ol {
 -----------------------*/
 
 .hero {
-	padding-top: 50px;
+	padding-top: 110px;
 }
 
 .hero__items {
@@ -475,7 +475,7 @@ ol {
 	font-family: "Oswald", sans-serif;
 	font-weight: 700;
 	line-height: 52px;
-	margin-top: 35px;
+	/*margin-top: 35px;*/
 	margin-bottom: 8px;
 	position: relative;
 	top: -100px;
@@ -483,12 +483,17 @@ ol {
 	-webkit-transition: all, 0.4s;
 	-o-transition: all, 0.4s;
 	transition: all, 0.4s;
+	text-shadow:
+			-1px -1px #000,
+			1px -1px #000,
+			-1px  1px #000,
+			1px  1px #000;
 }
 
 .hero__text p {
 	color: #ffffff;
 	font-size: 16px;
-	margin-bottom: 40px;
+	/*margin-bottom: 40px;*/
 	position: relative;
 	top: -100px;
 	opacity: 0;
@@ -501,6 +506,11 @@ ol {
 /* 	-webkit-box-orient: vertical; */
 /* 	overflow: hidden; */
 /* 	text-overflow: ellipsis; */
+	text-shadow:
+			-1px -1px #000,
+			1px -1px #000,
+			-1px  1px #000,
+			1px  1px #000;
 }
 
 
@@ -659,7 +669,7 @@ ol {
 }
 
 .product__item__pic {
-	height: 325px;
+	height: 393px;
 	position: relative;
 	border-radius: 5px;
 }
