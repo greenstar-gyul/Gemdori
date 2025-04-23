@@ -477,7 +477,7 @@ ol {
 	font-family: "Oswald", sans-serif;
 	font-weight: 700;
 	line-height: 52px;
-	margin-top: 35px;
+	/*margin-top: 35px;*/
 	margin-bottom: 8px;
 	position: relative;
 	top: -100px;
@@ -490,7 +490,7 @@ ol {
 .hero__text p {
 	color: #ffffff;
 	font-size: 16px;
-	margin-bottom: 40px;
+	/*margin-bottom: 40px;*/
 	position: relative;
 	top: -100px;
 	opacity: 0;

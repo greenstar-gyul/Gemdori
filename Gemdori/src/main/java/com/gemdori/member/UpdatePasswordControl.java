@@ -42,8 +42,9 @@ public class UpdatePasswordControl implements Control {
 
         if (result) {
             // 비밀번호 변경 성공 시 로그아웃 후 로그인 폼 이동
-            session.invalidate();
-            resp.sendRedirect("loginForm.do?message=changeSuccess");
+            session.invalidate(); // 로그아웃 처리
+            resp.sendRedirect("loginForm.do");
+            return;
         } else {
             // 기존 비밀번호 불일치 등 실패
             req.setAttribute("error", "기존 비밀번호가 일치하지 않거나 변경에 실패했습니다.");

@@ -8,7 +8,8 @@
 		<h2 class="myinfo__title">비밀번호 변경</h2>
 
 		<c:if test="${not empty error}">
-			<div style="color: red; margin-bottom: 20px;">${error}</div>
+			<div class="error-message" style="color: red; margin-bottom: 20px;">
+				${error}</div>
 		</c:if>
 
 		<form action="updatePassword.do" method="post">
@@ -36,6 +37,11 @@
 						required minlength="8" maxlength="16" style="width: 100%;"
 						placeholder="동일한 비밀번호를 입력해주세요" />
 				</div>
+			</div>
+			<div class="myinfo__btn-group">
+				<button class="myinfo__btn" type="submit">비밀번호 변경</button>
+				<button class="myinfo__btn myinfo__btn--danger" type="button"
+					onclick="location.href='myInfo.do'">취소</button>
 			</div>
 		</form>
 	</div>

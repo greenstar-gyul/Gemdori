@@ -44,12 +44,7 @@
 	                            <p>${game.gameDesc}</p>
                             </div>
                             <div class="rating">
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star"></i></a>
-                                <a href="#"><i class="fa fa-star-half-o"></i></a>
-                                <span>${game.gameRating} Votes</span>
+
                             </div>
 		                      <div class="gemdori__details__btn">
 		                          <a href="#" id="addToCartBtn" class="follow-btn"><i class="fa fa-heart-o"></i>장바구니 추가</a>
@@ -347,6 +342,26 @@ $(document).ready(function() {
     
     // 페이지 로드 시 장바구니 상태 확인
     checkCartStatus();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const ratingValue = parseFloat("${game.gameRating}"); // JSP 변수에서 값 삽입
+    const ratingContainer = document.querySelector(".gemdori__details__rating .rating");
+
+    function renderGameRatingStars(rating) {
+        let starsHtml = "";
+        const fullStars = Math.floor(rating);
+        const halfStar = (rating % 1 >= 0.5) ? 1 : 0;
+        const emptyStars = 5 - fullStars - halfStar;
+        for (let i = 0; i < fullStars; i++) starsHtml += '<a href="#"><i class="fa fa-star"></i></a>';
+        if (halfStar) starsHtml += '<a href="#"><i class="fa fa-star-half-o"></i></a>';
+        for (let i = 0; i < emptyStars; i++) starsHtml += '<a href="#"><i class="fa fa-star-o"></i></a>';
+        return starsHtml;
+    }
+
+    if (ratingContainer) {
+        ratingContainer.innerHTML = '<span>평점: ' + ratingValue + ' 점</span>' + renderGameRatingStars(ratingValue);
+    }
 });
 </script>
 <script src="js/main/review.js"></script>

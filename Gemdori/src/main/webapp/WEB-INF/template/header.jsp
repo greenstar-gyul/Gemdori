@@ -87,23 +87,9 @@ String email = loginUser != null ? loginUser.getUserEmail() : "";
 				<div class="header__nav">
 					<nav class="header__menu mobile-menu">
 						<ul>
-							<li><a href="main.do">홈</a></li>
-							<li class="active"><a href="./searchGames.do?keyword=">게임
-									카테고리 <span class="arrow_carrot-down"></span>
-							</a>
-								<ul class="dropdown">
-									<li><a href="./searchGames.do?keyword=">전체 게임</a></li>
-									<li><a href="./searchGames.do?keyword=&genre=action">액션</a></li>
-									<li><a href="./searchGames.do?keyword=&genre=rpg">RPG</a></li>
-									<li><a href="./searchGames.do?keyword=&genre=strategy">전략</a></li>
-									<li><a href="./searchGames.do?keyword=&genre=adventure">어드벤처</a></li>
-									<li><a href="./signup.do">회원가입</a></li>
-									<li><a href="./login.do">로그인</a></li>
-								</ul></li>
-							<c:if test="loginUser != null">
-							     <li><a href="./library.do">라이브러리</a></li>
-							</c:if>
-							<li><a href="#">커뮤니티</a></li>
+							<li class="active"><a href="main.do">홈</a></li>
+							<li><a href="./searchGames.do">게임 찾기</a></li>
+							<li><a href="./community.do">커뮤니티</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -118,7 +104,7 @@ String email = loginUser != null ? loginUser.getUserEmail() : "";
 								<img src="<c:url value='/img/${loginUser.userImage}'/>"
 									alt="프로필 이미지" class="profile-img" onclick="toggleDropdown()" style="margin-right: 20px;width: 30px; height: 30px; border-radius: 50%; object-fit: cover;"/>
 								<ul class="dropdown-menu" id="profileMenu">
-									<li><a href="mypage.do">마이페이지</a></li>
+									<li><a href="myPage.do">마이페이지</a></li>
 									<li><a href="myInfo.do">회원정보수정</a></li>
 									<li><a href="logout.do">로그아웃</a></li>
 								</ul>

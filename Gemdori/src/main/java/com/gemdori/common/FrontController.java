@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.gemdori.community.*;
+//import com.gemdori.community.CommunityControl;
 import com.gemdori.main.GameDetailsControl;
 import com.gemdori.main.MainControl;
 import com.gemdori.main.SearchGamesControl;
@@ -20,6 +22,7 @@ import com.gemdori.member.GenerateTempPasswordControl;
 import com.gemdori.member.JoinControl;
 import com.gemdori.member.JoinFormControl;
 import com.gemdori.member.LoginControl;
+import com.gemdori.member.LoginControl;
 import com.gemdori.member.LoginFormControl;
 import com.gemdori.member.LogoutControl;
 import com.gemdori.member.MyInfoControl;
@@ -28,8 +31,11 @@ import com.gemdori.member.UpdatePasswordControl;
 import com.gemdori.member.UpdatePasswordFormControl;
 import com.gemdori.member.UpdateProfileControl;
 import com.gemdori.member.UpdateProfileFormControl;
+import com.gemdori.member.UserDeleteControl;
+import com.gemdori.member.UserDeleteFormControl;
 import com.gemdori.member.VerifyEmailCodeControl;
 import com.gemdori.purchase.AddToCartControl;
+import com.gemdori.mypage.MyPageFormControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckCartControl;
 import com.gemdori.purchase.CheckOutControl;
@@ -47,7 +53,7 @@ import com.gemdori.user.TempSessionControl;
 
 
 public class FrontController extends HttpServlet {
-	// 요청url <=> 실행컨트롤.
+	private static final long serialVersionUID = 1L;
 	Map<String, Control> map;
 
 	// 생성자.
@@ -92,6 +98,15 @@ public class FrontController extends HttpServlet {
 		map.put("/updateProfile.do", new UpdateProfileControl()); // 회원정보 수정 업데이트
 		map.put("/updatePasswordForm.do", new UpdatePasswordFormControl()); // 회원 비밀번호 변경 페이지 이동
 		map.put("/updatePassword.do", new UpdatePasswordControl()); // 회원 비밀번호 변경
+		map.put("/userDeleteForm.do", new UserDeleteFormControl()); // 회원탈퇴 페이지 이동
+		map.put("/userDelete.do", new UserDeleteControl()); // 회원탈퇴
+		
+		/* ******************************
+		 * 마이페이지 요청
+		 * ******************************/
+		map.put("/myPage.do", new MyPageFormControl());
+		
+		
 		
 		/* ******************************
 		 * 구매 관련 요청
@@ -99,16 +114,32 @@ public class FrontController extends HttpServlet {
 		map.put("/gamePackage.do", new GamePackageControl());
 		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkout.do", new CheckOutControl());
+
+		//map.put("/community.do", new CommunityControl());
 		map.put("/success.do", new SuccessControl());
 		map.put("/tempSession.do", new TempSessionControl());
 		map.put("/addToCart.do", new AddToCartControl());
-		map.put("/cartPage.do", new CartPageControl());
 		map.put("/checkCart.do", new CheckCartControl());
 		map.put("/removeCartItem.do", new RemoveCartItemControl());
 		map.put("/tossPayment.do", new TossPaymentController());
 		map.put("/paymentSuccess.do", new PaymentSuccessControl());
 		map.put("/paymentFail.do", new PaymentFailControl());
 		map.put("/getCartSummary.do", new GetCartSummaryControl());
+
+		/* *****************
+		 * 커뮤니티
+		 * *****************/
+		map.put("/community.do", new CommunityControl());
+		map.put("/topicForm.do", new TopicFormControl()); // 2
+		map.put("/topicRegistration.do", new TopicregistrationControl());
+		map.put("/topicDetail.do", new TopicDetailControl());
+		map.put("/topicList.do", new TopicListControl());
+		map.put("/topicReplyAdd.do", new TopicReplyAdd());
+		map.put("/topicReplyList.do", new TopicReplyList());
+		map.put("/topicReplyUpdate.do", new TopicReplyUpdate());
+		map.put("/topicReplyRemove.do", new TopicReplyRemove());
+		map.put("/topicUpdate.do", new TopicUpdate());
+		map.put("/topicRemove.do", new TopicRemove());
 	}
 
 	// service.
@@ -122,5 +153,8 @@ public class FrontController extends HttpServlet {
 
 		Control sub = map.get(page); // 키(url) => control 반환.
 		sub.exec(req, resp);
+		System.out.println("요청 URI: " + uri);
+		System.out.println("매핑된 컨트롤러: " + sub.getClass().getName());
+
 	}
 }

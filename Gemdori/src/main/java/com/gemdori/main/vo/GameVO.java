@@ -39,4 +39,6 @@ public class GameVO {
     
     // 인게임 이미지 리스트
     private List<String> imageList;
+
+    private int reviewCount; // 리뷰 개수
 } 

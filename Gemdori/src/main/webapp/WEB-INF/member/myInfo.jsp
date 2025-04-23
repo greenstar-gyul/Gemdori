@@ -102,7 +102,7 @@
 			<button class="myinfo__btn"
 				onclick="location.href='updatePasswordForm.do'">비밀번호 수정</button>
 			<button class="myinfo__btn myinfo__btn--danger"
-				onclick="location.href='deleteAccount.do'">회원탈퇴</button>
+				onclick="location.href='userDeleteForm.do'">회원탈퇴</button>
 		</div>
 	</div>
 </section>

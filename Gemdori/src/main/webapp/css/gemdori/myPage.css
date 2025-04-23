@@ -1,0 +1,29 @@
+/*
+	myPage.css
+*/
+
+.section-box {
+  background-color: #0f223a;
+  padding: 30px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.section-box h4 {
+  color: #ffffff; /* 가장 강조 */
+}
+
+.section-box h5 {
+  color: #fff; /* 밝은 회색 (Tailwind 기준 text-gray-300) */
+}
+
+.section-box p {
+  color: #cbd5e1; /* 조금 더 차분한 회색 (text-slate-300 계열) */
+}
+.product__item__text small {
+  color: #f0f0f0; /* 조금 더 차분한 회색 (text-slate-300 계열) */
+}
+.stars {
+  color: gold;
+  font-size: 14px;
+}

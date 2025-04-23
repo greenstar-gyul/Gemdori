@@ -30,10 +30,11 @@
                     <option value="rpg">RPG</option>
                     <option value="전략">전략</option>
                     <option value="어드벤처">어드벤처</option>
-                    <option value="fps">FPS</option>
-                    <option value="simulation">시뮬레이션</option>
-                    <option value="horror">공포</option>
-                    <option value="puzzle">퍼즐</option>
+                    <option value="캐주얼">캐주얼</option>
+                    <option value="교육">교육</option>
+                    <option value="스포츠">스포츠</option>
+                    <option value="레이싱">레이싱</option>
+                    <option value="인디">인디</option>
                   </select>
                 </div>
                 <!-- 가격 -->
@@ -83,8 +84,11 @@
   <section class="search-results spad">
     <div class="container">
       <div class="row">
+      	<div class="col-lg-2">
+      	</div>
 
         <!-- =========== 사이드바 =========== -->
+        <%--
         <div class="col-lg-4 col-md-6 col-sm-8">
           <div class="category__sidebar" style="position: sticky; top: 80px;">
             <!-- 카테고리 박스 -->
@@ -140,7 +144,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>--%>
 
         <!-- =========== 메인 결과 =========== -->
         <div class="col-lg-8">
@@ -188,6 +192,9 @@
           <div id="pagination" class="pagination"></div>
 
         </div>
+        
+        <div class="col-lg-2">
+      	</div>
       </div>
     </div>
   </section>
