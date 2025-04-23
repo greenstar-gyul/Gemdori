@@ -241,20 +241,27 @@
 </head>
 <body>
     <!-- Breadcrumb Begin -->
-    <div class="breadcrumb-option">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb__links">
-                        <a href="./index.do"><i class="fa fa-home"></i> 홈</a>
-                        <a href="./cartPage.do">장바구니</a>
-                        <a href="./checkout.do">결제하기</a>
-                        <span>결제 실패</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="breadcrumb-option">
+	    <div class="container">
+	        <div class="row">
+	            <div class="col-lg-12">
+	                <div class="breadcrumb__links">
+	                    <a href="./index.do"><i class="fa fa-home"></i> 홈</a>
+	                    <c:choose>
+	                        <c:when test="${directBuy eq 'true' and not empty gameCode}">
+	                            <a href="./gameDetails.do?gameCode=${gameCode}">게임 상세</a>
+	                        </c:when>
+	                        <c:otherwise>
+	                            <a href="./cartPage.do">장바구니</a>
+	                        </c:otherwise>
+	                    </c:choose>
+	                    <a href="./checkout.do">결제하기</a>
+	                    <span>결제 실패</span>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	</div>
     <!-- Breadcrumb End -->
 
     <!-- Payment Result Section Begin -->
@@ -293,10 +300,18 @@
                         </div>
                         
                         <!-- 버튼 영역 -->
-                        <div class="text-center mt-4">
-                            <a href="checkout.do" class="btn btn-danger">다시 시도하기</a>
-                            <a href="cartPage.do" class="btn btn-outline-light">장바구니로 돌아가기</a>
-                        </div>
+						<div class="text-center mt-4">
+						    <c:choose>
+						        <c:when test="${directBuy eq 'true' and not empty gameCode}">
+						            <a href="checkout.do?directBuy=true&gameCode=${gameCode}" class="btn btn-danger">다시 시도하기</a>
+						            <a href="gameDetails.do?gameCode=${gameCode}" class="btn btn-outline-light">게임 상세로 돌아가기</a>
+						        </c:when>
+						        <c:otherwise>
+						            <a href="checkout.do" class="btn btn-danger">다시 시도하기</a>
+						            <a href="cartPage.do" class="btn btn-outline-light">장바구니로 돌아가기</a>
+						        </c:otherwise>
+						    </c:choose>
+						</div>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,6 @@
     <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #0b0c2a;
             color: #ffffff;
             margin: 0;
             padding: 0;
@@ -400,10 +399,18 @@
                     this.disabled = false;
                     this.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 100원 이상부터 결제 가능합니다';
                 }
-                // 정상 결제 - 토스페이먼츠 결제 페이지로 이동
+                // 정상 결제
                 else {
                     // tossPayment.do로 이동
-                    window.location.href = 'tossPayment.do';
+                    var directBuy = "${param.directBuy}";
+                    var gameCode = "${param.gameCode}";
+                    var redirectUrl = 'tossPayment.do';
+                    
+                    if (directBuy === 'true' && gameCode) {
+                        redirectUrl += '?directBuy=true&gameCode=' + gameCode;
+                    }
+                    
+                    window.location.href = redirectUrl;
                 }
             });
         }

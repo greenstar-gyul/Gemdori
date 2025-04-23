@@ -95,4 +95,11 @@ public class GemdoriShoppingCartServiceImpl implements GemdoriShoppingCartServic
         int count = freshMapper.checkExistingCart(userCode, gameCode);
         return count > 0;
     }
+    
+    @Override
+    public List<GemdoriShoppingCartVO> getGameDetailForDirectBuy(String gameCode) {
+        SqlSession session = DataSource.getInstance().openSession(true);
+        GemdoriShoppingCartMapper freshMapper = session.getMapper(GemdoriShoppingCartMapper.class);
+        return freshMapper.selectGameDetailForDirectBuy(gameCode);
+    }
 }

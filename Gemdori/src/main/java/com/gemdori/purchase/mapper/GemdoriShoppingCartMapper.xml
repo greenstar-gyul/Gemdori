@@ -102,5 +102,21 @@
             user_code = #{userCode} 
             AND game_code = #{gameCode}
     </select>
+    
+    <select id="selectGameDetailForDirectBuy" resultMap="cartItemDetailMap" parameterType="String">
+	    SELECT
+	        'DIRECT_BUY' as cart_code,
+	        'TEMP_USER' as user_code,
+	        g.game_code,
+	        SYSDATE as cart_date,
+	        g.game_title,
+	        g.game_price,
+	        g.game_sale_price,
+	        g.game_main_image
+	    FROM
+	        gemdori_game_tbl g
+	    WHERE
+	        g.game_code = #{gameCode}
+	</select>
 
 </mapper>

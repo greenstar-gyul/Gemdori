@@ -15,85 +15,129 @@
     <style>
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background-color: #0b0c2a;
             color: #ffffff;
             margin: 0;
             padding: 0;
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1170px;
             margin: 0 auto;
-            padding: 30px 15px;
+            padding: 0 15px;
+        }
+        
+        /* 전체 섹션에 패딩 추가해서 높이 늘리기 */
+        .payment-section {
+            padding: 80px 0; /* 위아래 패딩 증가 */
+            min-height: 350px; /* 최소 높이 설정 */
         }
         
         .payment-box {
             background-color: #1d1e39;
             border-radius: 10px;
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 60px; /* 패딩 키워서 내부 공간 확보 */
+            margin-bottom: 50px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            min-height: 450px; /* 최소 높이 설정 */
+            display: flex;
+            flex-direction: column;
         }
         
         .title {
-            text-align: center;
-            margin-bottom: 30px;
+            text-align: left;
+            margin-bottom: 40px; /* 간격 늘림 */
             color: #fff;
+            font-size: 28px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .title:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background-color: #e53637;
         }
         
         .order-info {
-            margin-bottom: 30px;
+            margin-bottom: 50px; /* 간격 늘림 */
+        }
+        
+        .order-info span {
+            color: white;
+            font-size: 16px; /* 글자 크기 키움 */
+        }
+        
+        .order-info p.highlight {
+            font-weight: bold;
+            color: #e53637;
         }
         
         .order-info p {
-            margin: 10px 0;
+            margin: 15px 0; /* 간격 늘림 */
             display: flex;
             justify-content: space-between;
         }
         
-        .order-info .highlight {
-            font-weight: bold;
-            color: #e53637;
+        .payment-methods-container {
+            flex-grow: 1; /* 남은 공간 채우기 */
+            display: flex;
+            flex-direction: column;
         }
         
         .payment-methods {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 10px;
-            margin-bottom: 30px;
+            gap: 20px; /* 간격 늘림 */
+            margin-bottom: 40px;
         }
         
         .button2 {
             background-color: #ffffff;
             border: 2px solid transparent;
-            border-radius: 7px;
-            padding: 15px 20px;
+            border-radius: 10px; /* 둥글게 */
+            padding: 20px 25px; /* 패딩 키워서 버튼 크기 확대 */
             cursor: pointer;
             transition: all 0.3s;
-            min-width: 120px;
+            min-width: 140px; /* 너비 키움 */
+            min-height: 100px; /* 높이 키움 */
             text-align: center;
             color: #000000;
             font-weight: 600;
-            margin: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .button2 i {
+            font-size: 24px; /* 아이콘 크기 키움 */
+            margin-bottom: 10px;
         }
         
         .button2:hover {
             background-color: rgb(229, 239, 255);
+            transform: translateY(-5px); /* 호버 시 살짝 위로 올라가는 효과 */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
         
         .btn-payment {
             background-color: #e53637;
             border: none;
             color: white;
-            padding: 15px 30px;
-            font-size: 16px;
+            padding: 18px 30px; /* 패딩 키워서 버튼 크게 */
+            font-size: 18px; /* 폰트 사이즈 키움 */
             font-weight: 700;
             border-radius: 5px;
             cursor: pointer;
             width: 100%;
             transition: background-color 0.3s;
-            margin-top: 30px;
+            margin-top: auto; /* 하단에 고정 */
         }
         
         .btn-payment:hover {
@@ -108,13 +152,14 @@
         .error-message {
             color: #e53637;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px; /* 간격 늘림 */
+            min-height: 24px; /* 최소 높이 설정 */
         }
         
         .order-summary {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 20px;
-            margin-top: 20px;
+            padding-top: 30px;
+            margin-top: 30px;
         }
         
         .breadcrumb-option {
@@ -150,6 +195,23 @@
         .breadcrumb__links a i {
             margin-right: 5px;
         }
+        
+        /* 반응형 스타일 */
+        @media (max-width: 768px) {
+            .payment-box {
+                padding: 30px;
+            }
+            
+            .payment-methods {
+                gap: 10px;
+            }
+            
+            .button2 {
+                min-width: 120px;
+                min-height: 90px;
+                padding: 15px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -170,50 +232,57 @@
     </div>
     <!-- Breadcrumb End -->
 
-    <div class="container">
-        <div class="payment-box">
-            <h2 class="title">결제 수단 선택</h2>
-            
-            <div class="order-info">
-                <p>
-                    <span>주문 상품:</span>
-                    <span>${paymentOrderName}</span>
-                </p>
-                <p>
-                    <span>주문 번호:</span>
-                    <span>${paymentOrderId}</span>
-                </p>
-                <p class="highlight">
-                    <span>결제 금액:</span>
-                    <span><fmt:formatNumber value="${paymentAmount}" pattern="#,###" />원</span>
-                </p>
+    <!-- Payment Section Begin -->
+    <section class="payment-section">
+        <div class="container">
+            <div class="payment-box">
+                <h2 class="title">결제 수단 선택</h2>
+                
+                <div class="order-info">
+                    <p>
+                        <span>주문 상품:</span>
+                        <span>${paymentOrderName}</span>
+                    </p>
+                    <p>
+                        <span>주문 번호:</span>
+                        <span>${paymentOrderId}</span>
+                    </p>
+                    <p class="highlight">
+                        <span style="color: #e53637;">결제 금액:</span>
+                        <span><fmt:formatNumber value="${paymentAmount}" pattern="#,###" />원</span>
+                    </p>
+                </div>
+                
+                <div class="payment-methods-container">
+                    <div id="payment-method" class="payment-methods">
+                        <button id="CARD" class="button2" onclick="selectPaymentMethod('CARD')">
+                            <i class="fas fa-credit-card"></i>
+                            간편결제&카드
+                        </button>
+                        <button id="TRANSFER" class="button2" onclick="selectPaymentMethod('TRANSFER')">
+                            <i class="fas fa-university"></i>
+                            계좌이체
+                        </button>
+                        <button id="VIRTUAL_ACCOUNT" class="button2" onclick="selectPaymentMethod('VIRTUAL_ACCOUNT')">
+                            <i class="fas fa-wallet"></i>
+                            가상계좌
+                        </button>
+                        <button id="MOBILE_PHONE" class="button2" onclick="selectPaymentMethod('MOBILE_PHONE')">
+                            <i class="fas fa-mobile-alt"></i>
+                            휴대폰
+                        </button>
+                    </div>
+                    
+                    <div id="error-message" class="error-message"></div>
+                </div>
+                
+                <button id="payment-button" class="btn-payment" disabled onclick="requestPayment()">
+                    결제 수단을 선택해주세요
+                </button>
             </div>
-            
-            <div id="payment-method" style="display: flex; flex-wrap: wrap; justify-content: center;">
-                <button id="CARD" class="button2" onclick="selectPaymentMethod('CARD')">
-                    <i class="fas fa-credit-card"></i><br>카드
-                </button>
-                <button id="TRANSFER" class="button2" onclick="selectPaymentMethod('TRANSFER')">
-                    <i class="fas fa-university"></i><br>계좌이체
-                </button>
-                <button id="VIRTUAL_ACCOUNT" class="button2" onclick="selectPaymentMethod('VIRTUAL_ACCOUNT')">
-                    <i class="fas fa-wallet"></i><br>가상계좌
-                </button>
-                <button id="MOBILE_PHONE" class="button2" onclick="selectPaymentMethod('MOBILE_PHONE')">
-                    <i class="fas fa-mobile-alt"></i><br>휴대폰
-                </button>
-                <button id="TOSSPAY" class="button2" onclick="selectPaymentMethod('TOSSPAY')">
-                    <i class="fas fa-won-sign"></i><br>토스페이
-                </button>
-            </div>
-            
-            <div id="error-message" class="error-message"></div>
-            
-            <button id="payment-button" class="btn-payment" disabled onclick="requestPayment()">
-                결제 수단을 선택해주세요
-            </button>
         </div>
-    </div>
+    </section>
+    <!-- Payment Section End -->
 
     <script>
         let selectedMethod = null;
@@ -242,11 +311,13 @@
             // 이전 선택 요소 스타일 초기화
             if (selectedMethod) {
                 document.getElementById(selectedMethod).style.backgroundColor = "#ffffff";
+                document.getElementById(selectedMethod).style.transform = "translateY(0)";
             }
             
             // 새 선택 요소 스타일 변경
             selectedMethod = method;
             document.getElementById(selectedMethod).style.backgroundColor = "rgb(229, 239, 255)";
+            document.getElementById(selectedMethod).style.transform = "translateY(-5px)";
             
             // 버튼 활성화 및 텍스트 변경
             paymentButton.disabled = false;

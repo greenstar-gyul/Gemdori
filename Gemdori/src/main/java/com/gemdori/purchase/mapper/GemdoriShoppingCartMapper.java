@@ -32,4 +32,7 @@ public interface GemdoriShoppingCartMapper {
     
     // 특정 상품이 장바구니에 이미 존재하는지 확인
     int checkExistingCart(@Param("userCode") String userCode, @Param("gameCode") String gameCode);
+    
+    // 직접 구매를 위한 게임 정보 조회
+    List<GemdoriShoppingCartVO> selectGameDetailForDirectBuy(String gameCode);
 }

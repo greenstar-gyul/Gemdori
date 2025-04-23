@@ -2,6 +2,7 @@ package com.gemdori.purchase;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID; // 고유한 주문 ID 생성을 위해 UUID 임포트
@@ -38,16 +39,56 @@ public class CheckOutControl implements Control {
         }
 
         try {
-            String userCode = loginUser.getUserCode(); // 사용자 고유 코드 가져오기
-
-            List<GemdoriShoppingCartVO> cartItems = cartService.getCartItemsByUser(userCode);
-
-            if (cartItems == null || cartItems.isEmpty()) {
-                resp.sendRedirect(req.getContextPath() + "/cartPage.do?message=empty_cart");
-                return;
+            String userCode = loginUser.getUserCode();
+            
+            // 직접 구매 파라미터 확인
+            String gameCode = req.getParameter("gameCode");
+            String directBuy = req.getParameter("directBuy");
+            
+            List<GemdoriShoppingCartVO> cartItems;
+            Map<String, Object> cartSummary;
+            
+         // 직접 구매인 경우
+            if ("true".equals(directBuy) && gameCode != null && !gameCode.isEmpty()) {
+                // 게임 정보 조회해서 카트아이템 리스트 생성
+                cartItems = cartService.getGameDetailForDirectBuy(gameCode);
+                
+                // 사용자 코드 설정
+                if (cartItems != null && !cartItems.isEmpty()) {
+                    for (GemdoriShoppingCartVO item : cartItems) {
+                        item.setUserCode(userCode);
+                    }
+                    
+                    // 직접 가격 계산 로직
+                    GemdoriShoppingCartVO item = cartItems.get(0);
+                    int totalAmount = item.getGamePrice();
+                    int finalAmount = (item.getGameSalePrice() > 0) ? item.getGameSalePrice() : item.getGamePrice();
+                    int discountAmount = totalAmount - finalAmount;
+                    
+                    // 요약 정보 설정
+                    Map<String, Object> directBuySummary = new HashMap<>();
+                    directBuySummary.put("TOTAL_ORIGINAL_PRICE", totalAmount);
+                    directBuySummary.put("TOTAL_DISCOUNT", discountAmount);
+                    directBuySummary.put("TOTAL_PAYMENT", finalAmount);
+                    
+                    cartSummary = directBuySummary;
+                } else {
+                    // 게임 정보가 없으면 오류 처리
+                    resp.sendRedirect(req.getContextPath() + "/gamePage.do?error=game_not_found");
+                    return;
+                }
+            } else {
+                // 기존 장바구니에서 가져오기
+                cartItems = cartService.getCartItemsByUser(userCode);
+                
+                if (cartItems == null || cartItems.isEmpty()) {
+                    resp.sendRedirect(req.getContextPath() + "/cartPage.do?message=empty_cart");
+                    return;
+                }
+                
+                // 기존 장바구니 가격 계산
+                cartSummary = cartService.getCartTotalAmount(userCode);
             }
-
-            Map<String, Object> cartSummary = cartService.getCartTotalAmount(userCode);
 
             int totalAmount = 0;
             int discountAmount = 0;

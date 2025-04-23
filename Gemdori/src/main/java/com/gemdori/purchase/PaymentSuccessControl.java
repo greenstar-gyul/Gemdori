@@ -56,6 +56,10 @@ public class PaymentSuccessControl implements Control {
             String orderId = req.getParameter("orderId");
             String amount = req.getParameter("amount");
             
+            // 직접 구매 파라미터 확인
+            String directBuy = req.getParameter("directBuy");
+            String gameCode = req.getParameter("gameCode");
+            
             System.out.println("결제 성공 파라미터: paymentKey=" + paymentKey + ", orderId=" + orderId + ", amount=" + amount);
             
             // 세션에 저장된 주문정보 검증
@@ -64,14 +68,14 @@ public class PaymentSuccessControl implements Control {
             
             // 0원 주문일 경우 (무료 게임)
             if ("FREE_ORDER".equals(paymentKey)) {
-                handleFreeOrder(req, resp, userCode, orderId);
+                handleFreeOrder(req, resp, userCode, orderId, directBuy, gameCode);
                 return;
             }
             
             // 주문정보 검증
             if (!orderId.equals(sessionOrderId) || Integer.parseInt(amount) != sessionAmount) {
                 // 주문정보 불일치 (보안 위반 가능성)
-                handlePaymentError(req, resp, "VALIDATION_FAILED", "주문 정보가 일치하지 않습니다.");
+                handlePaymentError(req, resp, "VALIDATION_FAILED", "주문 정보가 일치하지 않습니다.", directBuy, gameCode);
                 return;
             }
             
@@ -80,7 +84,7 @@ public class PaymentSuccessControl implements Control {
             
             if (paymentResult == null) {
                 // API 호출 실패
-                handlePaymentError(req, resp, "API_ERROR", "결제 승인 API 호출에 실패했습니다.");
+                handlePaymentError(req, resp, "API_ERROR", "결제 승인 API 호출에 실패했습니다.", directBuy, gameCode);
                 return;
             }
             
@@ -90,43 +94,73 @@ public class PaymentSuccessControl implements Control {
                 // 결제 상태가 완료가 아님
                 String errorCode = (String) paymentResult.get("code");
                 String errorMessage = (String) paymentResult.get("message");
-                handlePaymentError(req, resp, errorCode, errorMessage);
+                handlePaymentError(req, resp, errorCode, errorMessage, directBuy, gameCode);
                 return;
             }
             
-            // 결제 성공 시 구매 내역 저장
-            List<GemdoriShoppingCartVO> cartItems = cartService.getCartItemsByUser(userCode);
+            // 직접 구매인 경우와 일반 장바구니 구매 경우 분기 처리
+            List<GemdoriShoppingCartVO> cartItems;
+            if ("true".equals(directBuy) && gameCode != null && !gameCode.isEmpty()) {
+                // 직접 구매인 경우 - 해당 게임 정보만 조회
+                cartItems = cartService.getGameDetailForDirectBuy(gameCode);
+                // 사용자 코드 설정
+                for (GemdoriShoppingCartVO item : cartItems) {
+                    item.setUserCode(userCode);
+                }
+            } else {
+                // 일반 장바구니 구매
+                cartItems = cartService.getCartItemsByUser(userCode);
+            }
+            
             boolean saved = paymentService.saveGamePurchaseHistory(userCode, paymentResult, cartItems);
             
             if (saved) {
-                // 장바구니 비우기
-                cartService.clearCart(userCode);
+                // 일반 장바구니 구매인 경우만 장바구니 비우기
+                if (!"true".equals(directBuy)) {
+                    cartService.clearCart(userCode);
+                }
                 
                 // 결제 성공 화면으로 이동
                 req.setAttribute("isSuccess", true);
                 req.setAttribute("jsonObject", paymentResult);
+                req.setAttribute("directBuy", directBuy);
+                req.setAttribute("gameCode", gameCode);
                 req.getRequestDispatcher("purchase/success.tiles").forward(req, resp);
             } else {
                 // 구매 내역 저장 실패
-                handlePaymentError(req, resp, "DB_ERROR", "구매 내역 저장에 실패했습니다.");
+                handlePaymentError(req, resp, "DB_ERROR", "구매 내역 저장에 실패했습니다.", directBuy, gameCode);
             }
             
         } catch (Exception e) {
             e.printStackTrace();
-            handlePaymentError(req, resp, "SYSTEM_ERROR", "시스템 오류가 발생했습니다.");
+            String directBuy = req.getParameter("directBuy");
+            String gameCode = req.getParameter("gameCode");
+            handlePaymentError(req, resp, "SYSTEM_ERROR", "시스템 오류가 발생했습니다.", directBuy, gameCode);
         }
     }
-    
-    // 무료 주문 처리
-    private void handleFreeOrder(HttpServletRequest req, HttpServletResponse resp, String userCode, String orderId) 
-            throws ServletException, IOException {
+
+    // 무료 주문 처리 메소드 수정
+    private void handleFreeOrder(HttpServletRequest req, HttpServletResponse resp, String userCode, String orderId, 
+                                String directBuy, String gameCode) throws ServletException, IOException {
         try {
-            // 장바구니 아이템 목록 조회
-            List<GemdoriShoppingCartVO> cartItems = cartService.getCartItemsByUser(userCode);
+            List<GemdoriShoppingCartVO> cartItems;
             
-            if (cartItems == null || cartItems.isEmpty()) {
-                handlePaymentError(req, resp, "EMPTY_CART", "장바구니가 비어있습니다.");
-                return;
+            // 직접 구매인 경우와 일반 장바구니 구매 경우 분기 처리
+            if ("true".equals(directBuy) && gameCode != null && !gameCode.isEmpty()) {
+                // 직접 구매인 경우 - 해당 게임 정보만 조회
+                cartItems = cartService.getGameDetailForDirectBuy(gameCode);
+                // 사용자 코드 설정
+                for (GemdoriShoppingCartVO item : cartItems) {
+                    item.setUserCode(userCode);
+                }
+            } else {
+                // 일반 장바구니 구매
+                cartItems = cartService.getCartItemsByUser(userCode);
+                
+                if (cartItems == null || cartItems.isEmpty()) {
+                    handlePaymentError(req, resp, "EMPTY_CART", "장바구니가 비어있습니다.", directBuy, gameCode);
+                    return;
+                }
             }
             
             // 임시 JSON 객체 생성 (무료 주문용)
@@ -140,27 +174,31 @@ public class PaymentSuccessControl implements Control {
             boolean saved = paymentService.saveGamePurchaseHistory(userCode, freeOrderResult, cartItems);
             
             if (saved) {
-                // 장바구니 비우기
-                cartService.clearCart(userCode);
+                // 일반 장바구니 구매인 경우만 장바구니 비우기
+                if (!"true".equals(directBuy)) {
+                    cartService.clearCart(userCode);
+                }
                 
                 // 결제 성공 화면으로 이동
                 req.setAttribute("isSuccess", true);
                 req.setAttribute("jsonObject", freeOrderResult);
+                req.setAttribute("directBuy", directBuy);
+                req.setAttribute("gameCode", gameCode);
                 req.getRequestDispatcher("purchase/success.tiles").forward(req, resp);
             } else {
                 // 구매 내역 저장 실패
-                handlePaymentError(req, resp, "DB_ERROR", "구매 내역 저장에 실패했습니다.");
+                handlePaymentError(req, resp, "DB_ERROR", "구매 내역 저장에 실패했습니다.", directBuy, gameCode);
             }
             
         } catch (Exception e) {
             e.printStackTrace();
-            handlePaymentError(req, resp, "SYSTEM_ERROR", "시스템 오류가 발생했습니다.");
+            handlePaymentError(req, resp, "SYSTEM_ERROR", "시스템 오류가 발생했습니다.", directBuy, gameCode);
         }
     }
-    
-    // 결제 오류 처리
-    private void handlePaymentError(HttpServletRequest req, HttpServletResponse resp, String code, String message) 
-            throws ServletException, IOException {
+
+    // 결제 오류 처리 메소드도 수정
+    private void handlePaymentError(HttpServletRequest req, HttpServletResponse resp, String code, String message, 
+                                   String directBuy, String gameCode) throws ServletException, IOException {
         
         JSONObject errorData = new JSONObject();
         errorData.put("code", code);
@@ -168,10 +206,12 @@ public class PaymentSuccessControl implements Control {
         
         req.setAttribute("isSuccess", false);
         req.setAttribute("jsonObject", errorData);
+        req.setAttribute("directBuy", directBuy);
+        req.setAttribute("gameCode", gameCode);
         req.getRequestDispatcher("purchase/success.tiles").forward(req, resp);
     }
     
-    // 토스페이먼츠 결제 승인 API 호출
+ // 토스페이먼츠 결제 승인 API 호출
     private JSONObject confirmPayment(String paymentKey, String orderId, String amount) {
         try {
             // API URL 설정

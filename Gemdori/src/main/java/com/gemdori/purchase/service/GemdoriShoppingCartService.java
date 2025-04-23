@@ -29,4 +29,7 @@ public interface GemdoriShoppingCartService {
     
     // 특정 상품이 장바구니에 이미 존재하는지 확인
     boolean checkExistingCart(String userCode, String gameCode);
+    
+    // 직접 구매 아이템 조회
+    List<GemdoriShoppingCartVO> getGameDetailForDirectBuy(String gameCode);
 }

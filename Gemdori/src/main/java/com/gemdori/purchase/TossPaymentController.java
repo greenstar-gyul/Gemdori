@@ -42,43 +42,71 @@ public class TossPaymentController implements Control {
         
         String userCode = loginUser.getUserCode();
         
+        // 직접 구매 파라미터 확인
+        String gameCode = req.getParameter("gameCode");
+        String directBuy = req.getParameter("directBuy");
+        
         try {
-            // 장바구니 아이템 목록 조회
-            List<GemdoriShoppingCartVO> cartItems = cartService.getCartItemsByUser(userCode);
-            
-            if (cartItems == null || cartItems.isEmpty()) {
-                resp.sendRedirect("cartPage.do?error=empty_cart");
-                return;
-            }
-            
-            Map<String, Object> cartSummary = cartService.getCartTotalAmount(userCode);
-
+            List<GemdoriShoppingCartVO> cartItems;
             int totalAmount = 0;
             int discountAmount = 0;
             int finalAmount = 0;
-
-            // BigDecimal을 안전하게 int로 변환
-            if (cartSummary.get("TOTAL_ORIGINAL_PRICE") != null) {
-                if (cartSummary.get("TOTAL_ORIGINAL_PRICE") instanceof BigDecimal) {
-                    totalAmount = ((BigDecimal) cartSummary.get("TOTAL_ORIGINAL_PRICE")).intValue();
-                } else if (cartSummary.get("TOTAL_ORIGINAL_PRICE") instanceof Integer) {
-                    totalAmount = (Integer) cartSummary.get("TOTAL_ORIGINAL_PRICE");
+            
+            // 직접 구매인 경우
+            if ("true".equals(directBuy) && gameCode != null && !gameCode.isEmpty()) {
+                // 게임 정보 조회해서 카트아이템 리스트 생성
+                cartItems = cartService.getGameDetailForDirectBuy(gameCode);
+                
+                // 사용자 코드 설정
+                if (cartItems != null && !cartItems.isEmpty()) {
+                    for (GemdoriShoppingCartVO item : cartItems) {
+                        item.setUserCode(userCode);
+                    }
+                    
+                    // 직접 가격 계산 로직
+                    GemdoriShoppingCartVO item = cartItems.get(0);
+                    totalAmount = item.getGamePrice();
+                    finalAmount = (item.getGameSalePrice() > 0) ? item.getGameSalePrice() : item.getGamePrice();
+                    discountAmount = totalAmount - finalAmount;
+                } else {
+                    // 게임 정보가 없으면 오류 처리
+                    resp.sendRedirect("gameDetails.do?gameCode=" + gameCode + "&error=game_not_found");
+                    return;
                 }
-            }
-
-            if (cartSummary.get("TOTAL_DISCOUNT") != null) {
-                if (cartSummary.get("TOTAL_DISCOUNT") instanceof BigDecimal) {
-                    discountAmount = ((BigDecimal) cartSummary.get("TOTAL_DISCOUNT")).intValue();
-                } else if (cartSummary.get("TOTAL_DISCOUNT") instanceof Integer) {
-                    discountAmount = (Integer) cartSummary.get("TOTAL_DISCOUNT");
+            } else {
+                // 일반 장바구니 처리
+                cartItems = cartService.getCartItemsByUser(userCode);
+                
+                if (cartItems == null || cartItems.isEmpty()) {
+                    resp.sendRedirect("cartPage.do?error=empty_cart");
+                    return;
                 }
-            }
+                
+                Map<String, Object> cartSummary = cartService.getCartTotalAmount(userCode);
 
-            if (cartSummary.get("TOTAL_PAYMENT") != null) {
-                if (cartSummary.get("TOTAL_PAYMENT") instanceof BigDecimal) {
-                    finalAmount = ((BigDecimal) cartSummary.get("TOTAL_PAYMENT")).intValue();
-                } else if (cartSummary.get("TOTAL_PAYMENT") instanceof Integer) {
-                    finalAmount = (Integer) cartSummary.get("TOTAL_PAYMENT");
+                // BigDecimal을 안전하게 int로 변환
+                if (cartSummary.get("TOTAL_ORIGINAL_PRICE") != null) {
+                    if (cartSummary.get("TOTAL_ORIGINAL_PRICE") instanceof BigDecimal) {
+                        totalAmount = ((BigDecimal) cartSummary.get("TOTAL_ORIGINAL_PRICE")).intValue();
+                    } else if (cartSummary.get("TOTAL_ORIGINAL_PRICE") instanceof Integer) {
+                        totalAmount = (Integer) cartSummary.get("TOTAL_ORIGINAL_PRICE");
+                    }
+                }
+
+                if (cartSummary.get("TOTAL_DISCOUNT") != null) {
+                    if (cartSummary.get("TOTAL_DISCOUNT") instanceof BigDecimal) {
+                        discountAmount = ((BigDecimal) cartSummary.get("TOTAL_DISCOUNT")).intValue();
+                    } else if (cartSummary.get("TOTAL_DISCOUNT") instanceof Integer) {
+                        discountAmount = (Integer) cartSummary.get("TOTAL_DISCOUNT");
+                    }
+                }
+
+                if (cartSummary.get("TOTAL_PAYMENT") != null) {
+                    if (cartSummary.get("TOTAL_PAYMENT") instanceof BigDecimal) {
+                        finalAmount = ((BigDecimal) cartSummary.get("TOTAL_PAYMENT")).intValue();
+                    } else if (cartSummary.get("TOTAL_PAYMENT") instanceof Integer) {
+                        finalAmount = (Integer) cartSummary.get("TOTAL_PAYMENT");
+                    }
                 }
             }
 
@@ -110,13 +138,28 @@ public class TossPaymentController implements Control {
             }
             baseUrl += contextPath;
             
+            // 직접 구매인 경우 파라미터를 URL에 추가
             String successUrl = baseUrl + "/paymentSuccess.do";
             String failUrl = baseUrl + "/paymentFail.do";
+            
+            if ("true".equals(directBuy) && gameCode != null && !gameCode.isEmpty()) {
+                successUrl += "?directBuy=true&gameCode=" + gameCode;
+                failUrl += "?directBuy=true&gameCode=" + gameCode;
+            }
             
             // 결제 정보를 세션에 저장 (결제 검증용)
             session.setAttribute("paymentOrderId", orderId);
             session.setAttribute("paymentOrderName", orderName);
             session.setAttribute("paymentAmount", finalAmount);
+            
+            // 직접 구매 여부도 세션에 저장 (결제 성공/실패 후 처리를 위해)
+            if ("true".equals(directBuy) && gameCode != null && !gameCode.isEmpty()) {
+                session.setAttribute("directBuy", "true");
+                session.setAttribute("directBuyGameCode", gameCode);
+            } else {
+                session.removeAttribute("directBuy");
+                session.removeAttribute("directBuyGameCode");
+            }
             
             // 결제 정보를 뷰에 전달
             req.setAttribute("tossClientKey", TOSS_CLIENT_KEY);
@@ -129,12 +172,21 @@ public class TossPaymentController implements Control {
             req.setAttribute("paymentFailUrl", failUrl);
             req.setAttribute("cartItems", cartItems);
             
+            // 직접 구매 파라미터도 전달
+            req.setAttribute("directBuy", directBuy);
+            req.setAttribute("gameCode", gameCode);
+            
             // tossPayment.jsp로 포워딩
             req.getRequestDispatcher("purchase/tossPayment.tiles").forward(req, resp);
             
         } catch (Exception e) {
             e.printStackTrace();
-            resp.sendRedirect("cartPage.do?error=payment_error");
+            // 에러 처리 시에도 직접 구매 여부 체크
+            if ("true".equals(directBuy) && gameCode != null && !gameCode.isEmpty()) {
+                resp.sendRedirect("gameDetails.do?gameCode=" + gameCode + "&error=payment_error");
+            } else {
+                resp.sendRedirect("cartPage.do?error=payment_error");
+            }
         }
     }
 }
