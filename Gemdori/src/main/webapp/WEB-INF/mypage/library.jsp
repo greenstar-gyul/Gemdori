@@ -15,7 +15,7 @@
 						</div>
 						<ul class="category__list">
 							<li><a href="myPage.do">📱 내 정보</a></li>
-							<li><a href="#">📦 구매 내역</a></li>
+							<li><a href="purchaseHistory.do">📦 구매 내역</a></li>
 							<li><a href="library.do" class="active">📚 내 라이브러리</a></li>
 							<li><a href="#">📝 나의 리뷰</a></li>
 						</ul>

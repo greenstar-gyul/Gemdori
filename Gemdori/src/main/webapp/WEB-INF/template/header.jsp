@@ -117,8 +117,7 @@ String email = loginUser != null ? loginUser.getUserEmail() : "";
 					</c:choose>
 					<a href="#" class="search-switch"><span class="icon_search"></span></a>
 					<a href="cartPage.do" style="position: relative;"><span
-						class="icon_cart"></span> <span
-						style="position: absolute; top: -8px; right: -8px; background-color: #e53637; color: white; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px;">2</span></a>
+						class="icon_cart"></span></a>
 				</div>
 			</div>
 		</div>

@@ -44,7 +44,7 @@
 											</div>
 											<div class="product__item__text">
 												<h5>
-													<a href="gameDetail.do?gameCode=${purchase.gameCode}">${purchase.gameTitle}</a>
+													<a href="gameDetails.do?gameCode=${purchase.gameCode}">${purchase.gameTitle}</a>
 												</h5>
 											</div>
 										</div>

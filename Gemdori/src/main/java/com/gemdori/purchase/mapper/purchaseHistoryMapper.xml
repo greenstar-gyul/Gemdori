@@ -16,7 +16,7 @@
         payment_method,
         purchase_status
     ) VALUES (
-        #{purchaseCode},
+        'P' || PURCHASE_SEQ.NEXTVAL,
         #{userCode},
         #{gameCode},
         #{recipientCode, jdbcType=VARCHAR},  -- NULL 가능성 명시

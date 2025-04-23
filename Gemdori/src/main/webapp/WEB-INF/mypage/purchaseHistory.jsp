@@ -47,7 +47,7 @@
                                         <tr>
                                             <td>${fn:substring(item.purchaseDate, 0, 16)}</td>
                                             <td>
-                                                <a href="gameDetail.do?gameCode=${item.gameCode}">
+                                                <a href="gameDetails.do?gameCode=${item.gameCode}">
                                                     ${item.gameTitle}
                                                 </a>
                                             </td>
@@ -60,7 +60,7 @@
                                                 </c:choose>
                                             </td>
                                             <td>
-                                                <a href="gameDetail.do?gameCode=${item.gameCode}" class="btn btn-sm btn-info" title="게임 정보 보기"> <%-- 이 클래스들에 대한 스타일은 myPage.css에 있어야 함 --%>
+                                                <a href="gameDetails.do?gameCode=${item.gameCode}" class="btn btn-sm btn-info" title="게임 정보 보기"> <%-- 이 클래스들에 대한 스타일은 myPage.css에 있어야 함 --%>
                                                     <i class="fa fa-info-circle"></i> 보기
                                                 </a>
                                                 <a href="#" class="btn btn-sm btn-warning btn-write-review" data-game-code="${item.gameCode}" title="리뷰 작성하기">

@@ -127,6 +127,7 @@ public class FrontController extends HttpServlet {
 		map.put("/paymentSuccess.do", new PaymentSuccessControl());
 		map.put("/paymentFail.do", new PaymentFailControl());
 		map.put("/getCartSummary.do", new GetCartSummaryControl());
+        map.put("/checkout.do", new CheckOutControl());
 
 		/* *****************
 		 * 커뮤니티
