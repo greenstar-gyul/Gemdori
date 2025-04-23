@@ -40,8 +40,12 @@ import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckCartControl;
 import com.gemdori.purchase.CheckOutControl;
 import com.gemdori.purchase.GamePackageControl;
+import com.gemdori.purchase.GetCartSummaryControl;
+import com.gemdori.purchase.PaymentFailControl;
+import com.gemdori.purchase.PaymentSuccessControl;
 import com.gemdori.purchase.RemoveCartItemControl;
 import com.gemdori.purchase.SuccessControl;
+import com.gemdori.purchase.TossPaymentController;
 import com.gemdori.review.ReviewAddControl;
 import com.gemdori.review.ReviewListControl;
 import com.gemdori.review.ReviewRemoveControl;
@@ -117,6 +121,10 @@ public class FrontController extends HttpServlet {
 		map.put("/addToCart.do", new AddToCartControl());
 		map.put("/checkCart.do", new CheckCartControl());
 		map.put("/removeCartItem.do", new RemoveCartItemControl());
+		map.put("/tossPayment.do", new TossPaymentController());
+		map.put("/paymentSuccess.do", new PaymentSuccessControl());
+		map.put("/paymentFail.do", new PaymentFailControl());
+		map.put("/getCartSummary.do", new GetCartSummaryControl());
 
 		/* *****************
 		 * 커뮤니티
@@ -132,8 +140,6 @@ public class FrontController extends HttpServlet {
 		map.put("/topicReplyRemove.do", new TopicReplyRemove());
 		map.put("/topicUpdate.do", new TopicUpdate());
 		map.put("/topicRemove.do", new TopicRemove());
-		
-
 	}
 
 	// service.

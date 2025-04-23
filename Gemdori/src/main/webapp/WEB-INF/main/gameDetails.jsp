@@ -293,53 +293,24 @@ $(document).ready(function() {
         });
     });
     
-    // Buy Now 버튼 클릭 이벤트
     $('#buyNowBtn').click(function(e) {
-        e.preventDefault(); // 기본 링크 동작 방지
-        
-        // 현재 URL에서 gameCode 파라미터 값 가져오기
-        var gameCode = getParameterByName('gameCode');
-        
-        // 로그인 상태 확인
-        var isLoggedIn = <%= session.getAttribute("loginUser") != null %>;
-        
-        if (!isLoggedIn) {
-            alert('로그인이 필요한 서비스입니다.');
-            window.location.href = 'login.do?redirect=gameDetails.do?gameCode=' + gameCode;
-            return;
-        }
-        
-        // 버튼 상태 변경 (클릭 비활성화)
-        var $btn = $(this);
-        $btn.addClass('disabled').css('pointer-events', 'none');
-        
-        // 게임을 장바구니에 추가하고 바로 결제 페이지로 이동
-        $.ajax({
-            url: 'addToCart.do',
-            type: 'POST',
-            data: { gameCode: gameCode, buyNow: true },
-            success: function(response) {
-                if (response === 'success' || response === 'already_exists') {
-                    window.location.href = 'checkout.do';
-                } else if (response === 'login_required') {
-                    // 버튼 상태 복원
-                    $btn.removeClass('disabled').css('pointer-events', 'auto');
-                    alert('로그인이 필요한 서비스입니다.');
-                    window.location.href = 'login.do?redirect=gameDetails.do?gameCode=' + gameCode;
-                } else {
-                    // 버튼 상태 복원
-                    $btn.removeClass('disabled').css('pointer-events', 'auto');
-                    alert('구매 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
-                }
-            },
-            error: function(xhr, status, error) {
-                // 버튼 상태 복원
-                $btn.removeClass('disabled').css('pointer-events', 'auto');
-                alert('구매 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
-                console.error('Error:', error);
-            }
-        });
-    });
+    	  e.preventDefault();
+    	  
+    	  var gameCode = getParameterByName('gameCode');
+    	  var isLoggedIn = <%= session.getAttribute("loginUser") != null %>;
+    	  
+    	  if (!isLoggedIn) {
+    	    alert('로그인이 필요한 서비스입니다.');
+    	    window.location.href = 'login.do?redirect=gameDetails.do?gameCode=' + gameCode;
+    	    return;
+    	  }
+    	  
+    	  var $btn = $(this);
+    	  $btn.addClass('disabled').css('pointer-events', 'none');
+    	  
+    	  // 직접 결제 페이지로 이동
+    	  window.location.href = 'checkout.do?gameCode=' + gameCode + '&directBuy=true';
+    	});
     
     // URL 파라미터 값 가져오는 함수
     function getParameterByName(name) {

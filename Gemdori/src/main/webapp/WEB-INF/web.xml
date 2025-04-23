@@ -26,6 +26,7 @@
 		<servlet-name>Tiles Dispatch Servlet</servlet-name>
 		<url-pattern>*.tiles</url-pattern>
 	</servlet-mapping>
+	
 
 	<!-- 필터 추가: 모든 요청에 UTF-8 인코딩 강제 적용 -->
 	<filter>
