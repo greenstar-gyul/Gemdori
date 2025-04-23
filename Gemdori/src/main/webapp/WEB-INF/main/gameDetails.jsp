@@ -165,7 +165,7 @@
                         <div class="section-title">
                             <h5>Your Comment</h5>
                         </div>
-                        <%-- ▼▼▼ 리뷰 등록 폼 수정 시작 ▼▼▼ --%>
+                        <%-- ▼▼▼ 리뷰 등록 폼 시작 ▼▼▼ --%>
                         <c:choose>
                             <c:when test="${empty sessionScope.loginUser}">
                                 <%-- 1. 로그인 안했을 때: 로그인 안내 메시지 표시 --%>
