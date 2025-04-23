@@ -19,8 +19,9 @@ public class TopicDetailControl implements Control {
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String topicCode = req.getParameter("topicCode"); // 예: "T0001"
 		
-		SqlSession session = DataSource.getInstance().openSession();
-		TopicMapper mapper = session.getMapper(TopicMapper.class);
+		
+		SqlSession session = DataSource.getInstance().openSession(); // 필수
+		TopicMapper mapper = session.getMapper(TopicMapper.class); // 필수
 		
 		TopicVO topic = mapper.selectTopic(topicCode); // 글 하나 조회
 

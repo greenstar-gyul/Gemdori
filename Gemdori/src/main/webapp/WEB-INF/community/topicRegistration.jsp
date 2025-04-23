@@ -9,6 +9,7 @@
             </div>
             <div class="col-lg-8" style="background-color: #203b57; padding:20px;">
                 <form action="topicRegistration.do" method="post">
+                	<input type="hidden" name="gameCode" value="${gameCode }">
                     <label>제목</label><br>
                     <input type="text" name="topicTitle" required style="width: 400px;"><br><br>
 
