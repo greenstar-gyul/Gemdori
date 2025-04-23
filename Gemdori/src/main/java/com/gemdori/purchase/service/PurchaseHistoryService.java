@@ -2,6 +2,7 @@ package com.gemdori.purchase.service;
 
 import java.util.List;
 import com.gemdori.purchase.vo.GemdoriShoppingCartVO; // 장바구니 VO 필요
+import com.gemdori.purchase.vo.PurchaseHistoryVO;
 import com.google.gson.JsonObject; // 또는 다른 JSON 객체 타입
 
 public interface PurchaseHistoryService {
@@ -28,5 +29,19 @@ public interface PurchaseHistoryService {
      * @throws Exception DB 처리 중 예외 발생 시
      */
     boolean recordFreePurchase(String userCode, String orderId, List<GemdoriShoppingCartVO> cartItems) throws Exception;
-
+    
+    /**
+     * 특정 사용자의 최근 구매 내역을 가져옵니다.
+     * @param userCode 사용자 코드
+     * @param limit 가져올 최대 항목 수
+     * @return 최근 구매 내역 목록
+     */
+    List<PurchaseHistoryVO> getRecentPurchasesByUser(String userCode, int limit);
+    
+    /**
+     * 특정 사용자의 모든 구매 내역을 가져옵니다.
+     * @param userCode 사용자 코드
+     * @return 모든 구매 내역 목록
+     */
+    List<PurchaseHistoryVO> getAllPurchasesByUser(String userCode);
 }

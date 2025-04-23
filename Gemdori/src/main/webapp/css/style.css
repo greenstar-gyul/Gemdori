@@ -686,6 +686,11 @@ ol {
 	top: 10px;
 }
 
+a .product__item .product__item__text h5 {
+	color: #ffffff;
+	font-weight: 700;
+}
+
 .product__item__pic .comment {
 	font-size: 13px;
 	color: #ffffff;

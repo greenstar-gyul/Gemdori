@@ -35,7 +35,9 @@ import com.gemdori.member.UserDeleteControl;
 import com.gemdori.member.UserDeleteFormControl;
 import com.gemdori.member.VerifyEmailCodeControl;
 import com.gemdori.purchase.AddToCartControl;
+import com.gemdori.mypage.LibraryFormControl;
 import com.gemdori.mypage.MyPageFormControl;
+import com.gemdori.mypage.PurchaseHistoryFormControl;
 import com.gemdori.purchase.CartPageControl;
 import com.gemdori.purchase.CheckCartControl;
 import com.gemdori.purchase.CheckOutControl;
@@ -105,7 +107,8 @@ public class FrontController extends HttpServlet {
 		 * 마이페이지 요청
 		 * ******************************/
 		map.put("/myPage.do", new MyPageFormControl());
-		
+		map.put("/library.do", new LibraryFormControl());
+		map.put("/purchaseHistory.do", new PurchaseHistoryFormControl());
 		
 		
 		/* ******************************
@@ -113,7 +116,7 @@ public class FrontController extends HttpServlet {
 		 * ******************************/
 		map.put("/gamePackage.do", new GamePackageControl());
 		map.put("/cartPage.do", new CartPageControl());
-		map.put("/checkout.do", new CheckOutControl());
+		
 
 		//map.put("/community.do", new CommunityControl());
 		map.put("/success.do", new SuccessControl());

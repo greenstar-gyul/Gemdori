@@ -654,9 +654,14 @@ ol {
 }
 
 .product__item__pic {
-	height: 325px;
+	height: 393px;
 	position: relative;
 	border-radius: 5px;
+}
+
+a .product__item .product__item__text h5 {
+	color: #ffffff;
+	font-weight: 700;
 }
 
 .product__item__pic .ep {
