@@ -12,10 +12,9 @@ import com.gemdori.common.Control;
 import com.gemdori.member.vo.UserFullVO;
 import com.gemdori.mypage.service.MyPageService;
 import com.gemdori.mypage.service.MyPageServiceImpl;
-import com.gemdori.mypage.vo.RecentReviewVO;
 import com.gemdori.purchase.vo.PurchaseHistoryVO;
 
-public class MyPageFormControl implements Control {
+public class LibraryFormControl implements Control {
 	@Override
 	public void exec(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
@@ -27,22 +26,16 @@ public class MyPageFormControl implements Control {
 		
 		String userCode = loginUser.getUserCode();
 		
-		// MyPageService 이용하여 데이터 가져오기
+		// MyPageService 이용하여 모든 구매 내역 가져오기
 		MyPageService service = new MyPageServiceImpl();
-		
-		// 최근 리뷰 3개 조회
-		List<RecentReviewVO> recentReviews = service.getRecentReviews(userCode);
-		
-		// 최근 구매 내역 3개 조회 (limit 파라미터 제거)
-		List<PurchaseHistoryVO> recentPurchases = service.getRecentPurchases(userCode);
+		List<PurchaseHistoryVO> purchases = service.getAllPurchases(userCode);
 		
 		// 데이터 request에 저장
 		req.setAttribute("user", loginUser);
-		req.setAttribute("recentReviews", recentReviews);
-		req.setAttribute("recentPurchases", recentPurchases);
+		req.setAttribute("purchases", purchases);
 		
-		// 마이페이지 JSP 이동
-		req.getRequestDispatcher("/mypage/myPage.tiles").forward(req, resp);
-		System.out.println("myPage.do");
+		// 라이브러리 JSP 이동
+		req.getRequestDispatcher("/mypage/library.tiles").forward(req, resp);
+		System.out.println("library.do");
 	}
 }

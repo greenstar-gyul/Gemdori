@@ -58,6 +58,7 @@
                             <c:set var="appid" value="${fn:substring(game.gameCode, 1, fn:length(game.gameCode))}" />
                             <c:set var="fallbackImg" value="${fn:escapeXml(game.gameMainImage)}" />
                             <div class="col-lg-3 col-md-6 col-sm-6">
+                            <a href="gameDetails.do?gameCode=${game.gameCode }">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg"
                                          data-setbg="https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg"
@@ -70,9 +71,10 @@
                                                 <li>${genre}</li>
                                             </c:forEach>
                                         </ul>
-                                        <h5><a href="gameDetails.do?gameCode=${game.gameCode }">${game.gameTitle}</a></h5>
+                                        <h5>${game.gameTitle}</h5>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                         </c:forEach>
                     </div>
@@ -95,6 +97,7 @@
                             <c:set var="appid" value="${fn:substring(game.gameCode, 1, fn:length(game.gameCode))}" />
                             <c:set var="fallbackImg" value="${fn:escapeXml(game.gameMainImage)}" />
                             <div class="col-lg-3 col-md-6 col-sm-6">
+                            <a href="gameDetails.do?gameCode=${game.gameCode }">
                                 <div class="product__item">
                                     <div class="product__item__pic set-bg"
                                          data-setbg="https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg"
@@ -107,9 +110,10 @@
                                                 <li>${genre}</li>
                                             </c:forEach>
                                         </ul>
-                                        <h5><a href="gameDetails.do?gameCode=${game.gameCode }">${game.gameTitle}</a></h5>
+                                        <h5>${game.gameTitle}</h5>
                                     </div>
                                 </div>
+                                </a>
                             </div>
                         </c:forEach>
                     </div>
@@ -134,6 +138,7 @@
                             <c:set var="appid" value="${fn:substring(game.gameCode, 1, fn:length(game.gameCode))}" />
                             <c:set var="fallbackImg" value="${fn:escapeXml(game.gameMainImage)}" />
 						    <div class="col-lg-3 col-md-6 col-sm-6">
+						    <a href="gameDetails.do?gameCode=${game.gameCode }">
 						        <div class="product__item">
 						            <div class="product__item__pic set-bg"
                                          data-setbg="https://cdn.cloudflare.steamstatic.com/steam/apps/${appid}/library_600x900.jpg"
@@ -146,9 +151,10 @@
 						                        <li>${genre}</li>
 						                    </c:forEach>
 						                </ul>
-						                <h5><a href="gameDetails.do?gameCode=${game.gameCode }">${game.gameTitle}</a></h5>
+						                <h5>${game.gameTitle}</h5>
 						            </div>
 						        </div>
+						        </a>
 						    </div>
 						</c:forEach>
                     </div>

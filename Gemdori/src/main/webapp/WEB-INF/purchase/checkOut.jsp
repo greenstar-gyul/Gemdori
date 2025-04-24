@@ -334,15 +334,15 @@
                     <h3 class="summary-title">결제 요약</h3>
                     <div class="summary-row">
                         <span>상품 금액</span>
-                        <span><fmt:formatNumber value="${totalAmount}" pattern="#,###" />원</span>
+                        <span><fmt:formatNumber value="${totalAmount}" pattern="###,###" />원</span>
                     </div>
                     <div class="summary-row">
                         <span>할인</span>
-                        <span>- <fmt:formatNumber value="${discountAmount}" pattern="#,###" />원</span>
+                        <span>- <fmt:formatNumber value="${discountAmount}" pattern="###,###" />원</span>
                     </div>
                     <div class="summary-total">
                         <span>총 결제금액</span>
-                        <span style="color: #e53637"><fmt:formatNumber value="${finalAmount}" pattern="#,###" />원</span>
+                        <span style="color: #e53637"><fmt:formatNumber value="${finalAmount}" pattern="###,###" />원</span>
                     </div>
                 </div>
 

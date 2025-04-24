@@ -1,5 +1,6 @@
 package com.gemdori.purchase.mapper;
 
+import java.util.List;
 import com.gemdori.purchase.vo.PurchaseHistoryVO;
 
 public interface PurchaseHistoryMapper {
@@ -17,4 +18,19 @@ public interface PurchaseHistoryMapper {
      * @return 생성된 구매 코드 (예: P0000001)
      */
     String getNextPurchaseCode();
+    
+    /**
+     * 특정 사용자의 최근 구매 내역을 가져옵니다.
+     * @param userCode 사용자 코드
+     * @param limit 조회할 최대 레코드 수
+     * @return 최근 구매 내역 리스트
+     */
+    List<PurchaseHistoryVO> getRecentPurchasesByUser(String userCode, int limit);
+    
+    /**
+     * 특정 사용자의 모든 구매 내역을 가져옵니다.
+     * @param userCode 사용자 코드
+     * @return 사용자의 전체 구매 내역 리스트
+     */
+    List<PurchaseHistoryVO> getAllPurchasesByUser(String userCode);
 }

@@ -202,15 +202,14 @@ public class PaymentService {
                 String sql = "INSERT INTO gemdori_purchase_history_table "
                         + "(purchase_code, user_code, game_code, recipient_code, purchase_date, "
                         + "price, discount_rate, payment_method, purchase_status) "
-                        + "VALUES (?, ?, ?, NULL, SYSDATE, ?, ?, ?, 1)";
+                        + "VALUES ('P' || PURCHASE_SEQ.NEXTVAL, ?, ?, NULL, SYSDATE, ?, ?, ?, 1)";
                 
                 pstmt = conn.prepareStatement(sql);
-                pstmt.setString(1, purchaseCode);
-                pstmt.setString(2, userCode);
-                pstmt.setString(3, item.getGameCode());
-                pstmt.setInt(4, price);
-                pstmt.setInt(5, discountRate);
-                pstmt.setString(6, paymentMethod);
+                pstmt.setString(1, userCode);
+                pstmt.setString(2, item.getGameCode());
+                pstmt.setInt(3, price);
+                pstmt.setInt(4, discountRate);
+                pstmt.setString(5, paymentMethod);
                 
                 int result = pstmt.executeUpdate();
                 if (result <= 0) {

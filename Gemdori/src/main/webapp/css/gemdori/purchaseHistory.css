@@ -1,0 +1,131 @@
+/* === Purchase History Page Styles (/css/gemdori/purchaseHistory.css) === */
+/* Using variables from style.css for consistency */
+
+/* 테이블 스타일 (Gemdori 테마 적용) */
+.purchase-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: var(--font-size-p, 15px); /* style.css 변수 사용 */
+    background-color: var(--secondary-bg, #1d1e39); /* style.css 변수 사용 */
+    color: var(--text-primary, #ffffff); /* style.css 변수 사용 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    border-radius: var(--border-radius, 5px); /* style.css 변수 사용 */
+    overflow: hidden;
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.1)); /* style.css 변수 사용 */
+}
+
+.purchase-table th,
+.purchase-table td {
+    border: none; /* 내부 셀 테두리 제거 */
+    border-bottom: 1px solid var(--border-color, rgba(255, 255, 255, 0.1)); /* 행 구분선 */
+    padding: 12px 15px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.purchase-table th {
+    background-color: rgba(255, 255, 255, 0.05); /* 헤더 배경색 약간 밝게 */
+    color: var(--text-primary, #ffffff);
+    font-weight: var(--font-weight-semibold, 600); /* style.css 변수 사용 */
+    white-space: nowrap;
+    border-bottom-width: 2px;
+    border-bottom-color: var(--border-color, rgba(255, 255, 255, 0.2)); /* 헤더 구분선 약간 더 진하게 */
+}
+
+.purchase-table tbody tr {
+    transition: background-color 0.15s ease-in-out;
+}
+
+.purchase-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.08); /* 호버 시 배경색 */
+}
+
+.purchase-table tbody tr:last-child td {
+    border-bottom: none; /* 마지막 행 구분선 제거 */
+}
+
+.purchase-table td a {
+    color: var(--accent-color, #e53637); /* 링크 색상 (강조색 사용) */
+    text-decoration: none;
+    font-weight: var(--font-weight-medium, 500);
+}
+
+.purchase-table td a:hover {
+    text-decoration: underline;
+    filter: brightness(1.2); /* 호버 시 약간 밝게 */
+}
+
+/* 게임 썸네일 */
+.game-thumb-small {
+    width: 30px;
+    height: auto;
+    margin-right: 8px;
+    vertical-align: middle;
+    border-radius: 3px; /* 약간 둥글게 */
+}
+
+/* 작은 버튼 스타일 (기존 스타일 유지 또는 테마 버튼으로 변경) */
+/* style.css 의 .button 클래스를 활용하거나, 아래 스타일 유지 */
+.btn-sm {
+    padding: 4px 8px;
+    font-size: var(--font-size-sm, 13px);
+    margin-right: 5px;
+    border-radius: var(--border-radius, 5px);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, filter 0.2s ease;
+    vertical-align: middle;
+    display: inline-flex;
+    align-items: center;
+}
+.btn-sm i {
+    margin-right: 4px;
+}
+
+/* 버튼 색상 (테마 색상 활용 고려) */
+.btn-info { background-color: #17a2b8; } /* 정보 버튼 색상 (기존 유지) */
+.btn-info:hover { filter: brightness(0.9); }
+
+.btn-warning { background-color: #ffc107; color: #212529; } /* 경고 버튼 색상 (기존 유지) */
+.btn-warning:hover { filter: brightness(0.9); }
+
+/* 구매 내역 없을 때 메시지 */
+.empty-message {
+    padding: 40px;
+    color: var(--text-secondary, #b7b7b7); /* style.css 변수 사용 */
+    text-align: center;
+    border: 1px dashed var(--border-color, rgba(255, 255, 255, 0.1));
+    border-radius: var(--border-radius, 5px);
+    margin-top: 20px;
+    background-color: rgba(0,0,0,0.1); /* 약간의 배경 구분 */
+}
+.empty-message p {
+    margin-bottom: 15px;
+}
+
+/* 스토어 버튼 (style.css의 .button 스타일 적용 고려) */
+.site-btn {
+    /* style.css의 .button 클래스 스타일을 따르거나, 여기서 정의 */
+    display: inline-block;
+    font-size: var(--font-size-p, 15px);
+    padding: var(--padding-base-vertical, 11px) var(--padding-base-horizontal, 16px);
+    color: var(--text-primary, #ffffff);
+    background: var(--accent-color, #e53637);
+    border: none;
+    border-radius: var(--border-radius, 5px);
+    text-transform: uppercase;
+    font-weight: var(--font-weight-bold, 700);
+    letter-spacing: 1px; /* 약간 줄임 */
+    cursor: pointer;
+    text-decoration: none;
+    margin-top: 15px;
+    transition: background-color 0.2s ease;
+}
+.site-btn:hover {
+    background: var(--accent-hover, #d82a2b);
+}
+
+/* 참고: .product .spad, .container 등 기본 레이아웃 클래스는 */
+/* 다른 CSS 파일에서 정의된 스타일을 따라야 합니다. */

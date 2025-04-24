@@ -14,9 +14,10 @@
 							<h5>My Page</h5>
 						</div>
 						<ul class="category__list">
-							<li><a href="#">📦 구매 내역</a></li>
+							<li><a href="myPage.do" class="active">📱 내 정보</a></li>
+							<li><a href="purchaseHistory.do">📦 구매 내역</a></li>
+							<li><a href="library.do">📚 내 라이브러리</a></li>
 							<li><a href="#">📝 나의 리뷰</a></li>
-							<li><a href="#">📋 게시글 관리</a></li>
 						</ul>
 					</div>
 				</div>
@@ -29,53 +30,33 @@
 				<div class="trending__product section-box">
 					<div class="section-title">
 						<h4>최근 구매 내역</h4>
+						<a href="library.do" class="view-all">전체보기 &gt;</a>
 					</div>
 					<div class="row">
-						<div class="col-lg-4 col-md-6 col-sm-6">
-							<div class="product__item">
-								<div class="product__item__pic set-bg"
-									data-setbg="img/trending/trend-1.jpg">
-									<div class="ep">2025-04-01</div>
+						<c:choose>
+							<c:when test="${not empty recentPurchases}">
+								<c:forEach var="purchase" items="${recentPurchases}">
+									<div class="col-lg-4 col-md-6 col-sm-6">
+										<div class="product__item">
+											<div class="product__item__pic set-bg"
+												data-setbg="${purchase.thumbnailImage}">
+												<div class="ep">${fn:substring(purchase.purchaseDate, 0, 10)}</div>
+											</div>
+											<div class="product__item__text">
+												<h5>
+													<a href="gameDetails.do?gameCode=${purchase.gameCode}">${purchase.gameTitle}</a>
+												</h5>
+											</div>
+										</div>
+									</div>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<div class="col-lg-12">
+									<p class="empty-message">아직 구매한 게임이 없습니다.</p>
 								</div>
-								<div class="product__item__text">
-									<ul>
-										<li>RPG</li>
-										<li>Adventure</li>
-									</ul>
-									<h5>Elden Ring</h5>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-6">
-							<div class="product__item">
-								<div class="product__item__pic set-bg"
-									data-setbg="img/trending/trend-2.jpg">
-									<div class="ep">2025-03-21</div>
-								</div>
-								<div class="product__item__text">
-									<ul>
-										<li>Shooter</li>
-										<li>Co-op</li>
-									</ul>
-									<h5>Helldivers 2</h5>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-4 col-md-6 col-sm-6">
-							<div class="product__item">
-								<div class="product__item__pic set-bg"
-									data-setbg="img/trending/trend-4.jpg">
-									<div class="ep">2025-03-21</div>
-								</div>
-								<div class="product__item__text">
-									<ul>
-										<li>Shooter</li>
-										<li>Co-op</li>
-									</ul>
-									<h5>Helldivers 2</h5>
-								</div>
-							</div>
-						</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 
@@ -86,24 +67,23 @@
 					</div>
 					<div class="row">
 						<div class="col-lg-12">
-							<div class="product__item__text">
-								<h5>
-									<a href="#">[자유] 엘든링 DLC 언제 나올까요?</a>
-								</h5>
-								<p>2025-04-20 작성 | 댓글 4</p>
-							</div>
-							<div class="product__item__text">
-								<h5>
-									<a href="#">[리뷰] 헬다이버2 진짜 갓겜입니다</a>
-								</h5>
-								<p>2025-04-18 작성 | 댓글 2</p>
-							</div>
-							<div class="product__item__text">
-								<h5>
-									<a href="#">[리뷰] 레포데는 진짜 똥겜입니다</a>
-								</h5>
-								<p>2025-04-15 작성 | 댓글 5</p>
-							</div>
+							<c:choose>
+								<c:when test="${not empty recentTopics}">
+									<c:forEach var="topic" items="${recentTopics}">
+										<div class="product__item__text">
+											<h5>
+												<a href="topicDetail.do?topicCode=${topic.topicCode}">${topic.topicTitle}</a>
+											</h5>
+											<p>${topic.writeDate} 작성 | 게임: ${topic.gameTitle}</p>
+										</div>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<div class="product__item__text">
+										<p style="color: #bbb;">아직 작성한 게시글이 없습니다. 게임 커뮤니티에서 다른 유저들과 소통해보세요!</p>
+									</div>
+								</c:otherwise>
+							</c:choose>
 						</div>
 					</div>
 				</div>
@@ -133,6 +113,9 @@
 															<c:when test="${rating >= i - 0.5}">
 												              ☆
 												            </c:when>
+															<c:otherwise>
+																☆
+															</c:otherwise>
 														</c:choose>
 													</c:forEach>
 													(${review.rating}/5)
@@ -156,15 +139,11 @@
 	</div>
 </section>
 <script>
-	// 자바스크립트에서 JSTL 데이터를 직접 객체로 출력
-	console.log("최근 리뷰 데이터:");
-	<c:forEach var="review" items="${recentReviews}">
-	console.log({
-		gameTitle : "${review.gameTitle}",
-		reviewContents : "${review.reviewContents}",
-		writeDate : "${review.writeDate}",
-		rating : "${review.rating}"
+	// 배경 이미지 설정
+	var setBackground = document.querySelectorAll('.set-bg');
+	setBackground.forEach(function(item) {
+		var bg = item.getAttribute('data-setbg');
+		item.style.backgroundImage = 'url(' + bg + ')';
 	});
-	</c:forEach>
 </script>
 <link rel="stylesheet" href="css/gemdori/myPage.css" type="text/css">

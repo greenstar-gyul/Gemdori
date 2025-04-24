@@ -4,21 +4,62 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.gemdori.mypage.mapper.MyPageMapper">
-	<!-- 마이페이지 최근 리뷰 3개 가져오기 -->
 	<select id="selectRecentReviews" parameterType="string" resultType="com.gemdori.mypage.vo.RecentReviewVO">
 	    SELECT * FROM (
-        SELECT 
-            g.game_title AS gameTitle,
-            r.review_contents AS reviewContents,
-            TO_CHAR(r.write_date, 'YYYY-MM-DD') AS writeDate,
-            r.rating AS rating
-        FROM gemdori_review_tbl r
-        JOIN gemdori_game_tbl g ON r.game_code = g.game_code
-        WHERE r.user_code = #{userCode}
-        ORDER BY r.write_date DESC
-    )
+	        SELECT
+	            g.game_title AS gameTitle,
+	            r.review_contents AS reviewContents,
+	            TO_CHAR(r.write_date, 'YYYY-MM-DD') AS writeDate,
+	            r.rating AS rating
+	        FROM gemdori_review_tbl r
+	        JOIN gemdori_game_tbl g ON r.game_code = g.game_code
+	        WHERE r.user_code = #{userCode}
+	        ORDER BY r.write_date DESC
+	    )
 	    <![CDATA[
 	    WHERE ROWNUM <= 3
 	    ]]>
 	</select>
+
+	<select id="selectRecentPurchases" resultType="com.gemdori.purchase.vo.PurchaseHistoryVO">
+        SELECT *
+        FROM (
+	        SELECT
+	            p.purchase_code as purchaseCode,
+	            p.user_code as userCode,
+	            p.game_code as gameCode,
+	            p.purchase_date as purchaseDate,
+	            p.price as price,
+	            p.discount_rate as discountRate,
+	            p.payment_method as paymentMethod,
+	            p.purchase_status as purchaseStatus,
+	            g.game_title as gameTitle,
+	            g.GAME_MAIN_IMAGE as thumbnailImage
+	        FROM gemdori_purchase_history_table p
+	        JOIN gemdori_game_tbl g ON p.game_code = g.game_code
+	        WHERE p.user_code = #{userCode}
+	        ORDER BY p.purchase_date DESC
+		)
+        <![CDATA[
+        WHERE ROWNUM <= 3
+        ]]>
+    </select>
+
+    <select id="selectAllPurchases" parameterType="string" resultType="com.gemdori.purchase.vo.PurchaseHistoryVO">
+        SELECT
+            p.purchase_code as purchaseCode,
+            p.user_code as userCode,
+            p.game_code as gameCode,
+            p.purchase_date as purchaseDate,
+            p.price as price,
+            p.discount_rate as discountRate,
+            p.payment_method as paymentMethod,
+            p.purchase_status as purchaseStatus,
+            g.game_title as gameTitle,
+            g.GAME_MAIN_IMAGE as thumbnailImage
+        FROM gemdori_purchase_history_table p
+        JOIN gemdori_game_tbl g ON p.game_code = g.game_code
+        WHERE p.user_code = #{userCode}
+        ORDER BY p.purchase_date DESC
+    </select>
 </mapper>
